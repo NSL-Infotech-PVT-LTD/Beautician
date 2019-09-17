@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#70000000"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/_20sdp">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:background="@drawable/round_right_left_corner"
+        app:cardCornerRadius="@dimen/_20sdp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:orientation="vertical"
+
+            android:weightSum="2">
+
+
+            <TextView
+                android:id="@+id/subs_plan"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".7"
+                android:background="@color/pink"
+                android:gravity="center"
+                android:text="plan"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_18sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/sub_plan_desc"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".8"
+                android:gravity="center"
+                android:text="hdhsjhdfjs dfhsjhf"
+                android:textColor="@color/darkgrey"
+                android:textSize="@dimen/_12sdp" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight=".5">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/subs_got_it"
+                    android:gravity="end"
+                    android:text="Got it!"
+                    android:textColor="@color/pink"
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/subs_got_it"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="end"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:padding="@dimen/_10sdp"
+                    android:src="@drawable/success" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>

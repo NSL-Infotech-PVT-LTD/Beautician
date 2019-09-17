@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.circularreveal.coordinatorlayout.CircularRevealCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/tool_background"
+    android:orientation="vertical">
+
+
+    <ScrollView
+        android:id="@+id/dash_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:background="@drawable/round_right_left_corner"
+            android:elevation="@dimen/_10sdp"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/_20sdp"
+            android:paddingRight="@dimen/_20sdp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <ImageView
+                    android:id="@+id/c_view_back"
+                    android:layout_width="@dimen/_20sdp"
+
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_keyboard_backspace_black_24dp" />
+
+                <TextView
+                    android:id="@+id/textHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_toRightOf="@id/c_view_back"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="normal"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/orderByICon"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:layout_toLeftOf="@id/filterByICon"
+                    android:src="@drawable/order_by"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/filterByICon"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:layout_toLeftOf="@id/one"
+                    android:src="@drawable/filter" />
+
+                <RelativeLayout
+                    android:id="@+id/one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/_10sdp">
+
+
+                    <ImageView
+                        android:id="@+id/cartValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/cart" />
+
+                    <TextView
+                        android:id="@+id/cart_count"
+                        android:layout_width="@dimen/_9sdp"
+                        android:layout_height="@dimen/_9sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:background="@drawable/circle_cart"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_5sdp"
+                        android:visibility="gone" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_50sdp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/viewAllRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+
+                <ProgressBar
+                    android:id="@+id/item_progress_bar"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:elevation="5dp"
+                    android:padding="5dp"
+                    android:visibility="gone" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+    <TextView
+        android:id="@+id/no_search_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/_90sdp"
+
+        android:background="@drawable/no_search_item"
+        android:gravity="center"
+        android:text="No Search Data Found"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_18sdp"
+        android:textStyle="bold"
+
+        android:visibility="gone" />
+
+    <include layout="@layout/c_custom_bottom_sheet" />
+</com.google.android.material.circularreveal.coordinatorlayout.CircularRevealCoordinatorLayout>
