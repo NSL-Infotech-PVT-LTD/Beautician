@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -48,12 +49,16 @@ public class C_ProfileAct extends AppCompatActivity {
         update_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fragmentManager = getSupportFragmentManager();
-                transaction = fragmentManager.beginTransaction().addToBackStack("").replace(R.id.profile_container, new C_UpdateProfileFra());
-                transaction.commit();
+                startActivity(new Intent(activity, C_UpdateProfileFra.class));
             }
         });
 
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         user_name.setText(shared.getString(ConstantClass.USER_NAME));
         user_email.setText(shared.getString(ConstantClass.USER_Email));
         user_number.setText(shared.getString(ConstantClass.USER_Number));
@@ -61,7 +66,6 @@ public class C_ProfileAct extends AppCompatActivity {
         user_county.setText(shared.getString(ConstantClass.USER_Country));
         Picasso.with(activity).load(shared.getString("profile")).into(user_profile);
     }
-
 
     protected void onResume() {
         super.onResume();

@@ -57,12 +57,12 @@ public class P_DashBoard extends AppCompatActivity {
             }
         });
 
-        if (!shared.getString("p_name").equalsIgnoreCase("")) {
-            p_providerName.setText(shared.getString("p_name"));
+        if (!shared.getString(ConstantClass.PROVIDE_NAME).equalsIgnoreCase("")) {
+            p_providerName.setText(shared.getString(ConstantClass.PROVIDE_NAME));
 
         }
-        if (!shared.getString("p_profile").equalsIgnoreCase("")) {
-            Picasso.with(this).load(shared.getString("p_profile")).into(p_dash_user_image);
+        if (!shared.getString(ConstantClass.PROVIDE_PROFILE).equalsIgnoreCase("")) {
+            Picasso.with(this).load(shared.getString(ConstantClass.PROVIDE_PROFILE)).into(p_dash_user_image);
 
         }
 

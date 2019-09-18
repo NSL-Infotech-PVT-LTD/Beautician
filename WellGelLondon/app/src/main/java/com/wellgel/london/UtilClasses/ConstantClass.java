@@ -3,6 +3,13 @@ package com.wellgel.london.UtilClasses;
 import android.graphics.Bitmap;
 
 public class ConstantClass {
+    public static String PROVIDE_PROFILE = "p_profile" ;
+    public static String PROVIDE_EMAIL = "p_email" ;
+    public static String PROVIDE_NAME = "p_name" ;
+    public static String PROVIDE_NUMBER = "p_number" ;
+    public static String PROVIDE_ADDRESS = "p_address" ;
+
+
     public static String isCustomerLoggeIn = "isCus";
     public static String isProviderLoggeIn = "isPro";
     public static String USER_NAME = "user_naem";
@@ -17,4 +24,6 @@ public class ConstantClass {
     public static String SOCIAL_EMAIL="";
     public static String SOCIAL_PASSWORD="";
     public static String SOCIAL_PROFILE="";
+    public static String DEVICE_TOKEN="abc";
+    public static String DEVICETYPE="android";
 }

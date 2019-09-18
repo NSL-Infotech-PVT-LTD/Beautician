@@ -16,13 +16,17 @@ import com.wellgel.london.Customer.SerializeModelClasses.ProductDetailSerial;
 import com.wellgel.london.Customer.SerializeModelClasses.RegistrationSerial;
 import com.wellgel.london.Provider.ModelSerialized.ForgotPasswordSerial;
 
+import java.util.Map;
+
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 
 public interface APIs {
@@ -58,7 +62,7 @@ public interface APIs {
                                    @Query("limit") String limit,
                                    @Query("page") String page);
 
-    @POST("productdetails")
+    @POST("product/details")
     Call<ProductDetailSerial> poductDetail(@Header("Content-Type") String content,
                                            @Header("Authorization") String Auth,
                                            @Query("id") String product_id);
@@ -130,4 +134,7 @@ public interface APIs {
                                              @Query("country") String country,
                                              @Query("device_type") String device_type,
                                              @Query("device_token") String device_token);
+
+
+
 }

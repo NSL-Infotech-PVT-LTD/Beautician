@@ -8,6 +8,7 @@
     tools:context=".Customer.Activities.C_DashboardAct">
 
 
+
     <ScrollView
         android:id="@+id/dash_scroll"
         android:layout_width="match_parent"

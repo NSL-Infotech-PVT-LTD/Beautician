@@ -74,7 +74,7 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
     private C_Booked_OrderAdapter bookedAdpter;
     private ImageView c_dash_navi, cart_detail;
     private LinearLayoutManager linearLayoutManager;
-    private TextView customer_logout, cart_count, viewAll_products, viewAll_chrome;
+    private TextView c_dash_createNail, cart_count, viewAll_products, viewAll_chrome;
     private PopupWindow popupWindow;
 
     @Override
@@ -99,7 +99,7 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
         c_dash_navi = findViewById(R.id.c_dash_navi);
         c_dash_chrome_recycler = findViewById(R.id.c_dash_chrome_recycler);
         c_dash_user_image = findViewById(R.id.c_dash_user_image);
-        customer_logout = findViewById(R.id.customer_logout);
+        c_dash_createNail = findViewById(R.id.c_dash_createNail);
         cart_count = findViewById(R.id.cart_count);
         viewAll_products = findViewById(R.id.viewAll_products);
         viewAll_chrome = findViewById(R.id.viewAll_chrome);
@@ -134,6 +134,12 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(activity, C_CartDetailAct.class));
+            }
+        });
+        c_dash_createNail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(activity, C_CreateNailAct.class));
             }
         });
         c_dash_navi.setOnClickListener(new View.OnClickListener() {
@@ -224,15 +230,14 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
         call.enqueue(new Callback<C_ProductsSerial>() {
             @Override
             public void onResponse(Call<C_ProductsSerial> call, Response<C_ProductsSerial> response) {
-                if (progressDoalog != null)
-                    progressDoalog.dismiss();
 
 
                 if (response.body() != null) {
                     if (response.isSuccessful()) {
                         if (response.body().getStatus()) {
                             productList.clear();
-
+                            if (progressDoalog != null)
+                                progressDoalog.dismiss();
                             for (int i = 0; i < response.body().getData().getData().size(); i++) {
 
                                 product_model = new C_Product_model();
@@ -270,7 +275,8 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
                     }
                 } else {
 
-
+                    if (progressDoalog != null)
+                        progressDoalog.dismiss();
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         String errorMessage = jObjError.getJSONObject("error").getJSONObject("error_message").getJSONArray("message").getString(0);

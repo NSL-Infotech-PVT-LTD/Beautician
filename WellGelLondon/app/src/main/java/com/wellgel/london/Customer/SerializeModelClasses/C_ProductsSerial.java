@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class C_ProductsSerial {
+
+
     @SerializedName("status")
     @Expose
     private Boolean status;
@@ -63,13 +65,13 @@ public class C_ProductsSerial {
         private String lastPageUrl;
         @SerializedName("next_page_url")
         @Expose
-        private Object nextPageUrl;
+        private String nextPageUrl;
         @SerializedName("path")
         @Expose
         private String path;
         @SerializedName("per_page")
         @Expose
-        private String perPage;
+        private Integer perPage;
         @SerializedName("prev_page_url")
         @Expose
         private Object prevPageUrl;
@@ -128,11 +130,11 @@ public class C_ProductsSerial {
             this.lastPageUrl = lastPageUrl;
         }
 
-        public Object getNextPageUrl() {
+        public String getNextPageUrl() {
             return nextPageUrl;
         }
 
-        public void setNextPageUrl(Object nextPageUrl) {
+        public void setNextPageUrl(String nextPageUrl) {
             this.nextPageUrl = nextPageUrl;
         }
 
@@ -144,11 +146,11 @@ public class C_ProductsSerial {
             this.path = path;
         }
 
-        public String getPerPage() {
+        public Integer getPerPage() {
             return perPage;
         }
 
-        public void setPerPage(String perPage) {
+        public void setPerPage(Integer perPage) {
             this.perPage = perPage;
         }
 
@@ -178,7 +180,6 @@ public class C_ProductsSerial {
 
     }
 
-
     public class Datum {
 
         @SerializedName("id")
@@ -192,7 +193,7 @@ public class C_ProductsSerial {
         private String image;
         @SerializedName("images")
         @Expose
-        private Object images;
+        private List<String> images = null;
         @SerializedName("short_description")
         @Expose
         private String shortDescription;
@@ -223,6 +224,9 @@ public class C_ProductsSerial {
         @SerializedName("deleted_at")
         @Expose
         private Object deletedAt;
+        @SerializedName("is_added_to_cart")
+        @Expose
+        private Boolean isAddedToCart;
 
         public Integer getId() {
             return id;
@@ -248,11 +252,11 @@ public class C_ProductsSerial {
             this.image = image;
         }
 
-        public Object getImages() {
+        public List<String> getImages() {
             return images;
         }
 
-        public void setImages(Object images) {
+        public void setImages(List<String> images) {
             this.images = images;
         }
 
@@ -334,6 +338,14 @@ public class C_ProductsSerial {
 
         public void setDeletedAt(Object deletedAt) {
             this.deletedAt = deletedAt;
+        }
+
+        public Boolean getIsAddedToCart() {
+            return isAddedToCart;
+        }
+
+        public void setIsAddedToCart(Boolean isAddedToCart) {
+            this.isAddedToCart = isAddedToCart;
         }
 
     }

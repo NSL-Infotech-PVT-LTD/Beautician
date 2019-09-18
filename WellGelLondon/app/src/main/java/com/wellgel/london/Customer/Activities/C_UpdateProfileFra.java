@@ -5,14 +5,18 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.media.MediaScannerConnection;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -39,14 +43,20 @@ import com.wellgel.london.UtilClasses.ConstantClass;
 import com.wellgel.london.UtilClasses.PreferencesShared;
 import com.wellgel.london.UtilClasses.Retrofit.RetrofitClientInstance;
 
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -58,7 +68,7 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class C_UpdateProfileFra extends Fragment {
+public class C_UpdateProfileFra extends AppCompatActivity {
 
     private ImageView user_profile;
     private TextView user_name, user_number, user_address, user_county, user_email;
@@ -67,54 +77,48 @@ public class C_UpdateProfileFra extends Fragment {
     private int REQUEST_CAMERA = 888, SELECT_FILE = 8888;
     private String picturePath = "";
     private File file;
-    private Context activity;
+    private C_UpdateProfileFra activity;
     private String IMAGE_DIRECTORY = "/WellgelLondon/";
     private ProgressDialog progressDoalog;
     private Button update_profile_btn;
     private String imageURL = C_ConstantClass.IMAGE_BASE_URL + "customer/profile_image/";
     private String st_name, st_profile, st_number, st_country, st_address;
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.activity = context;
-    }
 
     public C_UpdateProfileFra() {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_c__update_profile, container, false);
-        init(view);
-
-        return view;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_c__update_profile);
+        activity = this;
+        init();
 
     }
 
-    private void init(View view) {
+
+    private void init() {
 
         shared = new PreferencesShared(activity);
-        user_profile = view.findViewById(R.id.user_profile);
-        user_name = view.findViewById(R.id.user_name);
-        user_number = view.findViewById(R.id.user_number);
-        user_address = view.findViewById(R.id.user_address);
-        user_county = view.findViewById(R.id.user_country);
-        user_email = view.findViewById(R.id.user_email);
-        update_profile_btn = view.findViewById(R.id.update_profile);
+        user_profile = findViewById(R.id.user_profile);
+        user_name = findViewById(R.id.user_name);
+        user_number = findViewById(R.id.user_number);
+        user_address = findViewById(R.id.user_address);
+        user_county = findViewById(R.id.user_country);
+        user_email = findViewById(R.id.user_email);
+        update_profile_btn = findViewById(R.id.update_profile);
 
+        if (!shared.getString(ConstantClass.USER_NAME).equalsIgnoreCase("")) {
 
-        user_name.setText(shared.getString(ConstantClass.USER_NAME));
-        user_email.setText(shared.getString(ConstantClass.USER_Email));
-        user_number.setText(shared.getString(ConstantClass.USER_Number));
-        user_address.setText(shared.getString(ConstantClass.USER_Address));
-        user_county.setText(shared.getString(ConstantClass.USER_Country));
-        Picasso.with(activity).load(shared.getString("profile")).into(user_profile);
-
+            user_name.setText(shared.getString(ConstantClass.USER_NAME));
+            user_email.setText(shared.getString(ConstantClass.USER_Email));
+            user_number.setText(shared.getString(ConstantClass.USER_Number));
+            user_address.setText(shared.getString(ConstantClass.USER_Address));
+            user_county.setText(shared.getString(ConstantClass.USER_Country));
+            Picasso.with(activity).load(shared.getString("profile")).into(user_profile);
+        }
         user_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -275,7 +279,7 @@ public class C_UpdateProfileFra extends Fragment {
     public String saveImage(Bitmap myBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-        File imageDirectory = new File(activity.getExternalFilesDir(null) + IMAGE_DIRECTORY);
+        File imageDirectory = new File(getExternalFilesDir(null) + IMAGE_DIRECTORY);
         if (!imageDirectory.exists()) {
             imageDirectory.mkdirs();
         }
@@ -298,7 +302,7 @@ public class C_UpdateProfileFra extends Fragment {
     public File saveImage1(Bitmap myBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-        File imageDirectory = new File(activity.getExternalFilesDir(null) + IMAGE_DIRECTORY);
+        File imageDirectory = new File(getExternalFilesDir(null) + IMAGE_DIRECTORY);
         if (!imageDirectory.exists()) {
             imageDirectory.mkdirs();
         }
@@ -328,16 +332,17 @@ public class C_UpdateProfileFra extends Fragment {
         // initialize file here
         MultipartBody.Part f = null;
         if (file != null) {
-
             f = MultipartBody.Part.createFormData("profile_image", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
         } else {
             f = MultipartBody.Part.createFormData("profile_image", "", RequestBody.create(MediaType.parse("image/*"), ""));
 
         }
 
+
+
         /*Create handle for the RetrofitInstance interface*/
         APIs service = RetrofitClientInstance.getRetrofitInstance().create(APIs.class);
-        Call<C_UpdateProfileSerial> call = service.updateProfil("application/x-www-form-urlencoded", "Bearer " + shared.getString("token"), f, st_name, st_number, st_address, st_country, "android", "mydevice");
+        Call<C_UpdateProfileSerial> call = service.updateProfil("application/x-www-form-urlencoded", "Bearer " + shared.getString("token"), f, st_name, st_number, st_address, st_country, ConstantClass.DEVICETYPE, ConstantClass.DEVICE_TOKEN);
         call.enqueue(new Callback<C_UpdateProfileSerial>() {
             @Override
             public void onResponse(Call<C_UpdateProfileSerial> call, Response<C_UpdateProfileSerial> response) {
@@ -348,14 +353,13 @@ public class C_UpdateProfileFra extends Fragment {
                     if (response.isSuccessful()) {
 
                         if (response.body().getStatus()) {
-                            if (file != null) file.delete();
+//                            if (file != null) delete(activity, file);
                             shared.setString("profile", imageURL + response.body().getData().getUser().getProfileImage());
                             shared.setString(ConstantClass.USER_NAME, response.body().getData().getUser().getName());
                             shared.setString(ConstantClass.USER_Address, response.body().getData().getUser().getAddress());
                             shared.setString(ConstantClass.USER_Country, response.body().getData().getUser().getCountry());
                             shared.setString(ConstantClass.USER_Number, response.body().getData().getUser().getPhone());
-                            startActivity(new Intent(activity, C_ProfileAct.class));
-                            getActivity().finish();
+                            finish();
 
                         } else {
 
@@ -365,7 +369,18 @@ public class C_UpdateProfileFra extends Fragment {
                     } else {
                     }
                 } else {
-                    Toast.makeText(activity, "Mobile number is already exists", Toast.LENGTH_SHORT).show();
+                    try {
+                        JSONObject jObjError = null;
+                        if (response.errorBody() != null) {
+                            jObjError = new JSONObject(response.errorBody().string());
+
+                            String errorMessage = jObjError.getJSONObject("error").getJSONObject("error_message").getJSONArray("message").getString(0);
+
+                            Toast.makeText(activity, "" + errorMessage, Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+
+                    }
                 }
             }
 
@@ -375,6 +390,30 @@ public class C_UpdateProfileFra extends Fragment {
                 Toast.makeText(activity, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public boolean delete(final Context context, final File file) {
+        final String where = MediaStore.MediaColumns.DATA + "=?";
+        final String[] selectionArgs = new String[]{
+                file.getAbsolutePath()
+        };
+        final ContentResolver contentResolver = context.getContentResolver();
+        final Uri filesUri = MediaStore.Files.getContentUri("external");
+
+        contentResolver.delete(filesUri, where, selectionArgs);
+
+        if (file.exists()) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                try {
+                    Files.delete(Paths.get(String.valueOf(file)));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            contentResolver.delete(filesUri, where, selectionArgs);
+        }
+        return !file.exists();
     }
 
 }

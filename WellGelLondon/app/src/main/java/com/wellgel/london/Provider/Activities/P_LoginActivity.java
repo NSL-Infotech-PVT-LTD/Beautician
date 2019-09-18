@@ -37,10 +37,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.wellgel.london.Customer.APIs;
-import com.wellgel.london.Customer.Activities.C_DashboardAct;
 import com.wellgel.london.Customer.Activities.C_ForgotPasswordAct;
-import com.wellgel.london.Customer.Activities.C_LoginActivity;
-import com.wellgel.london.Customer.Activities.C_RegisterActivity;
 import com.wellgel.london.Customer.C_ConstantClass;
 import com.wellgel.london.Customer.SerializeModelClasses.LoginSerialized;
 import com.wellgel.london.R;
@@ -235,8 +232,11 @@ public class P_LoginActivity extends AppCompatActivity {
 //                            shared.setString("profile", imageURL + response.body().getData().getUser().getProfileImage());
 //                            shared.setString("token", imageURL + response.body().getData().getToken());
                             setErrorTv.setText(response.body().getData().getMessage());
-                            shared.setString("p_profile", imageURL + response.body().getData().getUser().getProfileImage());
-                            shared.setString("p_name", response.body().getData().getUser().getName());
+                            shared.setString(ConstantClass.PROVIDE_PROFILE, imageURL + response.body().getData().getUser().getProfileImage());
+                            shared.setString(ConstantClass.PROVIDE_NAME, response.body().getData().getUser().getName());
+                            shared.setString(ConstantClass.PROVIDE_NUMBER, response.body().getData().getUser().getPhone());
+                            shared.setString(ConstantClass.PROVIDE_ADDRESS, response.body().getData().getUser().getAddress());
+                            shared.setString(ConstantClass.PROVIDE_EMAIL, response.body().getData().getUser().getEmail());
                             startActivity(new Intent(activity, P_DashBoard.class));
                             finish();
                         } else {

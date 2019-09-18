@@ -38,7 +38,7 @@ import retrofit2.Response;
 
 public class C_ProductsDetailAct extends AppCompatActivity {
 
-    private TextView c_direction, c_description, c_shippingAddress, addtocart, buyNow;
+    private TextView c_direction, c_description, c_shippingAddress, addtocart;
     private TextView c_product_name, c_product_price;
     private C_ProductsDetailAct activity;
     private ImageView c_ship_addr_iv, c_description_iv, c_use_direction_iv, backPress;
@@ -56,6 +56,7 @@ public class C_ProductsDetailAct extends AppCompatActivity {
     private int NUM_PAGES = 0;
     private String productID;
     private TextView cart_count;
+    public int isAdded = 0;
 
 
     @Override
@@ -76,7 +77,6 @@ public class C_ProductsDetailAct extends AppCompatActivity {
 
 
         init();
-        productDetailAPI();
 
     }
 
@@ -87,7 +87,6 @@ public class C_ProductsDetailAct extends AppCompatActivity {
         backPress = findViewById(R.id.c_product_back);
         c_direction = findViewById(R.id.c_direction);
         c_description = findViewById(R.id.c_description);
-        buyNow = findViewById(R.id.buyNow);
         addtocart = findViewById(R.id.addtocart);
         cart_detail = findViewById(R.id.cartValue);
         cart_count = findViewById(R.id.cart_count);
@@ -171,6 +170,12 @@ public class C_ProductsDetailAct extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        productDetailAPI();
+    }
+
     //     Products from server APi
     public void productDetailAPI() {
         progressDoalog = new ProgressDialog(activity);
@@ -192,6 +197,8 @@ public class C_ProductsDetailAct extends AppCompatActivity {
                     if (response.isSuccessful()) {
 
                         if (response.body().getStatus()) {
+                            images.clear();
+
                             images.add(C_ConstantClass.IMAGE_BASE_URL + "products/" + response.body().getData().getImage());
 
                             for (int i = 0; i < response.body().getData().getImages().size(); i++) {
@@ -201,6 +208,7 @@ public class C_ProductsDetailAct extends AppCompatActivity {
                             c_product_price.setText(" £" + response.body().getData().getPrice() + ".00");
                             c_product_name.setText(response.body().getData().getName());
                             productID = response.body().getData().getId() + "";
+                            isAdded = response.body().getData().getIsAddedToCartQuantity();
                             c_direction.setText(Html.fromHtml(response.body().getData().getDirectionsForUse()));
                             c_description.setText(Html.fromHtml(response.body().getData().getDescription()));
                             c_shippingAddress.setText(Html.fromHtml(response.body().getData().getShortDescription()));
@@ -211,15 +219,14 @@ public class C_ProductsDetailAct extends AppCompatActivity {
                             addtocart.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    addToCartApi();
+                                    if (isAdded != 0) {
+                                        updateCart(getIntent().getIntExtra("product_id", 0) + "", "update", isAdded + 1 + "");
+                                    } else {
+                                        addToCartApi();
+                                    }
                                 }
                             });
-                            buyNow.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    addToCartApi();
-                                }
-                            });
+
                         } else {
                         }
 
@@ -257,6 +264,8 @@ public class C_ProductsDetailAct extends AppCompatActivity {
                         if (response.body().getStatus()) {
 
 
+                            Intent intent = new Intent(activity, C_CartDetailAct.class);
+                            startActivity(intent);
                         }
                     }
                 }

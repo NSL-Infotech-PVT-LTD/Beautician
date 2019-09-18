@@ -53,6 +53,17 @@ public class ProductDetailSerial implements Serializable {
         @SerializedName("deleted_at")
         @Expose
         private Object deletedAt;
+        @SerializedName("is_added_to_cart_quantity")
+        @Expose
+        private Integer isAddedToCartQuantity;
+
+        public Integer getIsAddedToCartQuantity() {
+            return isAddedToCartQuantity;
+        }
+
+        public void setIsAddedToCartQuantity(Integer isAddedToCartQuantity) {
+            this.isAddedToCartQuantity = isAddedToCartQuantity;
+        }
 
         public Integer getId() {
             return id;

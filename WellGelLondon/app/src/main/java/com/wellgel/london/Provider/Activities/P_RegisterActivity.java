@@ -661,10 +661,11 @@ public class P_RegisterActivity extends AppCompatActivity implements GoogleApiCl
                             shared.setBoolean(ConstantClass.isProviderLoggeIn, true);
                             shared.setBoolean(ConstantClass.isCustomerLoggeIn, false);
 
-
-                            shared.setString("p_profile", response.body().getData().getUser().getProfileImage());
-                            shared.setString("p_name", response.body().getData().getUser().getName());
-
+                            shared.setString(ConstantClass.PROVIDE_PROFILE, response.body().getData().getUser().getProfileImage());
+                            shared.setString(ConstantClass.PROVIDE_NAME, response.body().getData().getUser().getName());
+                            shared.setString(ConstantClass.PROVIDE_NUMBER, response.body().getData().getUser().getPhone());
+                            shared.setString(ConstantClass.PROVIDE_ADDRESS, response.body().getData().getUser().getAddress());
+                            shared.setString(ConstantClass.PROVIDE_EMAIL, response.body().getData().getUser().getEmail());
                             startActivity(new Intent(activity, P_DashBoard.class));
                             finish();
                         }
@@ -1267,6 +1268,7 @@ public class P_RegisterActivity extends AppCompatActivity implements GoogleApiCl
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        loginType = "";
         //setDataFromSharedPreferences();
     }
 
@@ -1344,4 +1346,6 @@ public class P_RegisterActivity extends AppCompatActivity implements GoogleApiCl
             return null;
         }
     }
+
+
 }

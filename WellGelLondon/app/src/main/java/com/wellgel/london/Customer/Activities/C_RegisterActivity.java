@@ -52,9 +52,10 @@ import com.wellgel.london.Customer.SerializeModelClasses.RegistrationSerial;
 import com.wellgel.london.R;
 import com.wellgel.london.UtilClasses.CameraUtility;
 import com.wellgel.london.UtilClasses.ConstantClass;
-import com.wellgel.london.UtilClasses.GPSTracker;
 import com.wellgel.london.UtilClasses.PreferencesShared;
 import com.wellgel.london.UtilClasses.Retrofit.RetrofitClientInstance;
+
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -564,7 +565,19 @@ public class C_RegisterActivity extends AppCompatActivity implements GoogleApiCl
                     } else {
                     }
                 } else {
-                    Toast.makeText(C_RegisterActivity.this, "email or number already exists", Toast.LENGTH_SHORT).show();
+                    try {
+                        JSONObject jObjError = null;
+                        if (response.errorBody() != null) {
+                            jObjError = new JSONObject(response.errorBody().string());
+
+                            String errorMessage = jObjError.getJSONObject("error").getJSONObject("error_message").getJSONArray("message").getString(0);
+
+                            Toast.makeText(activity, "" + errorMessage, Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(activity, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
                 }
             }
 
@@ -768,5 +781,12 @@ public class C_RegisterActivity extends AppCompatActivity implements GoogleApiCl
             }
             return null;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        loginType = "";
+
     }
 }

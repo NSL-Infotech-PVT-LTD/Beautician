@@ -17,6 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_app_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".Customer.Activities.C_CreateNailAct"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".Provider.Activities.P_ProfileAct" />
         <activity android:name=".Customer.Activities.C_MyorderDetails" />
         <activity android:name=".Customer.Activities.C_MyOrdersActivity" />
         <activity android:name=".Customer.Activities.C_MakePaymentAct" />
@@ -25,6 +29,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".Customer.Activities.C_AddressAct" />
         <activity android:name=".Customer.Activities.C_ProfileAct" />
+        <activity android:name=".Customer.Activities.C_UpdateProfileFra" />
         <activity android:name=".Customer.Activities.C_CartDetailAct" />
         <activity android:name=".Customer.Activities.C_ProductsDetailAct" />
         <activity
@@ -47,7 +52,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Customer.Activities.MainActivity" />
-
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
