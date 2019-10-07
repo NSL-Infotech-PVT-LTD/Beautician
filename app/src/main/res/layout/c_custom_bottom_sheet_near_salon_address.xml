@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomsheet_address"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/trans_back"
+    android:clickable="true"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    app:behavior_hideable="true"
+
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_right_left_corner"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/locationName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginRight="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:text="@string/choose_location"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16sdp"
+            android:textStyle="bold" />
+
+
+        <EditText
+            android:id="@+id/edit_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:background="@drawable/capsule_edittxt_shape_grey"
+            android:backgroundTint="@color/grey"
+            android:drawableRight="@drawable/ic_gps_fixed_black_24dp"
+            android:singleLine="true"
+            android:textSize="@dimen/_10sdp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginRight="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_15sdp">
+
+            <RadioButton
+                android:id="@+id/radioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/nameOfaddHolder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_toRightOf="@id/radioButton"
+                android:text="Emma Lee"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fullAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/nameOfaddHolder"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_toRightOf="@id/radioButton"
+                android:text="Emma Lee"
+                android:textColor="@color/grey"
+                android:textStyle="normal" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:background="@color/pink"
+            android:gravity="center"
+            android:text="Update"
+            android:id="@+id/updateAddress"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16sdp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</LinearLayout>

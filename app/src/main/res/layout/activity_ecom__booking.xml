@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/tool_background"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:id="@+id/dash_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:fillViewport="true"
+        android:nestedScrollingEnabled="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:background="@drawable/round_right_left_corner"
+            android:elevation="@dimen/_10sdp"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/_20sdp"
+            android:paddingRight="@dimen/_20sdp">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <ImageView
+                    android:id="@+id/c_booking_back"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_keyboard_backspace_black_24dp" />
+
+                <TextView
+                    android:id="@+id/mycartText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_toRightOf="@id/c_booking_back"
+                    android:text="Bookings"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="normal" />
+            </RelativeLayout>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:minHeight="?actionBarSize"
+                app:tabBackground="@color/white"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="@color/pink"
+                app:tabIndicatorHeight="2dp"
+                app:tabMode="fixed"
+                app:tabPadding="@dimen/_5sdp"
+                app:tabSelectedTextColor="@color/black"
+                app:tabTextAppearance="@style/TabLayoutTextStyle"
+                app:tabTextColor="@color/grey">
+
+
+            </com.google.android.material.tabs.TabLayout>
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_10sdp">
+
+            </androidx.viewpager.widget.ViewPager>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

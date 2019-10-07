@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/tool_background">
+
+
+    <ScrollView
+        android:id="@+id/dash_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_above="@id/c_select_date_time"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:background="@drawable/round_right_left_corner"
+            android:elevation="@dimen/_10sdp"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp">
+
+                <ImageView
+                    android:id="@+id/c_salon_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+
+                    android:src="@drawable/ic_keyboard_backspace_black_24dp" />
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/_10sdp">
+
+                    <ImageView
+                        android:id="@+id/cartValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/cart" />
+
+                    <TextView
+                        android:id="@+id/cart_count"
+                        android:layout_width="@dimen/_9sdp"
+                        android:layout_height="@dimen/_9sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:background="@drawable/circle_cart"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_5sdp"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_250sdp"
+                android:layout_marginTop="@dimen/_15sdp">
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                </androidx.viewpager.widget.ViewPager>
+
+
+                <me.relex.circleindicator.CircleIndicator
+                    android:id="@+id/indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_alignBottom="@+id/pager"
+                    android:layout_marginBottom="10dp"
+                    app:ci_drawable="@drawable/selected_dot" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/salonNAme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:text="Beauty in Bloomsbury"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textnew"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:text="New"
+                android:visibility="gone" />
+
+            <androidx.appcompat.widget.AppCompatRatingBar
+                android:id="@+id/near_salon_rating"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:indeterminateTint=" @color/black"
+                android:numStars="5"
+                android:progressTint="@color/golden"
+                android:stepSize="1" />
+
+            <TextView
+                android:id="@+id/near_salon_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:text="@string/addnewAddres" />
+
+            <TextView
+                android:id="@+id/near_salon_timing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:text="Timing : 09.00 AM - 8.00 PM" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/c_select_date_time"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:background="@color/pink"
+        android:gravity="center"
+        android:text="Select Date and Time"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp" />
+</RelativeLayout>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/tool_background"
+    android:fillViewport="true"
+    android:orientation="vertical"
+    tools:context=".Customer.Activities.C_LoginAsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/_60sdp"
+            android:layout_marginRight="@dimen/_60sdp"
+            android:layout_weight=".9"
+            android:src="@mipmap/logo" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_marginRight="@dimen/_15sdp"
+            android:layout_weight="1.1"
+            android:background="@drawable/round_right_left_corner"
+            android:backgroundTint="@color/white"
+            android:elevation="@dimen/_10sdp"
+            android:gravity="center"
+            android:paddingRight="@dimen/_20sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/av_ltstd_roman"
+                android:gravity="center"
+                android:text="@string/loginAs"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_20sdp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/c_login_btn"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_50sdp"
+                android:layout_marginRight="@dimen/_25sdp"
+                android:background="@drawable/capsule_button_shape"
+                android:text="@string/customer"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/p_login_btn"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginRight="@dimen/_25sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:background="@drawable/capsule_button_shape_bla"
+                android:text="@string/service_provider"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</ScrollView>

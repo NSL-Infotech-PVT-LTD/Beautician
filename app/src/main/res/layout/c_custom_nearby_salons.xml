@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/_5sdp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="0dp"
+
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/near_salon_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="The Salon Hair and Beauty"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/salon_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New"
+                android:textColor="@color/golden"
+                android:visibility="gone" />
+
+            <androidx.appcompat.widget.AppCompatRatingBar
+                android:id="@+id/near_salon_rating"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint=" @color/black"
+                android:numStars="5"
+                android:progressTint="@color/golden"
+                android:stepSize="1" />
+
+            <TextView
+                android:id="@+id/near_salon_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/addnewAddres" />
+
+            <TextView
+                android:id="@+id/near_salon_timing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="Timing : 09.00 AM - 8.00 PM" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/near_salon_distance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:gravity="end"
+            android:text="1.5 miles"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@color/grey" />
+</LinearLayout>

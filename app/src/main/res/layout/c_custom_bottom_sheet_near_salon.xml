@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomsheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:clickable="true"
+    android:orientation="vertical"
+    app:behavior_hideable="false"
+
+    app:behavior_peekHeight="@dimen/_160sdp"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/locationName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:text="@string/london"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_18sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/location_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/locationName"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:maxLength="25"
+                android:text="united kingdom"
+                android:textSize="@dimen/_8sdp" />
+
+
+            <TextView
+                android:id="@+id/addLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:drawableTop="@drawable/ic_add_black_24dp"
+                android:text="ADD LOCATION"
+                android:textSize="@dimen/_8sdp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@color/grey" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/salonRecycelr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:orientation="vertical" />
+    </LinearLayout>
+</LinearLayout>

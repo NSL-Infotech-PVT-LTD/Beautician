@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/tool_background"
+
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:background="@drawable/round_right_left_corner"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:padding="@dimen/_10sdp">
+
+            <ImageView
+                android:id="@+id/backSalon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_keyboard_backspace_black_24dp" />
+
+            <AutoCompleteTextView
+                android:id="@+id/chooseSalon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_toLeftOf="@id/salon_sort"
+                android:layout_toRightOf="@id/backSalon"
+                android:background="@drawable/capsule_edittxt_shape"
+                android:drawableRight="@mipmap/search_fade"
+                android:elevation="@dimen/_5sdp"
+                android:hint="Choose Salon..."
+                android:imeOptions="actionSearch"
+                android:singleLine="true" />
+
+            <ImageView
+                android:id="@+id/salon_sort"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/order_by" />
+        </RelativeLayout>
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <fragment xmlns:map="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/map"
+
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+            <include layout="@layout/c_custom_bottom_sheet_near_salon" />
+
+            <include layout="@layout/c_custom_bottom_sheet_near_salon_address" />
+            <include layout="@layout/c_custom_bottom_sheet_sort_salon" />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </LinearLayout>
+
+</LinearLayout>

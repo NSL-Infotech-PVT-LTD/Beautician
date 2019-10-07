@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/tool_background">
+
+
+    <ScrollView
+        android:id="@+id/dash_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/booto"
+        android:fillViewport="true"
+        android:nestedScrollingEnabled="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:background="@drawable/round_right_left_corner"
+            android:elevation="@dimen/_10sdp"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/_15sdp"
+            android:paddingRight="@dimen/_15sdp">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp">
+
+
+                <ImageView
+                    android:id="@+id/c_booking_detail_navi"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_keyboard_backspace_black_24dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_toRightOf="@id/c_booking_detail_navi"
+                    android:text="Bookings"
+                    android:textColor="@color/black"
+
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="normal" />
+
+            </RelativeLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:padding="@dimen/_10sdp"
+                app:cardBackgroundColor="@color/black"
+                app:cardCornerRadius="@dimen/_10sdp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_15sdp">
+
+                    <TextView
+                        android:id="@+id/near_salon_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Emma Lee"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_16sdp"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/near_salon_timing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:text="Services"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12sdp"
+
+                        android:textStyle="bold" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:id="@+id/one"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                android:gravity="center_vertical"
+                                android:text="Nail Paint"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_10sdp"
+                                android:textStyle="normal" />
+
+                            <LinearLayout
+                                android:id="@+id/lay_nail_color"
+                                android:layout_width="@dimen/_10sdp"
+                                android:layout_height="@dimen/_10sdp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical">
+
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:layout_margin="@dimen/_3sdp"
+                                android:layout_marginTop="@dimen/_3sdp"
+                                android:background="@color/white" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                android:gravity="center_vertical"
+                                android:text="Skin Color"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_10sdp"
+                                android:textStyle="normal" />
+
+                            <LinearLayout
+                                android:id="@+id/lay_skin_color"
+                                android:layout_width="@dimen/_10sdp"
+                                android:layout_height="@dimen/_10sdp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical">
+
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:layout_margin="@dimen/_3sdp"
+                                android:layout_marginTop="@dimen/_3sdp"
+                                android:background="@color/white" />
+
+
+                        </LinearLayout>
+
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/c_dash_userhand_image"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/pointed_fair_one" />
+
+                        <TextView
+                            android:id="@+id/nail_shape"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/one"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="@dimen/_10sdp"
+                            android:gravity="center_vertical"
+                            android:text="Nail Shape"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_10sdp"
+                            android:textStyle="normal" />
+
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/salonBookingDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:text="Thursday, 21 August 2019"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/salonBookingTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10:30 AM"
+
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_18sdp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/calndr"
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_orders" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:layout_toRightOf="@id/calndr"
+                    android:text="@string/chngetime"
+                    android:textSize="@dimen/_10sdp" />
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/resc_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thursday, 21 August 2019"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/resc_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="10:30 AM"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_20sdp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/reschedulingBTN"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/capsule_button_shape_grey"
+                    android:backgroundTint="@color/pink"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingRight="@dimen/_10sdp"
+                    android:text="Reschedule"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="@string/price"
+                android:textSize="@dimen/_10sdp" />
+
+
+            <TextView
+                android:id="@+id/priceText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:background="@drawable/capsule_button_shape_grey"
+                android:hint="Enter Price"
+                android:inputType="numberDecimal"
+                android:paddingLeft="@dimen/_30sdp"
+                android:paddingRight="@dimen/_30sdp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/booto"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/red"
+            android:gravity="center"
+            android:text="Reject"
+            android:id="@+id/booking_reject"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/green"
+            android:gravity="center"
+            android:id="@+id/booking_accept"
+            android:text="Accept"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</RelativeLayout>

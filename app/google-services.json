@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1070905060465",
+    "firebase_url": "https://welgellondon-1568706079951.firebaseio.com",
+    "project_id": "welgellondon-1568706079951",
+    "storage_bucket": "welgellondon-1568706079951.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1070905060465:android:bbb85e05b98614b0367fd0",
+        "android_client_info": {
+          "package_name": "com.wellgel.london"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1070905060465-veqjd1l93ot9knsjbk9oo3scfpn7rvb4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wellgel.london",
+            "certificate_hash": "5a0053c079443d6dcc1c55682b19cbbe46f845d3"
+          }
+        },
+        {
+          "client_id": "1070905060465-l79gm9vpnvt866qoo84787trf9k81dni.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBj72D-J2QIbZb-inLOGigEekfW5lCMOBo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1070905060465-l79gm9vpnvt866qoo84787trf9k81dni.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

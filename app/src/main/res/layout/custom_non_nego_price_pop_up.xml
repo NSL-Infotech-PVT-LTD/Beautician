@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/trans_back"
+    android:id="@+id/main_pop_up"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/round_right_left_corner"
+        android:orientation="vertical"
+        android:padding="@dimen/_15sdp">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="To Accept Request,Please Enter Price First"
+            android:textColor="@color/red"
+            android:textSize="@dimen/_14sdp"
+            android:textStyle="bold" />
+        .
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_30sdp"
+            android:text="NOTE-This price you enter is Non-Negotiable to Customer" />
+    </LinearLayout>
+</RelativeLayout>

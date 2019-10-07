@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main_pop_up"
+
+    android:background="@mipmap/tool_background"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/back_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:background="@drawable/capsule_button_shape_grey"
+                android:paddingLeft="@dimen/_15sdp"
+                android:paddingRight="@dimen/_15sdp"
+                android:text="Back  to  Home"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/back_home"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="@dimen/_50sdp"
+                android:gravity="bottom">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_35sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/round_right_left_corner"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_50sdp"
+                            android:gravity="center"
+                            android:text="Request Confirm"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_18sdp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="Booking Request is now accepted."
+                            android:textSize="@dimen/_8sdp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:text="You will provide service to customer as below details."
+                            android:textSize="@dimen/_8sdp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_15sdp"
+
+                            android:text="Customer will shortly respond to the Payment Method it will follow."
+                            android:textSize="@dimen/_8sdp"
+                            android:textStyle="bold" />
+
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/bookinCard"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_15sdp"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_marginBottom="@dimen/_20sdp"
+                            android:padding="@dimen/_10sdp"
+                            app:cardBackgroundColor="@color/black"
+                            app:cardCornerRadius="@dimen/_10sdp">
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:padding="@dimen/_15sdp">
+
+                                <TextView
+                                    android:id="@+id/near_salon_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Emma Lee"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_16sdp"
+                                    android:textStyle="bold" />
+
+
+                                <TextView
+                                    android:id="@+id/near_salon_timing"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:text="Services"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_12sdp"
+
+                                    android:textStyle="bold" />
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <LinearLayout
+                                        android:id="@+id/one"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_marginRight="@dimen/_10sdp"
+                                            android:gravity="center_vertical"
+                                            android:text="Nail Paint"
+                                            android:textColor="@color/white"
+                                            android:textSize="@dimen/_10sdp"
+                                            android:textStyle="normal" />
+
+                                        <LinearLayout
+                                            android:id="@+id/lay_nail_color"
+                                            android:layout_width="@dimen/_10sdp"
+                                            android:layout_height="@dimen/_10sdp"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_marginRight="@dimen/_10sdp"
+                                            android:gravity="center_vertical"
+                                            android:orientation="vertical">
+
+
+                                        </LinearLayout>
+
+                                        <View
+                                            android:layout_width="1dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_margin="@dimen/_3sdp"
+                                            android:layout_marginTop="@dimen/_3sdp"
+                                            android:background="@color/white" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_marginLeft="@dimen/_10sdp"
+                                            android:layout_marginRight="@dimen/_10sdp"
+                                            android:gravity="center_vertical"
+                                            android:text="Skin Color"
+                                            android:textColor="@color/white"
+                                            android:textSize="@dimen/_10sdp"
+                                            android:textStyle="normal" />
+
+                                        <LinearLayout
+                                            android:id="@+id/lay_skin_color"
+                                            android:layout_width="@dimen/_10sdp"
+                                            android:layout_height="@dimen/_10sdp"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_marginRight="@dimen/_10sdp"
+                                            android:gravity="center_vertical"
+                                            android:orientation="vertical">
+
+
+                                        </LinearLayout>
+
+                                        <View
+                                            android:layout_width="1dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_margin="@dimen/_3sdp"
+                                            android:layout_marginTop="@dimen/_3sdp"
+                                            android:background="@color/white" />
+
+
+                                    </LinearLayout>
+
+
+                                    <de.hdodenhof.circleimageview.CircleImageView
+                                        android:id="@+id/c_dash_userhand_image"
+                                        android:layout_width="@dimen/_40sdp"
+                                        android:layout_height="@dimen/_40sdp"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_centerVertical="true"
+                                        android:src="@drawable/pointed_fair_one" />
+
+                                    <TextView
+                                        android:id="@+id/nail_shape"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@id/one"
+                                        android:layout_gravity="center_vertical"
+                                        android:layout_marginRight="@dimen/_10sdp"
+                                        android:gravity="center_vertical"
+                                        android:text="Nail Shape"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_10sdp"
+                                        android:textStyle="normal" />
+
+
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/salonBookingDate"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_20sdp"
+                                    android:text="Thursday, 21 August 2019"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_12sdp"
+                                    android:textStyle="bold" />
+
+
+                                <TextView
+                                    android:id="@+id/salonBookingTime"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="10:30 AM"
+
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_18sdp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/_45sdp"
+
+                    android:src="@drawable/success" />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

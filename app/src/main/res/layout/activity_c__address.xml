@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/tool_background"
+    tools:context=".Customer.Activities.C_DashboardAct">
+
+
+    <ScrollView
+        android:id="@+id/dash_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/_50sdp"
+        android:fillViewport="true"
+        android:nestedScrollingEnabled="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:background="@drawable/round_right_left_corner"
+            android:elevation="@dimen/_10sdp"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/_20sdp"
+            android:paddingRight="@dimen/_20sdp">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <ImageView
+                    android:id="@+id/c_cart_back"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_keyboard_backspace_black_24dp" />
+
+                <TextView
+                    android:id="@+id/mycartText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_toRightOf="@id/c_cart_back"
+                    android:text="Select Address"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="normal" />
+
+
+            </RelativeLayout>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/addNewAddress"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:cardBackgroundColor="@color/black"
+                app:cardCornerRadius="@dimen/_10sdp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:drawableRight="@drawable/next_24dp"
+                    android:drawableTint="@color/white"
+                    android:gravity="center_vertical"
+                    android:text="@string/addnewAddres"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/address_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_70sdp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/continueShipping"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/pink"
+        android:gravity="center"
+        android:padding="@dimen/_10sdp"
+        android:text="Conitnue"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14sdp" />
+</RelativeLayout>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wellgel.london">
+
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission. ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher_app_icon"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:roundIcon="@mipmap/ic_launcher_app_icon_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Provider.Activities.P_AcceptRejectAct"></activity>
+        <activity android:name=".Customer.Activities.C_AllAppointListAct" />
+        <activity android:name=".Customer.Activities.Ecom_AppointlistDetail" />
+        <activity android:name=".Customer.Ecom_BookingActivity" />
+        <activity android:name=".Customer.Activities.C_SelectDateAct" />
+        <activity android:name=".Customer.Activities.C_SalonDetailAct" />
+        <activity android:name=".Customer.Activities.C_NearBySalonAct" />
+        <activity
+            android:name=".Customer.Activities.C_CreateNailAct"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Provider.Activities.P_ProfileAct" />
+        <activity android:name=".Customer.Activities.C_MyorderDetails" />
+        <activity android:name=".Customer.Activities.C_MyOrdersActivity" />
+        <activity android:name=".Customer.Activities.C_MakePaymentAct" />
+        <activity
+            android:name=".Customer.Activities.C_ViewAllProductsAct"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Customer.Activities.C_AddressAct" />
+        <activity android:name=".Customer.Activities.C_ProfileAct" />
+        <activity android:name=".Customer.Activities.C_UpdateProfileFra" />
+        <activity android:name=".Customer.Activities.C_CartDetailAct" />
+        <activity android:name=".Customer.Activities.C_ProductsDetailAct" />
+        <activity
+            android:name=".Provider.Activities.P_DashBoard"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Customer.Activities.C_DashboardAct"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".Customer.Activities.C_RegisterActivity" />
+        <activity android:name=".Provider.Activities.P_RegisterActivity" />
+        <activity android:name=".Customer.Activities.C_ForgotPasswordAct" />
+        <activity android:name=".Provider.Activities.P_LoginActivity" />
+        <activity android:name=".Provider.Activities.P_RescheduleDateAct" />
+        <activity android:name=".Customer.Activities.C_LoginActivity" />
+        <activity android:name=".Customer.Activities.C_LoginAsActivity" />
+        <activity android:name=".Customer.Activities.C_SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Customer.Activities.MainActivity" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyB2Wd7e9FKiKfFoNkKkAQHBONXbUD2U-I8" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".FireBaseManager.MyFirebaseService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+
+        <receiver
+            android:name=".Provider.Activities.P_AcceptRejectAct$MyNotificationPublisher"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="appo-id"></action>
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>

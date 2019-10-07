@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="pink">#EC018C</color>
+    <color name="black">#000000</color>
+    <color name="blue">#3950FF</color>
+    <color name="red">#FF0000</color>
+    <color name="white">#ffffff</color>
+    <color name="grey">#CACACA</color>
+    <color name="darkgrey">#746969</color>
+    <color name="off_grey">#52CACACA</color>
+    <color name="transparent">#00CACACA</color>
+    <color name="green">#54FF5A</color>
+    <color name="nail_polish_colr">#17170445</color>
+    <color name="golden">#FFC107</color>
+</resources>

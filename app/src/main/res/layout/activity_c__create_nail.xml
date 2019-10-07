@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/tool_background"
+    tools:context=".Customer.Activities.C_DashboardAct">
+
+
+    <ScrollView
+        android:id="@+id/dash_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:nestedScrollingEnabled="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:background="@drawable/round_right_left_corner"
+            android:elevation="@dimen/_10sdp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/customer_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="Logout"
+                android:textColor="@color/pink"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:paddingLeft="@dimen/_20sdp"
+                android:paddingRight="@dimen/_20sdp">
+
+                <ImageView
+                    android:id="@+id/c_dash_navi"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_centerVertical="true"
+
+                    android:src="@drawable/ic_keyboard_backspace_black_24dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:text="Save"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="normal" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/mainLAyout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/hand_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/color_recycler"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/pointed_fair_one" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/color_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/layout"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/off_grey"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+
+                <LinearLayout
+                    android:id="@+id/layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/chooseSalon"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_10sdp"
+                    android:weightSum="3">
+
+
+                    <TextView
+                        android:id="@+id/skin_color"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Skin Colour"
+                        android:textAllCaps="false"
+                        android:textColor="@color/pink"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <TextView
+                        android:id="@+id/nail_polish"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Nail Polish Colour"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12sdp" />
+
+
+                    <TextView
+                        android:id="@+id/nail_shape"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Nail Shape"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12sdp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/chooseSalon"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/pink"
+                    android:gravity="center"
+                    android:text="@string/saveDetails"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="normal" />
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
