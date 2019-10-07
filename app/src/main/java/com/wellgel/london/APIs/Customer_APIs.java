@@ -22,8 +22,6 @@ import com.wellgel.london.Provider.ModelSerialized.ForgotPasswordSerial;
 
 import java.util.Map;      
 
-
-
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
