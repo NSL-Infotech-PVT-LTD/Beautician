@@ -1,12 +1,15 @@
 package com.wellgel.london.Provider.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -73,8 +76,8 @@ public class P_AcceptRejectAct extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_p__accept_reject);
-
-        ln_nailColor = findViewById(R.id.mainLAyout);
+        onNewIntent(getIntent());
+        ln_nailColor = findViewById(R.id.nail_back);
 
         activity = this;
         shared = new PreferencesShared(activity);
@@ -155,8 +158,21 @@ public class P_AcceptRejectAct extends AppCompatActivity {
         listNailShape.add(4, "pointed");
 
 
-        appointDetailAPI(getIntent().getIntExtra("appo_id", 0));
+    }
 
+    @Override
+    public void onNewIntent(Intent intent) {
+        activity = this;
+        shared = new PreferencesShared(activity);
+
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            if (extras.containsKey("appo_id_noti")) {
+                appointDetailAPI(Integer.parseInt(extras.getString("appo_id_noti", "")));
+
+            } else appointDetailAPI(getIntent().getIntExtra("appo_id", 0));
+
+        }
     }
 
     public void appointDetailAPI(int appo_id) {
@@ -188,7 +204,11 @@ public class P_AcceptRejectAct extends AppCompatActivity {
                                 salonBookingDate.setText(parseDateToddMMyyyy(separated[0]));
                                 resc_date.setText(parseDateToddMMyyyy(separated[0]));
                                 resc_date.setText(parseDateToddMMyyyy(separated[0]));
-                                c_dash_userhand_image.setBackgroundColor(Color.parseColor(response.body().getData().get(0).getNailPolishColor() + ""));
+                                Drawable unwrappedDrawable = AppCompatResources.getDrawable(activity, R.drawable.circle_view);
+                                Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
+                                DrawableCompat.setTint(wrappedDrawable, Color.parseColor(response.body().getData().get(0).getNailPolishColor() + ""));
+
+                                ln_nailColor.setBackground(wrappedDrawable);
                                 nail_shape.setText("Nail Shape  " + response.body().getData().get(0).getNailShape());
                                 nailShape(c_dash_userhand_image, response.body().getData().get(0).getNailShape());
                                 skinColor(c_dash_userhand_image, response.body().getData().get(0).getSkinColor(), response.body().getData().get(0).getNailShape());
@@ -223,7 +243,7 @@ public class P_AcceptRejectAct extends AppCompatActivity {
                                         if (priceText_st.isEmpty()) {
                                             initiatePopupWindow();
                                         } else {
-                                            acceptReject(getIntent().getIntExtra("appo_id", 0), priceText_st, "rejected", separated[0] + " " + time);
+                                            acceptReject(response.body().getData().get(0).getId(), priceText_st, "rejected", separated[0] + " " + time);
                                         }
                                     }
                                 });
@@ -234,7 +254,7 @@ public class P_AcceptRejectAct extends AppCompatActivity {
                                         if (priceText_st.isEmpty()) {
                                             initiatePopupWindow();
                                         } else {
-                                            acceptReject(getIntent().getIntExtra("appo_id", 0), priceText_st, "open", separated[0] + " " + time);
+                                            acceptReject(response.body().getData().get(0).getId(), priceText_st, "open", separated[0] + " " + time);
                                         }
                                     }
                                 });
@@ -446,8 +466,7 @@ public class P_AcceptRejectAct extends AppCompatActivity {
             lay_nail_color = layout.findViewById(R.id.lay_nail_color);
             lay_skin_color = layout.findViewById(R.id.lay_skin_color);
             c_dash_userhand_image = layout.findViewById(R.id.c_dash_userhand_image);
-            ln_nailColor = layout.findViewById(R.id.lay_nail_color);
-
+            ln_nailColor = layout.findViewById(R.id.nail_back);
 
             back_home.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -611,6 +630,7 @@ public class P_AcceptRejectAct extends AppCompatActivity {
             lay_nail_color = layout.findViewById(R.id.lay_nail_color);
             lay_skin_color = layout.findViewById(R.id.lay_skin_color);
             c_dash_userhand_image = layout.findViewById(R.id.c_dash_userhand_image);
+            ln_nailColor = layout.findViewById(R.id.nail_back);
 
             near_salon_name.setText(name);
 //                                near_salon_address.setText(response.body().getData().get(0).getCustomerDetails().get(0).getAddress());
@@ -618,7 +638,15 @@ public class P_AcceptRejectAct extends AppCompatActivity {
             lay_skin_color.setBackgroundColor(Color.parseColor(handColor + ""));
             lay_nail_color.setBackgroundColor(Color.parseColor(nailColr + ""));
             salonBookingDate.setText(parseDateToddMMyyyy(separated[0]));
-            c_dash_userhand_image.setBackgroundColor(Color.parseColor(nailColr + ""));
+
+
+            Drawable unwrappedDrawable = AppCompatResources.getDrawable(activity, R.drawable.circle_view);
+            Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
+            DrawableCompat.setTint(wrappedDrawable, Color.parseColor(nailColr + ""));
+
+            ln_nailColor.setBackground(wrappedDrawable);
+
+//            c_dash_userhand_image.setBackgroundColor(Color.parseColor(nailColr + ""));
             nail_shape.setText("Nail Shape  " + nailShape);
             nailShape(c_dash_userhand_image, nailShape);
             skinColor(c_dash_userhand_image, handColor, nailShape);

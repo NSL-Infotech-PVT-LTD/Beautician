@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_pop_up"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/main_pop_up"
 
     android:background="@mipmap/tool_background"
     android:orientation="vertical">
@@ -211,13 +211,22 @@
                                     </LinearLayout>
 
 
-                                    <de.hdodenhof.circleimageview.CircleImageView
-                                        android:id="@+id/c_dash_userhand_image"
+                                    <RelativeLayout
                                         android:layout_width="@dimen/_40sdp"
                                         android:layout_height="@dimen/_40sdp"
                                         android:layout_alignParentRight="true"
                                         android:layout_centerVertical="true"
-                                        android:src="@drawable/pointed_fair_one" />
+                                        android:id="@+id/nail_back"
+                                        android:background="@drawable/circle_view">
+
+                                        <de.hdodenhof.circleimageview.CircleImageView
+                                            android:id="@+id/c_dash_userhand_image"
+                                            android:layout_width="@dimen/_40sdp"
+                                            android:layout_height="@dimen/_40sdp"
+                                            android:layout_alignParentRight="true"
+                                            android:layout_centerVertical="true"
+                                            android:src="@drawable/pointed_fair_one" />
+                                    </RelativeLayout>
 
                                     <TextView
                                         android:id="@+id/nail_shape"

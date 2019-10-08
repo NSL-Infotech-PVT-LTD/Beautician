@@ -262,7 +262,7 @@
                         android:background="@drawable/capsule_button_shape_grey"
                         android:drawableRight="@drawable/ic_add_circle_outline_black_24dp"
                         android:padding="@dimen/_8sdp"
-                        android:text="dksk"
+                        android:text=""
                         android:visibility="gone" />
                 </LinearLayout>
 
@@ -379,7 +379,9 @@
                     android:id="@+id/subs_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"></androidx.recyclerview.widget.RecyclerView>
+                    android:layout_marginTop="@dimen/_10sdp">
+
+                </androidx.recyclerview.widget.RecyclerView>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/subsCard"

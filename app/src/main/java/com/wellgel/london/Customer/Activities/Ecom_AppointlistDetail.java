@@ -3,9 +3,11 @@ package com.wellgel.london.Customer.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,9 +32,10 @@ public class Ecom_AppointlistDetail extends AppCompatActivity {
 
     private Ecom_AppointlistDetail activity;
     private PreferencesShared shared;
-    private TextView near_salon_name, salonBookingDate, salonBookingTime, near_salon_address;
+    private TextView near_salon_name, salonBookingDate, salonBookingTime, near_salon_address, priceText;
     private ImageView c_booking_detail_navi;
     private ProgressDialog progressDoalog;
+    private LinearLayout lay_pay, lay_accep_reject, layout_for_reschedule;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,10 @@ public class Ecom_AppointlistDetail extends AppCompatActivity {
         salonBookingDate = findViewById(R.id.salonBookingDate);
         salonBookingTime = findViewById(R.id.salonBookingTime);
         c_booking_detail_navi = findViewById(R.id.c_booking_detail_navi);
+        priceText = findViewById(R.id.priceText);
+        lay_pay = findViewById(R.id.lay_pay);
+        lay_accep_reject = findViewById(R.id.lay_accep_reject);
+        layout_for_reschedule = findViewById(R.id.layout_for_reschedule);
 
         c_booking_detail_navi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,8 +60,18 @@ public class Ecom_AppointlistDetail extends AppCompatActivity {
                 finish();
             }
         });
-        appointDetailAPI(getIntent().getIntExtra("appo_id", 0));
+
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            if (extras.containsKey("appo_id_noti")) {
+                appointDetailAPI(Integer.parseInt(extras.getString("appo_id_noti", "")));
+
+            } else appointDetailAPI(getIntent().getIntExtra("appo_id", 0));
+
+        }
     }
+
 
     public void appointDetailAPI(int appo_id) {
         progressDoalog = new ProgressDialog(this);
@@ -78,8 +95,15 @@ public class Ecom_AppointlistDetail extends AppCompatActivity {
                                 if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_CUSTOMER)) {
                                     near_salon_name.setText(response.body().getData().get(0).getSalonDetails().get(0).getName());
                                     near_salon_address.setText(response.body().getData().get(0).getSalonDetails().get(0).getAddress());
+//                                    priceText.setText(response.body().getData().get(0).getPaymentMode());
                                     String currentString = response.body().getData().get(0).getRequestedDatetime();
                                     String[] separated = currentString.split(" ");
+                                    if (response.body().getData().get(0).getAvailableDatetime() == response.body().getData().get(0).getRequestedDatetime()) {
+                                        layout_for_reschedule.setVisibility(View.GONE);
+                                    } else {
+                                        layout_for_reschedule.setVisibility(View.VISIBLE);
+
+                                    }
 
                                     salonBookingDate.setText(parseDateToddMMyyyy(separated[0]));
 

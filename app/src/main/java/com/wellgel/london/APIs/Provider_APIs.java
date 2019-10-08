@@ -5,6 +5,7 @@ import com.wellgel.london.Customer.SerializeModelClasses.LoginSerialized;
 import com.wellgel.london.Provider.ModelSerialized.P_AppointmentListSerial;
 import com.wellgel.london.Provider.ModelSerialized.P_Registration_serial;
 import com.wellgel.london.Provider.ModelSerialized.P_SubscripSerial;
+import com.wellgel.london.Provider.ModelSerialized.P_UpdateProfileSeialize;
 import com.wellgel.london.Provider.ModelSerialized.RescheduleAppointment;
 import com.wellgel.london.Provider.ModelSerialized.ServiceSerilize;
 
@@ -52,10 +53,10 @@ public interface Provider_APIs {
                                 @Query("device_token") String device_token);
 
     @Multipart
-    @POST("customer/update")
-    Call<C_UpdateProfileSerial> updateProfilProvider(@Header("Authorization") String Auth,
-                                                     @Part MultipartBody.Part file,
-                                                     @PartMap() Map<String, RequestBody> partMap);
+    @POST("salon/update")
+    Call<P_UpdateProfileSeialize> updateProfilProvider(@Header("Authorization") String Auth,
+                                                       @Part MultipartBody.Part file,
+                                                       @PartMap() Map<String, RequestBody> partMap);
 
     @POST("services")
     Call<ServiceSerilize> services();

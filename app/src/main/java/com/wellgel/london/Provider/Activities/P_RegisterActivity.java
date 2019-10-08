@@ -135,7 +135,7 @@ public class P_RegisterActivity extends AppCompatActivity implements GoogleApiCl
     private P_Adapter_Services adapter_services;
     private C_Product_model serviceModel;
     private String address = "";
-    private double latitude = 0.0, longitude;
+    private double latitude = 0.0, longitude=0.0;
     private String valueOfLayout = "";
     private PreferencesShared shared;
     private Chip addServiceMAin;

@@ -44,6 +44,7 @@ import com.wellgel.london.Customer.Ecom_BookingActivity;
 import com.wellgel.london.Customer.SerializeModelClasses.C_AppointmentList;
 import com.wellgel.london.Customer.SerializeModelClasses.C_ProductsSerial;
 import com.wellgel.london.Provider.Activities.P_AcceptRejectAct;
+import com.wellgel.london.Provider.Activities.P_ProfileAct;
 import com.wellgel.london.Provider.ModelSerialized.P_AppointmentListSerial;
 import com.wellgel.london.Provider.ProviderAdapters.P_Booked_OrderAdapter;
 import com.wellgel.london.R;
@@ -199,7 +200,10 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
         c_dash_user_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(activity, C_ProfileAct.class));
+                if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_CUSTOMER))
+                    startActivity(new Intent(activity, C_ProfileAct.class));
+                else if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_PROVIDER))
+                    startActivity(new Intent(activity, P_ProfileAct.class));
             }
         });
         viewAll_products.setOnClickListener(new View.OnClickListener() {
@@ -230,7 +234,7 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
 
         for (int i = 0; i < 5; i++) {
             product_model = new C_Product_model();
-            product_model.setProddductPrice(getString(R.string.currency)+"12.00");
+            product_model.setProddductPrice(getString(R.string.currency) + "12.00");
             product_model.setProductName("chrome powder");
             product_model.setProductImage(C_ConstantClass.IMAGE_BASE_URL + "products/5d6f8fe9d9602.webp");
 
@@ -288,9 +292,9 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
 
                                 product_model = new C_Product_model();
                                 if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_CUSTOMER)) {
-                                    product_model.setProddductPrice(" "+getString(R.string.currency) + response.body().getData().getData().get(i).getPrice() + "");
+                                    product_model.setProddductPrice(" " + getString(R.string.currency) + response.body().getData().getData().get(i).getPrice() + "");
                                 } else if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_PROVIDER)) {
-                                    product_model.setProddductPrice(" "+getString(R.string.currency) + response.body().getData().getData().get(i).getWholesale_price() + "");
+                                    product_model.setProddductPrice(" " + getString(R.string.currency) + response.body().getData().getData().get(i).getWholesale_price() + "");
                                 }
                                 product_model.setProductName(response.body().getData().getData().get(i).getName());
                                 product_model.setProductImage(baseUrlImage + response.body().getData().getData().get(i).getImage());

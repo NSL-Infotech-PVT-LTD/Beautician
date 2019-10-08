@@ -16,6 +16,7 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
+
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -24,6 +25,12 @@ import com.wellgel.london.Provider.Activities.P_AcceptRejectAct;
 import com.wellgel.london.R;
 import com.wellgel.london.UtilClasses.ConstantClass;
 import com.wellgel.london.UtilClasses.PreferencesShared;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Map;
 
 
 public class MyFirebaseService extends FirebaseMessagingService {
@@ -50,6 +57,7 @@ public class MyFirebaseService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
+        shared = new PreferencesShared(getApplicationContext());
 
         // TODO(developer): Handle FCM messages here.
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
@@ -57,17 +65,28 @@ public class MyFirebaseService extends FirebaseMessagingService {
 
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData().get("title"));
+            Log.d(TAG, "Message data payload: " + remoteMessage.getData().get("data"));
+            String tragetId = "";
+
+            String response = remoteMessage.getData().toString();
+            try {
+
+                JSONObject json = new JSONObject(response);
+                JSONObject jsonObject = json.getJSONObject("data");
+                tragetId = jsonObject.getString("target_id");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+
 //                if (remoteMessage.getNotification() != null) {
 //                    Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-
-
-                Greater_M_version(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
-//                }
+                if (remoteMessage.getNotification() != null)
+                    Greater_M_version(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), tragetId);
             } else {
-//                if (remoteMessage.getNotification() != null) {
-                setNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
+                if (remoteMessage.getNotification() != null)
+                    setNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), tragetId);
 //                }
             }
             if (/* Check if data needs to be processed by long running job */ true) {
@@ -85,12 +104,14 @@ public class MyFirebaseService extends FirebaseMessagingService {
 
     }
 
-    private void setNotification(String title, String data) {
+    private void setNotification(String title, String data, String target_id) {
         Intent intent = null;
         if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_PROVIDER)) {
             intent = new Intent(this, P_AcceptRejectAct.class);
+            intent.putExtra("appo_id_noti", target_id);
         } else if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_CUSTOMER)) {
             intent = new Intent(this, Ecom_AppointlistDetail.class);
+            intent.putExtra("appo_id_noti", target_id);
         }
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -113,13 +134,15 @@ public class MyFirebaseService extends FirebaseMessagingService {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void Greater_M_version(String title, String messageData) {
+    private void Greater_M_version(String title, String messageData, String target_id) {
         Intent intent = null;
         if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_PROVIDER)) {
             intent = new Intent(this, P_AcceptRejectAct.class);
+            intent.putExtra("appo_id_noti", target_id);
         } else if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_CUSTOMER)) {
-            intent = new Intent(this, Ecom_AppointlistDetail
-                    .class);
+            intent = new Intent(this, Ecom_AppointlistDetail.class);
+            intent.putExtra("appo_id_noti", target_id);
+
         }
 
         Notification notification;

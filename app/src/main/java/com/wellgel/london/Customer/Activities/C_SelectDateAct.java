@@ -50,7 +50,6 @@ public class C_SelectDateAct extends AppCompatActivity implements DatePickerList
     private String formattedDate;
     private String dateMatch = "";
     private CardView bookinCard;
-    private AppCompatRatingBar near_salon_rating;
     private String st_day, st_date, st_month, st_year, st_time;
     private PreferencesShared shared;
     private ProgressDialog progressDoalog;
@@ -70,7 +69,6 @@ public class C_SelectDateAct extends AppCompatActivity implements DatePickerList
         confirm_booking = findViewById(R.id.confirm_booking);
         near_salon_name = findViewById(R.id.near_salon_name);
         salon_new = findViewById(R.id.salon_new);
-        near_salon_rating = findViewById(R.id.near_salon_rating);
         near_salon_address = findViewById(R.id.near_salon_address);
         bookinCard = findViewById(R.id.bookinCard);
         salonBookingDate = findViewById(R.id.salonBookingDate);
@@ -296,14 +294,14 @@ public class C_SelectDateAct extends AppCompatActivity implements DatePickerList
         near_salon_address.setText(getIntent().getStringExtra("salon_address"));
 
         salonBookingDate.setText(st_day + "," + st_date + " " + st_month + " " + st_year);
-        if (getIntent().getIntExtra("salon_rating", 0) == 0) {
-            near_salon_rating.setVisibility(View.GONE);
-            salon_new.setVisibility(View.VISIBLE);
-        } else {
-            near_salon_rating.setVisibility(View.VISIBLE);
-            salon_new.setVisibility(View.GONE);
-            near_salon_rating.setRating(getIntent().getIntExtra("salon_rating", 0));
-        }
+//        if (getIntent().getIntExtra("salon_rating", 0) == 0) {
+//            near_salon_rating.setVisibility(View.GONE);
+//            salon_new.setVisibility(View.VISIBLE);
+//        } else {
+//            near_salon_rating.setVisibility(View.VISIBLE);
+//            salon_new.setVisibility(View.GONE);
+//            near_salon_rating.setRating(getIntent().getIntExtra("salon_rating", 0));
+//        }
         if (selectedHour > 12) {
 
             salonBookingTime.setText(String.valueOf(selectedHour - 12) + ":" + (String.valueOf(selectedMinute) + " PM"));

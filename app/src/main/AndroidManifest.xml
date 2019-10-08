@@ -54,6 +54,7 @@
         <activity android:name=".Provider.Activities.P_RescheduleDateAct" />
         <activity android:name=".Customer.Activities.C_LoginActivity" />
         <activity android:name=".Customer.Activities.C_LoginAsActivity" />
+        <activity android:name=".Provider.Activities.P_UpdateProfileFra" />
         <activity android:name=".Customer.Activities.C_SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -105,13 +106,6 @@
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
 
-        <receiver
-            android:name=".Provider.Activities.P_AcceptRejectAct$MyNotificationPublisher"
-            android:enabled="true">
-            <intent-filter>
-                <action android:name="appo-id"></action>
-            </intent-filter>
-        </receiver>
 
     </application>
 

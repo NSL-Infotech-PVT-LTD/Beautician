@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -299,7 +300,7 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
 
         /*Create handle for the RetrofitInstance interface*/
         Customer_APIs service = RetrofitClientInstance.getRetrofitInstance().create(Customer_APIs.class);
-        Call<C_ProductsSerial> call = service.poducts("application/x-www-form-urlencoded", "Bearer " + shared.getString("token"), orderBy, search + "", "10", currentPage+"");
+        Call<C_ProductsSerial> call = service.poducts("application/x-www-form-urlencoded", "Bearer " + shared.getString("token"), orderBy, search + "", "10", currentPage + "");
         call.enqueue(new Callback<C_ProductsSerial>() {
             @Override
             public void onResponse(Call<C_ProductsSerial> call, Response<C_ProductsSerial> response) {
@@ -318,16 +319,16 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
                                 no_search_data.setVisibility(View.GONE);
 
 
-                                        for (int i = 0; i < response.body().getData().getData().size(); i++) {
+                                for (int i = 0; i < response.body().getData().getData().size(); i++) {
 
-                                            product_model = new C_Product_model();
-                                            product_model.setProddductPrice(getString(R.string.currency) + response.body().getData().getData().get(i).getPrice() + "");
-                                            product_model.setProductName(response.body().getData().getData().get(i).getName());
-                                            product_model.setProductImage(C_ConstantClass.IMAGE_BASE_URL + "products/" + response.body().getData().getData().get(i).getImage());
-                                            product_model.setProductID(response.body().getData().getData().get(i).getId());
+                                    product_model = new C_Product_model();
+                                    product_model.setProddductPrice(getString(R.string.currency) + response.body().getData().getData().get(i).getPrice() + "");
+                                    product_model.setProductName(response.body().getData().getData().get(i).getName());
+                                    product_model.setProductImage(C_ConstantClass.IMAGE_BASE_URL + "products/" + response.body().getData().getData().get(i).getImage());
+                                    product_model.setProductID(response.body().getData().getData().get(i).getId());
 
-                                            productList.add(product_model);
-                                        }
+                                    productList.add(product_model);
+                                }
 
 
                                 product_adapte = new C_Product_Adapte(activity, productList, activity);
@@ -464,6 +465,7 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
         });
 
     }
+
 
     private void checkClick() {
         sort_price_high.setTypeface(null, Typeface.NORMAL);

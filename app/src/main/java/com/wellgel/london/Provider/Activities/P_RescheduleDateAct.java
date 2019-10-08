@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,10 +22,13 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.cardview.widget.CardView;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.github.jhonnyx2012.horizontalpicker.DatePickerListener;
 import com.github.jhonnyx2012.horizontalpicker.HorizontalPicker;
@@ -58,16 +62,15 @@ public class P_RescheduleDateAct extends AppCompatActivity implements DatePicker
 
     private ImageView c_dash_navi;
     private TextView nail_shape, near_salon_name, shoTimeSelected, salonBookingDate, confirm_booking, salonBookingTime;
-    private ImageView c_booking_detail_navi;
     private ProgressDialog progressDoalog;
     private LinearLayout lay_nail_color, lay_skin_color;
     private CircleImageView c_dash_userhand_image;
     private String formattedDate;
     private String dateMatch = "";
     private CardView bookinCard;
-    private AppCompatRatingBar near_salon_rating;
     private String st_day, st_date, st_month, st_year, st_time;
     private PreferencesShared shared;
+    private RelativeLayout nail_back;
     private P_RescheduleDateAct activity;
     private ArrayList<String> listSkinColor = new ArrayList<>();
     private ArrayList<String> listNailColor = new ArrayList<>();
@@ -81,7 +84,7 @@ public class P_RescheduleDateAct extends AppCompatActivity implements DatePicker
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_c__select_date);
+        setContentView(R.layout.activity_p__reschedule_date);
         // find the picker
 
         activity = this;
@@ -90,7 +93,6 @@ public class P_RescheduleDateAct extends AppCompatActivity implements DatePicker
         shoTimeSelected = findViewById(R.id.shoTimeSelected);
         c_dash_navi = findViewById(R.id.c_dash_navi);
         near_salon_name = findViewById(R.id.near_salon_name);
-        near_salon_rating = findViewById(R.id.near_salon_rating);
         bookinCard = findViewById(R.id.bookinCard);
         salonBookingDate = findViewById(R.id.salonBookingDate);
         salonBookingTime = findViewById(R.id.salonBookingTime);
@@ -99,7 +101,7 @@ public class P_RescheduleDateAct extends AppCompatActivity implements DatePicker
 //        near_salon_address = findViewById(R.id.near_salon_address);
         salonBookingDate = findViewById(R.id.salonBookingDate);
         salonBookingTime = findViewById(R.id.salonBookingTime);
-        c_booking_detail_navi = findViewById(R.id.c_booking_detail_navi);
+        nail_back = findViewById(R.id.nail_back);
 
         lay_nail_color = findViewById(R.id.lay_nail_color);
         lay_skin_color = findViewById(R.id.lay_skin_color);
@@ -249,7 +251,11 @@ public class P_RescheduleDateAct extends AppCompatActivity implements DatePicker
                                 lay_skin_color.setBackgroundColor(Color.parseColor(response.body().getData().get(0).getSkinColor() + ""));
                                 lay_nail_color.setBackgroundColor(Color.parseColor(response.body().getData().get(0).getNailPolishColor() + ""));
                                 salonBookingDate.setText(parseDateToddMMyyyy(separated[0]));
-                                c_dash_userhand_image.setBackgroundColor(Color.parseColor(response.body().getData().get(0).getNailPolishColor() + ""));
+                                Drawable unwrappedDrawable = AppCompatResources.getDrawable(activity, R.drawable.circle_view);
+                                Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
+                                DrawableCompat.setTint(wrappedDrawable, Color.parseColor(response.body().getData().get(0).getNailPolishColor() + ""));
+
+                                nail_back.setBackground(wrappedDrawable);
                                 nail_shape.setText("Nail Shape  " + response.body().getData().get(0).getNailShape());
                                 nailShape(c_dash_userhand_image, response.body().getData().get(0).getNailShape());
                                 skinColor(c_dash_userhand_image, response.body().getData().get(0).getSkinColor(), response.body().getData().get(0).getNailShape());
@@ -381,10 +387,12 @@ public class P_RescheduleDateAct extends AppCompatActivity implements DatePicker
         confirm_booking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 String dateTime = st_year + "-" + getmonthCount(dateSelected) + "-" + st_date
                         + " " + st_time;
                 rescheduleAppointment(getIntent().getIntExtra("appo_id", 0), getIntent().getStringExtra("price"), dateTime);
-                ;
+
             }
         });
 
@@ -486,7 +494,14 @@ public class P_RescheduleDateAct extends AppCompatActivity implements DatePicker
 
     private void setTime(int selectedHour, int selectedMinute) {
 
-        st_time = selectedHour + ":" + selectedMinute;
+        if ((selectedHour == 0) || (selectedHour == 1) || (selectedHour == 2) || (selectedHour == 3) ||
+                (selectedHour == 4) || (selectedHour == 5) || (selectedHour == 6) ||
+                (selectedHour == 7) || (selectedHour == 8)
+                || (selectedHour == 9))
+            st_time = "0" + selectedHour + ":" + selectedMinute;
+        else
+            st_time = selectedHour + ":" + selectedMinute;
+
         bookinCard.setVisibility(View.VISIBLE);
         confirm_booking.setVisibility(View.VISIBLE);
         Animation animation = AnimationUtils.loadAnimation(P_RescheduleDateAct.this, R.anim.slide_in_right);
@@ -571,6 +586,7 @@ public class P_RescheduleDateAct extends AppCompatActivity implements DatePicker
             }
         });
     }
+
     public void confirmedBookingPopUp(String name, String availTime, String nailColr, String nailShape, String handColor) {
         try {
             //We need to get the instance of the LayoutInflater, use the context of this activity
@@ -592,14 +608,18 @@ public class P_RescheduleDateAct extends AppCompatActivity implements DatePicker
             lay_nail_color = layout.findViewById(R.id.lay_nail_color);
             lay_skin_color = layout.findViewById(R.id.lay_skin_color);
             c_dash_userhand_image = layout.findViewById(R.id.c_dash_userhand_image);
+            nail_back = layout.findViewById(R.id.nail_back);
+            Drawable unwrappedDrawable = AppCompatResources.getDrawable(activity, R.drawable.circle_view);
+            Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
+            DrawableCompat.setTint(wrappedDrawable, Color.parseColor(nailColr + ""));
 
+            nail_back.setBackground(wrappedDrawable);
             near_salon_name.setText(name);
 //                                near_salon_address.setText(response.body().getData().get(0).getCustomerDetails().get(0).getAddress());
             String[] separated = availTime.split(" ");
             lay_skin_color.setBackgroundColor(Color.parseColor(handColor + ""));
             lay_nail_color.setBackgroundColor(Color.parseColor(nailColr + ""));
             salonBookingDate.setText(parseDateToddMMyyyy(separated[0]));
-            c_dash_userhand_image.setBackgroundColor(Color.parseColor(nailColr + ""));
             nail_shape.setText("Nail Shape  " + nailShape);
             nailShape(c_dash_userhand_image, nailShape);
             skinColor(c_dash_userhand_image, handColor, nailShape);

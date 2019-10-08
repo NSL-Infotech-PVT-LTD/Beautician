@@ -11,7 +11,8 @@
         android:id="@+id/dash_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/confirm_booking"
+        android:layout_above="@id/booto"
+        android:layout_marginTop="@dimen/_50sdp"
         android:fillViewport="true"
         android:nestedScrollingEnabled="true">
 
@@ -19,7 +20,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/_50sdp"
             android:background="@drawable/round_right_left_corner"
             android:elevation="@dimen/_10sdp"
             android:orientation="vertical"
@@ -152,6 +152,7 @@
 
 
             <ImageView
+                android:id="@+id/image_accept_reject_loader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
@@ -172,6 +173,7 @@
                     android:textColor="@color/black" />
 
                 <TextView
+                    android:id="@+id/booking_confirmed"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
@@ -181,21 +183,179 @@
                     android:textColor="@color/grey" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/layout_for_reschedule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/calndr"
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="@dimen/_10sdp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_orders" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:layout_toRightOf="@id/calndr"
+                        android:text="@string/chngetime"
+                        android:textSize="@dimen/_10sdp" />
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/resc_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thursday, 21 August 2019"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/resc_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="10:30 AM"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_20sdp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/reschedulingBTN"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/capsule_button_shape_grey"
+                        android:backgroundTint="@color/pink"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:text="Reschedule"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="@string/price"
+                android:textSize="@dimen/_10sdp" />
+
+
+            <TextView
+                android:id="@+id/priceText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:background="@drawable/capsule_button_shape_grey"
+                android:gravity="center"
+                android:hint="Enter Price"
+                android:inputType="numberDecimal"
+                android:paddingLeft="@dimen/_30sdp"
+                android:paddingRight="@dimen/_30sdp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>
 
-
-    <TextView
-        android:id="@+id/confirm_booking"
+    <LinearLayout
+        android:id="@+id/booto"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
-        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:background="@color/pink"
-        android:gravity="center"
-        android:text="Confirm Booking"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_14sdp"
-        android:textStyle="bold"
-        android:visibility="gone" />
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:id="@+id/lay_accep_reject"
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/booking_reject"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/red"
+                android:gravity="center"
+                android:text="Cancel"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/booking_accept"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/green"
+                android:gravity="center"
+                android:text="Accept"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lay_pay"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/pay_at_salon"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Pay at Salon"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/pay_now"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Pay Now"
+                android:textColor="@color/pink"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
 </RelativeLayout>
