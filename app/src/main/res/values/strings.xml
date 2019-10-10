@@ -58,6 +58,7 @@
     <string name="placeOrder">Proceed to pay</string>
     <string name="updateCar">Update Cart</string>
     <string name="Thnku">Thank you! \nYour order is pending\nMake payment for place your order</string>
+    <string name="confimBookigText">Thank you! \n\nMake payment for Booking Confirmation</string>
     <string name="invalidCardDetail">Invalid card detail</string>
     <string name="view">Check invoice</string>
     <string name="view_detail"><u>View</u></string>
@@ -84,5 +85,8 @@
     <string name="chngetime"><![CDATA[Change Time & Date]]></string>
     <string name="currency">£</string>
     <string name="price">£ \u0020Price</string>
+    <string name="cofirmBooking">Confirm Booking</string>
+    <string name="updateDateTime"><![CDATA[Update Booking Date & Time]]></string>
+    <string name="continues">Continue</string>
 
 </resources>

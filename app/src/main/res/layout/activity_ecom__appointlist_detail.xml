@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/booto"
-        android:layout_marginTop="@dimen/_50sdp"
         android:fillViewport="true"
         android:nestedScrollingEnabled="true">
 
@@ -20,6 +19,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_50sdp"
             android:background="@drawable/round_right_left_corner"
             android:elevation="@dimen/_10sdp"
             android:orientation="vertical"
@@ -54,7 +54,103 @@
 
             </RelativeLayout>
 
+            <!--            <androidx.cardview.widget.CardView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/_15sdp"-->
+            <!--                android:layout_marginBottom="@dimen/_20sdp"-->
+            <!--                android:padding="@dimen/_10sdp"-->
+            <!--                app:cardBackgroundColor="@color/black"-->
+            <!--                app:cardCornerRadius="@dimen/_10sdp">-->
+
+            <!--                <LinearLayout-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="match_parent"-->
+            <!--                    android:orientation="vertical"-->
+            <!--                    android:padding="@dimen/_15sdp">-->
+
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/near_salon_name"-->
+            <!--                        android:layout_width="match_parent"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:textColor="@color/white"-->
+            <!--                        android:textSize="@dimen/_16sdp"-->
+            <!--                        android:textStyle="bold" />-->
+
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/salon_new"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:textColor="@color/golden"-->
+            <!--                        android:visibility="gone" />-->
+
+            <!--                    <androidx.appcompat.widget.AppCompatRatingBar-->
+            <!--                        android:id="@+id/near_salon_rating"-->
+            <!--                        style="?android:attr/ratingBarStyleSmall"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:numStars="5"-->
+            <!--                        android:progressTint="@color/golden"-->
+            <!--                        android:stepSize="1"-->
+            <!--                        android:visibility="gone" />-->
+
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/near_salon_address"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+
+            <!--                        android:textColor="@color/grey" />-->
+
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/near_salon_timing"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_marginTop="@dimen/_35sdp"-->
+            <!--                        android:text="Services"-->
+            <!--                        android:textColor="@color/white"-->
+            <!--                        android:textSize="@dimen/_12sdp"-->
+
+            <!--                        android:textStyle="bold" />-->
+
+            <!--                    <LinearLayout-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:orientation="horizontal">-->
+
+            <!--                        <TextView-->
+            <!--                            android:layout_width="wrap_content"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:layout_marginRight="@dimen/_10sdp"-->
+            <!--                            android:text="Nail Art"-->
+            <!--                            android:textColor="@color/white"-->
+
+            <!--                            android:textSize="@dimen/_10sdp"-->
+            <!--                            android:textStyle="normal" />-->
+
+            <!--                    </LinearLayout>-->
+
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/salonBookingDate"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_marginTop="@dimen/_20sdp"-->
+            <!--                        android:textColor="@color/white"-->
+            <!--                        android:textSize="@dimen/_12sdp"-->
+            <!--                        android:textStyle="bold" />-->
+
+
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/salonBookingTime"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:textColor="@color/white"-->
+
+            <!--                        android:textSize="@dimen/_18sdp"-->
+            <!--                        android:textStyle="bold" />-->
+            <!--                </LinearLayout>-->
+            <!--            </androidx.cardview.widget.CardView>-->
             <androidx.cardview.widget.CardView
+                android:id="@+id/bookinCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
@@ -62,6 +158,7 @@
                 android:padding="@dimen/_10sdp"
                 app:cardBackgroundColor="@color/black"
                 app:cardCornerRadius="@dimen/_10sdp">
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -73,67 +170,147 @@
                         android:id="@+id/near_salon_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="Emma Lee"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_16sdp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/salon_new"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/golden"
-                        android:visibility="gone" />
-
-                    <androidx.appcompat.widget.AppCompatRatingBar
-                        android:id="@+id/near_salon_rating"
-                        style="?android:attr/ratingBarStyleSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:numStars="5"
-                        android:progressTint="@color/golden"
-                        android:stepSize="1"
-                        android:visibility="gone" />
-
-                    <TextView
                         android:id="@+id/near_salon_address"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="Emma Lee"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="normal" />
 
-                        android:textColor="@color/grey" />
 
                     <TextView
                         android:id="@+id/near_salon_timing"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_35sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
                         android:text="Services"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_12sdp"
 
                         android:textStyle="bold" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                        <TextView
+                        <LinearLayout
+                            android:id="@+id/one"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="@dimen/_10sdp"
-                            android:text="Nail Art"
-                            android:textColor="@color/white"
+                            android:orientation="horizontal">
 
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                android:gravity="center_vertical"
+                                android:text="Nail Paint"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_10sdp"
+                                android:textStyle="normal" />
+
+                            <LinearLayout
+                                android:id="@+id/lay_nail_color"
+                                android:layout_width="@dimen/_10sdp"
+                                android:layout_height="@dimen/_10sdp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical">
+
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:layout_margin="@dimen/_3sdp"
+                                android:layout_marginTop="@dimen/_3sdp"
+                                android:background="@color/white" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                android:gravity="center_vertical"
+                                android:text="Skin Color"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_10sdp"
+                                android:textStyle="normal" />
+
+                            <LinearLayout
+                                android:id="@+id/lay_skin_color"
+                                android:layout_width="@dimen/_10sdp"
+                                android:layout_height="@dimen/_10sdp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical">
+
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:layout_margin="@dimen/_3sdp"
+                                android:layout_marginTop="@dimen/_3sdp"
+                                android:background="@color/white" />
+
+
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/nail_back"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/circle_view">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/c_dash_userhand_image"
+                                android:layout_width="@dimen/_40sdp"
+                                android:layout_height="@dimen/_40sdp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/pointed_fair_one" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/nail_shape"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/one"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="@dimen/_10sdp"
+                            android:gravity="center_vertical"
+                            android:text="Nail Shape"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/_10sdp"
                             android:textStyle="normal" />
 
-                    </LinearLayout>
+
+                    </RelativeLayout>
 
                     <TextView
                         android:id="@+id/salonBookingDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_20sdp"
+                        android:text="Thursday, 21 August 2019"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold" />
@@ -143,8 +320,9 @@
                         android:id="@+id/salonBookingTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:text="10:30 AM"
 
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_18sdp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -188,7 +366,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
 
                 <RelativeLayout
@@ -266,14 +445,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_50sdp"
                 android:background="@drawable/capsule_button_shape_grey"
                 android:gravity="center"
-                android:hint="Enter Price"
                 android:inputType="numberDecimal"
                 android:paddingLeft="@dimen/_30sdp"
                 android:paddingRight="@dimen/_30sdp"
                 android:text=""
+
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
                 android:textSize="@dimen/_14sdp"
@@ -281,20 +460,34 @@
         </LinearLayout>
     </ScrollView>
 
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/pink"
+        android:text=""
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
     <LinearLayout
         android:id="@+id/booto"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
         android:layout_alignParentBottom="true"
+        android:background="@color/white"
         android:orientation="horizontal">
 
 
         <LinearLayout
             android:id="@+id/lay_accep_reject"
             android:layout_width="match_parent"
-
             android:layout_height="match_parent"
             android:orientation="horizontal"
+            android:visibility="gone"
             android:weightSum="2">
 
             <TextView

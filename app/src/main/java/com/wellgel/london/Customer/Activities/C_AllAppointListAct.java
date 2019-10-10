@@ -3,14 +3,18 @@ package com.wellgel.london.Customer.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.wellgel.london.APIs.Customer_APIs;
 import com.wellgel.london.APIs.Provider_APIs;
 import com.wellgel.london.Customer.Adapters.C_Booked_OrderAdapter;
 import com.wellgel.london.Customer.SerializeModelClasses.C_AppointmentList;
+import com.wellgel.london.Customer.SerializeModelClasses.C_CartSerailized;
 import com.wellgel.london.Provider.Activities.P_AcceptRejectAct;
 import com.wellgel.london.Provider.ModelSerialized.P_AppointmentListSerial;
 import com.wellgel.london.Provider.ProviderAdapters.P_Booked_OrderAdapter;
@@ -36,6 +40,8 @@ public class C_AllAppointListAct extends AppCompatActivity implements C_Booked_O
     private RecyclerView c_dash_bookedList_recycler;
     private List<P_AppointmentListSerial.Datum> bookedListProvider = new ArrayList<>();
     private P_Booked_OrderAdapter bookedAdpterProvider;
+    private ImageView c_view_back;
+    private ProgressDialog progressDoalog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +50,27 @@ public class C_AllAppointListAct extends AppCompatActivity implements C_Booked_O
         activity = this;
         shared = new PreferencesShared(activity);
         c_dash_bookedList_recycler = findViewById(R.id.c_dash_bookedList_recycler);
+        c_view_back = findViewById(R.id.c_view_back);
 
         if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_CUSTOMER))
             appointMentList();
         else if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_PROVIDER))
             appointMentListProvider();
+
+
+        c_view_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     public void appointMentList() {
+
+        progressDoalog = new ProgressDialog(activity);
+        progressDoalog.setMessage("Loading.....");
+        progressDoalog.show();
 
         Customer_APIs service = RetrofitClientInstance.getRetrofitInstance().create(Customer_APIs.class);
         Call<C_AppointmentList> call = service.appointmentList("application/x-www-form-urlencoded", "Bearer " + shared.getString("token"));
@@ -59,6 +78,7 @@ public class C_AllAppointListAct extends AppCompatActivity implements C_Booked_O
             @Override
             public void onResponse(Call<C_AppointmentList> call, Response<C_AppointmentList> response) {
 
+                progressDoalog.dismiss();
 
                 if (response.body() != null) {
                     if (response.isSuccessful()) {
@@ -86,13 +106,17 @@ public class C_AllAppointListAct extends AppCompatActivity implements C_Booked_O
 
             @Override
             public void onFailure(Call<C_AppointmentList> call, Throwable t) {
+
+                progressDoalog.dismiss();
                 Toast.makeText(activity, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     public void appointMentListProvider() {
-
+        progressDoalog = new ProgressDialog(activity);
+        progressDoalog.setMessage("Loading.....");
+        progressDoalog.show();
         Provider_APIs service = RetrofitClientInstance.getRetrofitInstance().create(Provider_APIs.class);
         Call<P_AppointmentListSerial> call = service.appointmentListProvider("application/x-www-form-urlencoded", "Bearer  " + shared.getString("token"));
         call.enqueue(new Callback<P_AppointmentListSerial>() {
@@ -100,6 +124,7 @@ public class C_AllAppointListAct extends AppCompatActivity implements C_Booked_O
             public void onResponse(Call<P_AppointmentListSerial> call, Response<P_AppointmentListSerial> response) {
 
 
+                progressDoalog.dismiss();
                 if (response.body() != null) {
                     if (response.isSuccessful()) {
                         if (response.body().getStatus()) {
@@ -132,6 +157,7 @@ public class C_AllAppointListAct extends AppCompatActivity implements C_Booked_O
 
             @Override
             public void onFailure(Call<P_AppointmentListSerial> call, Throwable t) {
+                progressDoalog.dismiss();
                 Toast.makeText(activity, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });

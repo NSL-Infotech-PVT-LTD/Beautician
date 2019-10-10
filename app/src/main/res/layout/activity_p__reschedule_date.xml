@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:padding="@dimen/_5sdp"
-                android:text="10.32 AM"
+                android:text="Select Time"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/_10sdp"
                 android:textStyle="normal" />

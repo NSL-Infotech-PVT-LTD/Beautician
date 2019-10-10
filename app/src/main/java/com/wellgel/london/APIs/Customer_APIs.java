@@ -19,6 +19,7 @@ import com.wellgel.london.Customer.SerializeModelClasses.LoginSerialized;
 import com.wellgel.london.Customer.SerializeModelClasses.ProductDetailSerial;
 import com.wellgel.london.Customer.SerializeModelClasses.RegistrationSerial;
 import com.wellgel.london.Provider.ModelSerialized.ForgotPasswordSerial;
+import com.wellgel.london.Provider.ModelSerialized.RescheduleAppointment;
 
 import java.util.Map;      
 
@@ -160,5 +161,16 @@ public interface Customer_APIs {
     Call<EcomAppoDetailSerial> appointmentDetail(@Header("Content-Type") String content,
                                                  @Header("Authorization") String Auth,
                                                  @Path("appo_id") int id);
+
+
+    @POST("appointment/customer/update")
+    Call<RescheduleAppointment> appointmentUpddateByCustomer(@Header("Content-Type") String content,
+                                                          @Header("Authorization") String Auth,
+                                                          @Query("appointments_id") String appointments_id,
+                                                          @Query("requested_datetime") String available_datetime,
+                                                          @Query("status") String status,
+                                                          @Query("comments") String comments,
+                                                          @Query("token") String token,
+                                                          @Query("payment_mode") String price);
 
 }

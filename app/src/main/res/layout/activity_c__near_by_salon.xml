@@ -47,11 +47,15 @@
 
             <ImageView
                 android:id="@+id/salon_sort"
-                android:layout_width="@dimen/_15sdp"
-                android:layout_height="@dimen/_15sdp"
+                android:layout_width="@dimen/_20sdp"
+                android:padding="@dimen/_5sdp"
+                android:layout_height="@dimen/_20sdp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/order_by" />
+                android:background="@drawable/circle_cart"
+                android:backgroundTint="@color/pink"
+                android:src="@drawable/order_by"
+                android:tint="@color/white" />
         </RelativeLayout>
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -71,6 +75,7 @@
             <include layout="@layout/c_custom_bottom_sheet_near_salon" />
 
             <include layout="@layout/c_custom_bottom_sheet_near_salon_address" />
+
             <include layout="@layout/c_custom_bottom_sheet_sort_salon" />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </LinearLayout>

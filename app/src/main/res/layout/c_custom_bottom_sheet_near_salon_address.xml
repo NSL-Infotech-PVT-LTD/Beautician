@@ -64,7 +64,8 @@
             <RadioButton
                 android:id="@+id/radioButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:checked="true" />
 
             <TextView
                 android:id="@+id/nameOfaddHolder"
@@ -89,12 +90,12 @@
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/updateAddress"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
             android:background="@color/pink"
             android:gravity="center"
             android:text="Update"
-            android:id="@+id/updateAddress"
             android:textColor="@color/white"
             android:textSize="@dimen/_16sdp"
             android:textStyle="bold" />

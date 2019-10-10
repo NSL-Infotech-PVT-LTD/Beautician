@@ -169,12 +169,12 @@
 
 
                         <RelativeLayout
-                            android:layout_width="@dimen/_40sdp"
-                            android:layout_alignParentRight="true"
-                            android:background="@drawable/circle_view"
-                            android:layout_centerVertical="true"
                             android:id="@+id/nail_back"
-                            android:layout_height="@dimen/_40sdp">
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/circle_view">
 
                             <de.hdodenhof.circleimageview.CircleImageView
                                 android:id="@+id/c_dash_userhand_image"
@@ -295,12 +295,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_50sdp"
                 android:background="@drawable/capsule_button_shape_grey"
+                android:gravity="center"
                 android:hint="Enter Price"
                 android:inputType="numberDecimal"
                 android:paddingLeft="@dimen/_30sdp"
-                android:gravity="center"
                 android:paddingRight="@dimen/_30sdp"
                 android:text=""
                 android:textColor="@color/black"
@@ -311,6 +311,20 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/pink"
+        android:gravity="center"
+        android:text=""
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
 
     <LinearLayout
         android:id="@+id/booto"

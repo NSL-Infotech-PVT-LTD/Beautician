@@ -1,6 +1,7 @@
 package com.wellgel.london.Customer.Fragment;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -48,6 +49,7 @@ public class ApprovedOrders extends Fragment {
 
     private List<P_AppointmentListSerial.Datum> bookedListProvider = new ArrayList<>();
     private P_Booked_OrderAdapter bookedAdpterProvider;
+    private ProgressDialog progressDoalog;
 
     @Override
     public void onAttach(Context context) {
@@ -80,12 +82,16 @@ public class ApprovedOrders extends Fragment {
 
     public void appointMentListProvider() {
 
+        progressDoalog = new ProgressDialog(context);
+        progressDoalog.setMessage("Loading.....");
+        progressDoalog.show();
         Provider_APIs service = RetrofitClientInstance.getRetrofitInstance().create(Provider_APIs.class);
         Call<P_AppointmentListSerial> call = service.appointmentListProvider("application/x-www-form-urlencoded", "Bearer  " + shared.getString("token"));
         call.enqueue(new Callback<P_AppointmentListSerial>() {
             @Override
             public void onResponse(Call<P_AppointmentListSerial> call, Response<P_AppointmentListSerial> response) {
 
+                progressDoalog.dismiss();
 
                 if (response.body() != null) {
                     if (response.isSuccessful()) {
@@ -139,6 +145,7 @@ public class ApprovedOrders extends Fragment {
 
             @Override
             public void onFailure(Call<P_AppointmentListSerial> call, Throwable t) {
+                progressDoalog.dismiss();
                 Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });

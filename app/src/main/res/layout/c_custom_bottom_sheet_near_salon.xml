@@ -48,16 +48,31 @@
                 android:textSize="@dimen/_8sdp" />
 
 
-            <TextView
+            <RelativeLayout
                 android:id="@+id/addLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/_15sdp"
-                android:drawableTop="@drawable/ic_add_black_24dp"
-                android:text="ADD LOCATION"
-                android:textSize="@dimen/_8sdp" />
+                android:layout_marginRight="@dimen/_15sdp">
+
+                <ImageView
+                    android:id="@+id/locationIcon"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/ic_location"
+                    android:tint="@color/pink" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/locationIcon"
+
+                    android:drawableTint="@color/pink"
+                    android:text="ADD LOCATION"
+                    android:textSize="@dimen/_8sdp" />
+            </RelativeLayout>
         </RelativeLayout>
 
         <View

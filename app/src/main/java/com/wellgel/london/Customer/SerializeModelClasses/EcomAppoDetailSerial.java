@@ -170,6 +170,11 @@ public class EcomAppoDetailSerial {
         @SerializedName("rating")
         @Expose
         private Object rating;
+
+        @SerializedName("price")
+        @Expose
+        private String price;
+
         @SerializedName("payment_mode")
         @Expose
         private Object paymentMode;
@@ -240,8 +245,17 @@ public class EcomAppoDetailSerial {
             return availableDatetime;
         }
 
+
         public void setAvailableDatetime(Object availableDatetime) {
             this.availableDatetime = availableDatetime;
+        }
+
+        public String getPrice() {
+            return price;
+        }
+
+        public void setPrice(String price) {
+            this.price = price;
         }
 
         public Object getComments() {

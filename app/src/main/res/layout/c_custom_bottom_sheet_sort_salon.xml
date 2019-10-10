@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_10sdp"
             android:padding="@dimen/_10sdp"
-            android:text="Sort By Distance"
+            android:text="Distance"
             android:textColor="@color/pink"
             android:textSize="@dimen/_12sdp" />
 
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_10sdp"
             android:padding="@dimen/_10sdp"
-            android:text="Sort By Rating"
+            android:text="Rating"
             android:textColor="@color/black"
             android:textSize="@dimen/_12sdp" />
 

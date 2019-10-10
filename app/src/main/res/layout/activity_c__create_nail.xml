@@ -88,7 +88,7 @@
                     android:layout_above="@id/layout"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
-                    android:background="@color/off_grey"
+                    android:background="?android:attr/selectableItemBackground"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
@@ -148,7 +148,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_50sdp"
                     android:layout_alignParentBottom="true"
-                    android:background="@color/pink"
+                    android:background="@drawable/ripple_effect"
                     android:gravity="center"
                     android:text="@string/saveDetails"
                     android:textColor="@color/white"

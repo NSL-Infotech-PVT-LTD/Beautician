@@ -17,7 +17,10 @@ import com.wellgel.london.Customer.C_ConstantClass;
 import com.wellgel.london.R;
 import com.wellgel.london.UtilClasses.PreferencesShared;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import me.relex.circleindicator.CircleIndicator;
@@ -68,8 +71,18 @@ public class C_SalonDetailAct extends AppCompatActivity {
             ratingBar.setRating(getIntent().getIntExtra("salon_rating", 0));
         }
 
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+        SimpleDateFormat requestime = new SimpleDateFormat("hh:mm aa");
+        Date dt = null, dt2 = null;
 
-        salonTiming.setText("Timings: " + getIntent().getStringExtra("salon_startTime") + "-" + getIntent().getStringExtra("salon_endTime"));
+        try {
+            dt = sdf.parse(getIntent().getStringExtra("salon_startTime"));
+            dt2 = sdf.parse(getIntent().getStringExtra("salon_endTime"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        salonTiming.setText("Timings: " + requestime.format(dt) + "-" + requestime.format(dt2));
 
         c_product_back.setOnClickListener(new View.OnClickListener() {
             @Override

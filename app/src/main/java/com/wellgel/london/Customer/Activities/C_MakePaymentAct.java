@@ -26,9 +26,12 @@ import com.stripe.android.model.Card;
 import com.stripe.android.model.Token;
 import com.wellgel.london.APIs.Customer_APIs;
 import com.wellgel.london.Customer.SerializeModelClasses.C_PlaceOrderSerial;
+import com.wellgel.london.Provider.ModelSerialized.RescheduleAppointment;
 import com.wellgel.london.R;
 import com.wellgel.london.UtilClasses.PreferencesShared;
 import com.wellgel.london.UtilClasses.Retrofit.RetrofitClientInstance;
+
+import org.json.JSONObject;
 
 import java.util.Calendar;
 
@@ -48,12 +51,13 @@ public class C_MakePaymentAct extends AppCompatActivity {
     private ProgressDialog progressDoalog;
     private C_MakePaymentAct activity;
     private PreferencesShared shared;
-    private TextView productName, productQuantity, productAddress;
+    private TextView textView, productName, productQuantity, productAddress;
     private AlertDialog dialogMultiOrder;
     private String datePattern = "\\d{2}/\\d{4}", currentString;
 
 
     String backString = "";
+    private Bundle extras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,10 +77,20 @@ public class C_MakePaymentAct extends AppCompatActivity {
         cardDate = findViewById(R.id.carDate);
         cardCVV = findViewById(R.id.cardCVV);
         cardHolder = findViewById(R.id.cardHolder);
+        textView = findViewById(R.id.textView);
         validateCard = findViewById(R.id.validateCard);
         stripe = new Stripe(this);
 
-
+        extras = getIntent().getExtras();
+        if (extras != null) {
+            if (extras.containsKey("appo_id")) {
+                textView.setText(getString(R.string.confimBookigText));
+                validateCard.setText("Confirm Booking");
+            } else {
+                validateCard.setText(getString(R.string.continues));
+                textView.setText(getString(R.string.Thnku));
+            }
+        }
         validateCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -176,7 +190,16 @@ public class C_MakePaymentAct extends AppCompatActivity {
                             //  charge(token);
 
                             progressDoalog.dismiss();
-                            placeOrder(Integer.parseInt(shared.getString("order_id")), token.getId());
+                            Bundle extras = getIntent().getExtras();
+                            if (extras != null) {
+                                if (extras.containsKey("appo_id")) {
+                                    bookingConfirm(getIntent().getIntExtra("appo_id", 0), getIntent().getStringExtra("dateTime"), token.getId());
+
+                                } else
+                                    placeOrder(Integer.parseInt(shared.getString("order_id")), token.getId());
+                            }
+
+
                         }
                     });
         } else if (!cardToSave.validateNumber()) {
@@ -198,6 +221,67 @@ public class C_MakePaymentAct extends AppCompatActivity {
         }
     }
 
+    public void bookingConfirm(int appo_id, String dateTime, String token) {
+
+        progressDoalog = new ProgressDialog(activity);
+        progressDoalog.setMessage("Confirm appointment....");
+        progressDoalog.show();
+
+        /*Create handle for the RetrofitInstance interface*/
+        Customer_APIs service = RetrofitClientInstance.getRetrofitInstance().create(Customer_APIs.class);
+        Call<RescheduleAppointment> call = service.appointmentUpddateByCustomer("application/x-www-form-urlencoded", "Bearer " + shared.getString("token"), appo_id + "", dateTime, "accepted", "", token, "pay_now");
+        call.enqueue(new Callback<RescheduleAppointment>() {
+            @Override
+            public void onResponse(Call<RescheduleAppointment> call, Response<RescheduleAppointment> response) {
+
+
+                progressDoalog.dismiss();
+                if (response.body() != null) {
+                    if (response.isSuccessful()) {
+
+
+                        if (response.body().getStatus()) {
+
+                            dismisFunc();
+
+                        } else {
+
+                        }
+
+
+                    } else {
+                    }
+                } else {
+                    try {
+                        JSONObject jObjError = null;
+                        if (response.errorBody() != null) {
+                            jObjError = new JSONObject(response.errorBody().string());
+
+                            String errorMessage = jObjError.getJSONObject("error").getJSONObject("error_message").getJSONArray("message").getString(0);
+
+                            Toast.makeText(activity, "" + errorMessage, Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(activity, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RescheduleAppointment> call, Throwable t) {
+                progressDoalog.dismiss();
+            }
+        });
+    }
+
+    private void dismisFunc() {
+        Intent intent = new Intent(activity, C_DashboardAct.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
 
     private void checkCard(EditText cardNumberEditText) {
         cardNumberEditText.addTextChangedListener(new TextWatcher() {
@@ -339,7 +423,12 @@ public class C_MakePaymentAct extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (backString.equalsIgnoreCase("yes")) {
+
+        if (extras != null) {
+            if (extras.containsKey("appo_id")) {
+                finish();
+            }
+        } else if (backString.equalsIgnoreCase("yes")) {
             backString = "";
             Toast.makeText(activity, "Press again to exit", Toast.LENGTH_SHORT).show();
         } else {

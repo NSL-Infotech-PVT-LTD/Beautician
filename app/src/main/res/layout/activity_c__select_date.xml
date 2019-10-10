@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:padding="@dimen/_5sdp"
-                android:text="10.32 AM"
+                android:text="Select Time"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/_10sdp"
                 android:textStyle="normal" />
@@ -83,13 +83,12 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@color/darkgrey" />
 
-
             <androidx.cardview.widget.CardView
                 android:id="@+id/bookinCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:layout_marginBottom="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_50sdp"
                 android:padding="@dimen/_10sdp"
                 android:visibility="gone"
                 app:cardBackgroundColor="@color/black"
@@ -132,18 +131,114 @@
 
                         android:textStyle="bold" />
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="@dimen/_10sdp"
-                        android:gravity="center_vertical"
-                        android:text="Nail Art"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_10sdp"
-                        android:textStyle="normal" />
+                        <LinearLayout
+                            android:id="@+id/one"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                android:gravity="center_vertical"
+                                android:text="Nail Paint"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_10sdp"
+                                android:textStyle="normal" />
+
+                            <LinearLayout
+                                android:id="@+id/lay_nail_color"
+                                android:layout_width="@dimen/_10sdp"
+                                android:layout_height="@dimen/_10sdp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical">
+
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:layout_margin="@dimen/_3sdp"
+                                android:layout_marginTop="@dimen/_3sdp"
+                                android:background="@color/white" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                android:gravity="center_vertical"
+                                android:text="Skin Color"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_10sdp"
+                                android:textStyle="normal" />
+
+                            <LinearLayout
+                                android:id="@+id/lay_skin_color"
+                                android:layout_width="@dimen/_10sdp"
+                                android:layout_height="@dimen/_10sdp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical">
+
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:layout_margin="@dimen/_3sdp"
+                                android:layout_marginTop="@dimen/_3sdp"
+                                android:background="@color/white" />
+
+
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/nail_back"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/circle_view">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/c_dash_userhand_image"
+                                android:layout_width="@dimen/_40sdp"
+                                android:layout_height="@dimen/_40sdp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/pointed_fair_one" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/nail_shape"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/one"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="@dimen/_10sdp"
+                            android:gravity="center_vertical"
+                            android:text="Nail Shape"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_10sdp"
+                            android:textStyle="normal" />
+
+
+                    </RelativeLayout>
 
                     <TextView
                         android:id="@+id/salonBookingDate"
@@ -167,6 +262,90 @@
                         android:textStyle="bold" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
+            <!--            <androidx.cardview.widget.CardView-->
+            <!--                android:id="@+id/bookinCard"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/_15sdp"-->
+            <!--                android:layout_marginBottom="@dimen/_20sdp"-->
+            <!--                android:padding="@dimen/_10sdp"-->
+            <!--                android:visibility="gone"-->
+            <!--                app:cardBackgroundColor="@color/black"-->
+            <!--                app:cardCornerRadius="@dimen/_10sdp">-->
+
+
+            <!--                <LinearLayout-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="match_parent"-->
+            <!--                    android:orientation="vertical"-->
+            <!--                    android:padding="@dimen/_15sdp">-->
+
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/near_salon_name"-->
+            <!--                        android:layout_width="match_parent"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:text="Emma Lee"-->
+            <!--                        android:textColor="@color/white"-->
+            <!--                        android:textSize="@dimen/_16sdp"-->
+            <!--                        android:textStyle="bold" />-->
+
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/near_salon_address"-->
+            <!--                        android:layout_width="match_parent"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:text="Emma Lee"-->
+            <!--                        android:textColor="@color/grey"-->
+            <!--                        android:textSize="@dimen/_12sdp"-->
+            <!--                        android:textStyle="normal" />-->
+
+
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/near_salon_timing"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_marginTop="@dimen/_10sdp"-->
+            <!--                        android:text="Services"-->
+            <!--                        android:textColor="@color/white"-->
+            <!--                        android:textSize="@dimen/_12sdp"-->
+
+            <!--                        android:textStyle="bold" />-->
+
+
+            <!--                    <TextView-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_gravity="center_vertical"-->
+            <!--                        android:layout_marginRight="@dimen/_10sdp"-->
+            <!--                        android:gravity="center_vertical"-->
+            <!--                        android:text="Nail Art"-->
+            <!--                        android:textColor="@color/white"-->
+            <!--                        android:textSize="@dimen/_10sdp"-->
+            <!--                        android:textStyle="normal" />-->
+
+
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/salonBookingDate"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_marginTop="@dimen/_20sdp"-->
+            <!--                        android:text="Thursday, 21 August 2019"-->
+            <!--                        android:textColor="@color/white"-->
+            <!--                        android:textSize="@dimen/_12sdp"-->
+            <!--                        android:textStyle="bold" />-->
+
+
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/salonBookingTime"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:text="10:30 AM"-->
+
+            <!--                        android:textColor="@color/white"-->
+            <!--                        android:textSize="@dimen/_18sdp"-->
+            <!--                        android:textStyle="bold" />-->
+            <!--                </LinearLayout>-->
+            <!--            </androidx.cardview.widget.CardView>-->
         </LinearLayout>
     </ScrollView>
 
@@ -179,7 +358,7 @@
         android:layout_alignParentBottom="true"
         android:background="@color/pink"
         android:gravity="center"
-        android:text="Confirm Booking"
+        android:text="@string/cofirmBooking"
         android:textColor="@color/white"
         android:textSize="@dimen/_14sdp"
         android:textStyle="bold"

@@ -29,6 +29,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -96,7 +97,7 @@ public class C_NearBySalonAct extends AppCompatActivity implements OnMapReadyCal
 
     private LinearLayout layoutBottomSheet, bottomsheet_address, bottomsheet_sort;
     private BottomSheetBehavior sheetBehavior, sheetBehavior_address, sheetBehavior_sort;
-    private TextView addLocation, sort_rating, sort_distance, locationName, location_address, updateAddress, nameOfaddHolder, fullAddress;
+    private TextView sort_rating, sort_distance, locationName, location_address, updateAddress, nameOfaddHolder, fullAddress;
     private EditText edit_address;
 
     private final int REQUEST_CHECK_SETTINGS_GPS = 0x3;
@@ -110,6 +111,7 @@ public class C_NearBySalonAct extends AppCompatActivity implements OnMapReadyCal
     private boolean isBottomSort = false;
     private boolean isBottomList = false;
     private boolean isBottomaddress = false;
+    private RelativeLayout addLocation;
 
     @Override
     public void onBackPressed() {
@@ -485,7 +487,7 @@ public class C_NearBySalonAct extends AppCompatActivity implements OnMapReadyCal
                             if (value > 0) {
                                 BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.marker);
                                 Bitmap b = bitmapdraw.getBitmap();
-                                Bitmap smallMarker = Bitmap.createScaledBitmap(b, 20, 20, false);
+                                Bitmap smallMarker = Bitmap.createScaledBitmap(b, 60, 60, false);
                                 for (int i = 0; i < value; i++) {
                                     latng = new LatLng(Double.parseDouble(response.body().getData().get(i).getLatitude()), Double.parseDouble(response.body().getData().get(i).getLongitude()));
                                     mGoogleMap.addMarker(new MarkerOptions().position(latng).title("")
@@ -720,6 +722,8 @@ public class C_NearBySalonAct extends AppCompatActivity implements OnMapReadyCal
         requestBodyMap.put("address", RequestBody.create(MediaType.parse("multipart/form-data"), address));
         requestBodyMap.put("latitude", RequestBody.create(MediaType.parse("multipart/form-data"), latitude + ""));
         requestBodyMap.put("longitude", RequestBody.create(MediaType.parse("multipart/form-data"), longitude + ""));
+        requestBodyMap.put("device_type", RequestBody.create(MediaType.parse("multipart/form-data"), ConstantClass.DEVICETYPE));
+        requestBodyMap.put("device_token", RequestBody.create(MediaType.parse("multipart/form-data"), shared.getString(ConstantClass.DEVICE_TOKEN)));
 
 
 

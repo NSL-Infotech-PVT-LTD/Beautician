@@ -64,10 +64,10 @@
                     android:textStyle="normal" />
 
                 <RelativeLayout
+                    android:id="@+id/lay_notification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:id="@+id/lay_notification"
                     android:layout_marginRight="@dimen/_20sdp"
                     android:layout_toLeftOf="@id/lay_cart">
 
@@ -75,8 +75,8 @@
                         android:id="@+id/notification"
                         android:layout_width="@dimen/_15sdp"
                         android:layout_height="@dimen/_20sdp"
-                        android:rotation="-45"
                         android:layout_centerVertical="true"
+                        android:rotation="-45"
                         android:src="@drawable/ic_notification" />
 
                     <TextView
@@ -266,7 +266,7 @@
         android:layout_height="@dimen/_50sdp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center"
-        android:background="@color/pink"
+        android:background="@drawable/ripple_effect"
         android:gravity="center"
         android:text="Create nail art"
         android:textColor="@color/white"

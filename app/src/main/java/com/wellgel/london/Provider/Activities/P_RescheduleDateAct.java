@@ -383,7 +383,7 @@ public class P_RescheduleDateAct extends AppCompatActivity implements DatePicker
 
         dateMatch = dateSelected.getDayOfMonth() + "/" + dateSelected.getMonthOfYear() + "/" + dateSelected.getYear();
 
-        confirm_booking.setText("Update Booking Date & Time");
+        confirm_booking.setText(getString(R.string.updateDateTime));
         confirm_booking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
