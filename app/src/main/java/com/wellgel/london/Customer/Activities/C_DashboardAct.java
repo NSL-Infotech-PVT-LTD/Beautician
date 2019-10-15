@@ -36,10 +36,12 @@ import com.squareup.picasso.Picasso;
 import com.wellgel.london.APIs.Customer_APIs;
 import com.wellgel.london.APIs.Provider_APIs;
 import com.wellgel.london.Customer.Adapters.C_Booked_OrderAdapter;
+import com.wellgel.london.Customer.Adapters.C_ChromeKit_Adapte;
 import com.wellgel.london.Customer.Adapters.C_Product_Adapte;
 import com.wellgel.london.Customer.C_BookedOrderModel;
 import com.wellgel.london.Customer.C_ConstantClass;
 import com.wellgel.london.Customer.C_Product_model;
+import com.wellgel.london.Customer.EcomNotificationAct;
 import com.wellgel.london.Customer.Ecom_BookingActivity;
 import com.wellgel.london.Customer.SerializeModelClasses.C_AppointmentList;
 import com.wellgel.london.Customer.SerializeModelClasses.C_ProductsSerial;
@@ -49,8 +51,11 @@ import com.wellgel.london.Provider.ModelSerialized.P_AppointmentListSerial;
 import com.wellgel.london.Provider.ProviderAdapters.P_Booked_OrderAdapter;
 import com.wellgel.london.R;
 import com.wellgel.london.UtilClasses.ConstantClass;
+import com.wellgel.london.UtilClasses.NailPolishColorAdapter;
+import com.wellgel.london.UtilClasses.NailShapeAdapter;
 import com.wellgel.london.UtilClasses.PreferencesShared;
 import com.wellgel.london.UtilClasses.Retrofit.RetrofitClientInstance;
+import com.wellgel.london.UtilClasses.SkinColorAdapter;
 
 import org.json.JSONObject;
 
@@ -70,7 +75,7 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
     private List<C_AppointmentList.Datum> bookedList = new ArrayList<>();
     private List<P_AppointmentListSerial.Datum> bookedListProvider = new ArrayList<>();
     private C_Product_Adapte product_adapte;
-    private C_Product_Adapte chromAdpater;
+    private C_ChromeKit_Adapte chromeKit_adapte;
     private C_Product_model product_model;
     private C_BookedOrderModel bookedModel;
     private CircleImageView c_dash_user_image, navi_profile;
@@ -82,7 +87,7 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
     private AutoCompleteTextView getSearchedItem;
     private C_Booked_OrderAdapter bookedAdpter;
     private P_Booked_OrderAdapter bookedAdpterProvider;
-    private ImageView c_dash_navi, cart_detail;
+    private ImageView notification, c_dash_navi, cart_detail;
     private RelativeLayout lay_notification;
     private LinearLayoutManager linearLayoutManager;
     private TextView seeAll, c_dash_createNail, cart_count, viewAll_products, viewAll_chrome;
@@ -91,6 +96,10 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
     @Override
     protected void onResume() {
         super.onResume();
+
+        SkinColorAdapter.selectedPosition = 0;
+        NailShapeAdapter.selectedPosition = 0;
+        NailPolishColorAdapter.selectedPosition = 0;
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.shake);
         lay_notification.setAnimation(animation);
         if (shared.getString("cartsize").equalsIgnoreCase("")) {
@@ -115,16 +124,14 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
         c_dash_user_image = findViewById(R.id.c_dash_user_image);
         c_dash_createNail = findViewById(R.id.c_dash_createNail);
         cart_count = findViewById(R.id.cart_count);
+        notification = findViewById(R.id.notification);
         viewAll_products = findViewById(R.id.viewAll_products);
         lay_notification = findViewById(R.id.lay_notification);
         viewAll_chrome = findViewById(R.id.viewAll_chrome);
         cart_detail = findViewById(R.id.cartValue);
         seeAll = findViewById(R.id.seeAll);
 
-
         getSearchedItem = findViewById(R.id.getSearchedItem);
-
-
         getSearchedItem.setOnTouchListener(new View.OnTouchListener() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -167,6 +174,12 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(activity, C_CartDetailAct.class));
+            }
+        });
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(activity, EcomNotificationAct.class));
             }
         });
 
@@ -241,13 +254,13 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
             chromeList.add(product_model);
         }
 
-        chromAdpater = new C_Product_Adapte(this, chromeList, new C_Product_Adapte.onItemClick() {
+        chromeKit_adapte = new C_ChromeKit_Adapte(this, chromeList, new C_ChromeKit_Adapte.onItemClick() {
             @Override
             public void onItemClick(int id) {
 
             }
         });
-        c_dash_chrome_recycler.setAdapter(chromAdpater);
+        c_dash_chrome_recycler.setAdapter(chromeKit_adapte);
 
 
         seeAll.setOnClickListener(new View.OnClickListener() {
@@ -288,21 +301,21 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
                     if (response.isSuccessful()) {
                         if (response.body().getStatus()) {
                             productList.clear();
-                            for (int i = 0; i < response.body().getData().getData().size(); i++) {
-
-                                product_model = new C_Product_model();
-                                if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_CUSTOMER)) {
-                                    product_model.setProddductPrice(" " + getString(R.string.currency) + response.body().getData().getData().get(i).getPrice() + "");
-                                } else if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_PROVIDER)) {
-                                    product_model.setProddductPrice(" " + getString(R.string.currency) + response.body().getData().getData().get(i).getWholesale_price() + "");
-                                }
-                                product_model.setProductName(response.body().getData().getData().get(i).getName());
-                                product_model.setProductImage(baseUrlImage + response.body().getData().getData().get(i).getImage());
-                                product_model.setProductID(response.body().getData().getData().get(i).getId());
-
-                                productList.add(product_model);
-                            }
-                            product_adapte = new C_Product_Adapte(activity, productList, activity);
+//                            for (int i = 0; i < response.body().getData().getData().size(); i++) {
+//
+//                                product_model = new C_Product_model();
+//                                if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_CUSTOMER)) {
+//                                    product_model.setProddductPrice(" " + getString(R.string.currency) + response.body().getData().getData().get(i).getPrice() + "");
+//                                } else if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_PROVIDER)) {
+//                                    product_model.setProddductPrice(" " + getString(R.string.currency) + response.body().getData().getData().get(i).getWholesale_price() + "");
+//                                }
+//                                product_model.setProductName(response.body().getData().getData().get(i).getName());
+//                                product_model.setProductImage(baseUrlImage + response.body().getData().getData().get(i).getImage());
+//                                product_model.setProductID(response.body().getData().getData().get(i).getId());
+//
+//                                productList.add(product_model);
+//                            }
+                            product_adapte = new C_Product_Adapte(activity, response.body().getData().getData(), activity);
                             c_dash_product_recycler.setAdapter(product_adapte);
 
                             String[] array = new String[productList.size()];

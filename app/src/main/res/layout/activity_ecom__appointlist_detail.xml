@@ -170,7 +170,7 @@
                         android:id="@+id/near_salon_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Emma Lee"
+                        android:text="Loading...."
                         android:textColor="@color/white"
                         android:textSize="@dimen/_16sdp"
                         android:textStyle="bold" />
@@ -179,7 +179,7 @@
                         android:id="@+id/near_salon_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Emma Lee"
+                        android:text="Loading...."
                         android:textColor="@color/grey"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="normal" />
@@ -310,7 +310,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_20sdp"
-                        android:text="Thursday, 21 August 2019"
+                        android:text="Loading...."
                         android:textColor="@color/white"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold" />
@@ -320,7 +320,7 @@
                         android:id="@+id/salonBookingTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="10:30 AM"
+                        android:text="Loading...."
 
                         android:textColor="@color/white"
                         android:textSize="@dimen/_18sdp"
@@ -395,7 +395,7 @@
                     android:id="@+id/resc_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Thursday, 21 August 2019"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
@@ -409,7 +409,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="10:30 AM"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="@dimen/_20sdp"
                         android:textStyle="bold" />
@@ -419,7 +419,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:background="@drawable/capsule_button_shape_grey"
+                        android:background="@drawable/ripple_effect_capsule"
                         android:backgroundTint="@color/pink"
                         android:paddingLeft="@dimen/_10sdp"
                         android:paddingRight="@dimen/_10sdp"
@@ -466,8 +466,8 @@
         android:layout_height="@dimen/_50sdp"
         android:layout_alignParentBottom="true"
         android:background="@color/pink"
-        android:text=""
         android:gravity="center"
+        android:text=""
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
         android:textStyle="bold"
@@ -495,7 +495,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/red"
+
+                android:background="@drawable/ripple_effect"
+                android:backgroundTint="@color/red"
                 android:gravity="center"
                 android:text="Cancel"
                 android:textColor="@color/white"
@@ -507,7 +509,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/green"
+                android:background="@drawable/ripple_effect"
+                android:backgroundTint="@color/green"
                 android:gravity="center"
                 android:text="Accept"
                 android:textColor="@color/white"
@@ -521,6 +524,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
             android:layout_alignParentBottom="true"
+            android:background="@color/off_grey"
             android:orientation="horizontal"
             android:visibility="gone"
             android:weightSum="2">
@@ -532,7 +536,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Pay at Salon"
-                android:textColor="@color/grey"
+                android:textColor="@color/red"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 
@@ -543,7 +547,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Pay Now"
-                android:textColor="@color/pink"
+                android:textColor="@color/green"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
         </LinearLayout>

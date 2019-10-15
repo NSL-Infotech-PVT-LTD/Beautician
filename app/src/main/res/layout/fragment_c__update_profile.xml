@@ -133,7 +133,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@drawable/capsule_button_shape"
+                    android:background="@drawable/ripple_effect_capsule"
                     android:gravity="center"
                     android:visibility="invisible"
                     android:text="Udpate"

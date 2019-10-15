@@ -205,18 +205,20 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
         android:layout_alignParentBottom="true"
-        android:background="@color/pink"
+        android:background="@drawable/ripple_effect"
         android:paddingLeft="@dimen/_30sdp"
+
         android:paddingRight="@dimen/_30sdp"
         android:visibility="visible">
 
 
         <TextView
             android:id="@+id/ordertxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:padding="@dimen/_10sdp"
+            android:gravity="center"
             android:text="Proceed to pay"
             android:textColor="@color/white"
             android:textStyle="bold" />

@@ -161,38 +161,39 @@ public class Ecom_AppointlistDetail extends AppCompatActivity {
     }
 
     private void funcList() {
+        ConstantClass.ListFunc(listSkinColor, listNailColor, listNailShape);
 
-        listNailColor.add(0, "#FFFFFF");
-        listNailColor.add(1, "#CC66CC");
-        listNailColor.add(2, "#333366");
-        listNailColor.add(3, "#009999");
-        listNailColor.add(4, "#CC00CC");
-        listNailColor.add(5, "#0033FF");
-        listNailColor.add(6, "#99FFFF");
-        listNailColor.add(7, "#CCFF99");
-        listNailColor.add(8, "#006633");
-        listNailColor.add(9, "#CC9900");
-        listNailColor.add(10, "#33FF00");
-        listNailColor.add(11, "#669966");
-        listNailColor.add(12, "#666666");
-        listNailColor.add(13, "#00FFCC");
-        listNailColor.add(14, "#993333");
-        listNailColor.add(15, "#990099");
-        listNailColor.add(16, "#9999FF");
-
-
-        listSkinColor.add(0, "#F2D9B7");
-        listSkinColor.add(1, "#EFB38A");
-        listSkinColor.add(2, "#A07561");
-        listSkinColor.add(3, "#795D4C");
-        listSkinColor.add(4, "#3D2923");
-
-
-        listNailShape.add(0, "square");
-        listNailShape.add(1, "round");
-        listNailShape.add(2, "oval");
-        listNailShape.add(3, "stillete");
-        listNailShape.add(4, "pointed");
+//        listNailColor.add(0, "#FFFFFF");
+//        listNailColor.add(1, "#CC66CC");
+//        listNailColor.add(2, "#333366");
+//        listNailColor.add(3, "#009999");
+//        listNailColor.add(4, "#CC00CC");
+//        listNailColor.add(5, "#0033FF");
+//        listNailColor.add(6, "#99FFFF");
+//        listNailColor.add(7, "#CCFF99");
+//        listNailColor.add(8, "#006633");
+//        listNailColor.add(9, "#CC9900");
+//        listNailColor.add(10, "#33FF00");
+//        listNailColor.add(11, "#669966");
+//        listNailColor.add(12, "#666666");
+//        listNailColor.add(13, "#00FFCC");
+//        listNailColor.add(14, "#993333");
+//        listNailColor.add(15, "#990099");
+//        listNailColor.add(16, "#9999FF");
+//
+//
+//        listSkinColor.add(0, "#F2D9B7");
+//        listSkinColor.add(1, "#EFB38A");
+//        listSkinColor.add(2, "#A07561");
+//        listSkinColor.add(3, "#795D4C");
+//        listSkinColor.add(4, "#3D2923");
+//
+//
+//        listNailShape.add(0, "square");
+//        listNailShape.add(1, "round");
+//        listNailShape.add(2, "oval");
+//        listNailShape.add(3, "stillete");
+//        listNailShape.add(4, "pointed");
 
     }
 
@@ -290,6 +291,102 @@ public class Ecom_AppointlistDetail extends AppCompatActivity {
         }
     }
 
+    public void confirmedBookingPopUp(String name, String availTime, String nailColr, String nailShape, String handColor) {
+        try {
+            //We need to get the instance of the LayoutInflater, use the context of this activity
+            LayoutInflater inflater = (LayoutInflater)
+                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            //Inflate the view from a predefined XML layout
+            final View layout = inflater.inflate(R.layout.custom_request_confirm,
+                    (ViewGroup) this.findViewById(R.id.mainPop));
+            // create a 300px width and 470px height PopupWindow
+            final PopupWindow pw = new PopupWindow(layout, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
+            // display the popup in the center
+            pw.showAtLocation(layout, Gravity.TOP, 0, 0);
+            TextView back_home = layout.findViewById(R.id.back_home);
+
+            near_salon_name = layout.findViewById(R.id.near_salon_name);
+            nail_shape = layout.findViewById(R.id.nail_shape);
+            salonBookingDate = layout.findViewById(R.id.salonBookingDate);
+            salonBookingTime = layout.findViewById(R.id.salonBookingTime);
+            lay_nail_color = layout.findViewById(R.id.lay_nail_color);
+            lay_skin_color = layout.findViewById(R.id.lay_skin_color);
+            c_dash_userhand_image = layout.findViewById(R.id.c_dash_userhand_image);
+            ln_nailColor = layout.findViewById(R.id.nail_back);
+
+            near_salon_name.setText(name);
+//                                near_salon_address.setText(response.body().getData().get(0).getCustomerDetails().get(0).getAddress());
+            String[] separated = availTime.split(" ");
+            lay_skin_color.setBackgroundColor(Color.parseColor(handColor + ""));
+            lay_nail_color.setBackgroundColor(Color.parseColor(nailColr + ""));
+            salonBookingDate.setText(parseDateToddMMyyyy(separated[0]));
+
+
+            Drawable unwrappedDrawable = AppCompatResources.getDrawable(activity, R.drawable.circle_view);
+            Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
+            DrawableCompat.setTint(wrappedDrawable, Color.parseColor(nailColr + ""));
+
+            ln_nailColor.setBackground(wrappedDrawable);
+
+//            c_dash_userhand_image.setBackgroundColor(Color.parseColor(nailColr + ""));
+            nail_shape.setText("Nail Shape  " + nailShape);
+            nailShape(c_dash_userhand_image, nailShape);
+            skinColor(c_dash_userhand_image, handColor, nailShape);
+
+            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
+            SimpleDateFormat sdfs = new SimpleDateFormat("hh:mm aa");
+            Date dt;
+            try {
+                dt = sdf.parse(separated[1]);
+                salonBookingTime.setText(sdfs.format(dt));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+
+            c_dash_userhand_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    initiatePopupWindow(handColor, nailColr, nailShape);
+                }
+            });
+
+
+            back_home.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismisFunc();
+                    pw.dismiss();
+                }
+            });
+
+            RelativeLayout main_pop_up = layout.findViewById(R.id.main_pop_up);
+            main_pop_up.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    dismisFunc();
+                    pw.dismiss();
+                }
+            });
+
+            pw.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    dismisFunc();
+                    pw.dismiss();
+
+                }
+            });
+
+        } catch (
+                Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void appointDetailAPI(int appo_id) {
         progressDoalog = new ProgressDialog(this);
         progressDoalog.setMessage("Getting Booking Detail....");
@@ -357,16 +454,31 @@ public class Ecom_AppointlistDetail extends AppCompatActivity {
                                     SimpleDateFormat sdfs = new SimpleDateFormat("hh:mm aa");
 
 
-                                    if (response.body().getData().get(0).getStatus().equalsIgnoreCase("requested") || response.body().getData().get(0).getStatus().equalsIgnoreCase("open")) {
+                                    if (response.body().getData().get(0).getStatus().equalsIgnoreCase("requested")) {
                                         statusText.setVisibility(View.VISIBLE);
                                         bottomLayout.setVisibility(View.VISIBLE);
-                                        lay_accep_reject.setVisibility(View.VISIBLE);
-                                        lay_pay.setVisibility(View.VISIBLE);
+                                        lay_accep_reject.setVisibility(View.GONE);
+                                        lay_pay.setVisibility(View.GONE);
                                         layout_for_reschedule.setVisibility(View.GONE);
-                                        if (response.body().getData().get(0).getAvailableDatetime() == null
-                                                || (response.body().getData().get(0).getAvailableDatetime() == response.body().getData().get(0).getRequestedDatetime())) {
+                                        if ((response.body().getData().get(0).getAvailableDatetime() != null) && (response.body().getData().get(0).getAvailableDatetime() != response.body().getData().get(0).getRequestedDatetime())) {
                                             layout_for_reschedule.setVisibility(View.VISIBLE);
+                                            lay_accep_reject.setVisibility(View.VISIBLE);
+                                            lay_pay.setVisibility(View.VISIBLE);
+                                            if (!availSeprate.equalsIgnoreCase("null")) {
+                                                String[] availableTime = availSeprate.split(" ");
 
+                                                resc_date.setText(parseDateToddMMyyyy(availableTime[0]));
+
+                                                try {
+                                                    avilDate = sdf.parse(availableTime[1]);
+
+                                                    if (avilDate != null) {
+                                                        resc_time.setText(sdfs.format(avilDate));
+                                                    }
+                                                } catch (ParseException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
                                             image_accept_reject_loader.setImageDrawable(getResources().getDrawable(R.drawable.ic_loader_half));
 
                                             reschedulingBTN.setOnClickListener(new View.OnClickListener() {
@@ -375,6 +487,9 @@ public class Ecom_AppointlistDetail extends AppCompatActivity {
                                                     Intent intent = new Intent(activity, C_SelectDateAct.class);
                                                     intent.putExtra("salon_name", response.body().getData().get(0).getSalonDetails().get(0).getName());
                                                     intent.putExtra("salon_address", response.body().getData().get(0).getSalonDetails().get(0).getAddress());
+                                                    intent.putExtra("hand_color", response.body().getData().get(0).getSkinColor());
+                                                    intent.putExtra("nail_color", response.body().getData().get(0).getNailPolishColor());
+                                                    intent.putExtra("nail_shape", response.body().getData().get(0).getNailShape());
                                                     intent.putExtra("from", "resc");
                                                     intent.putExtra("appo_id", appo_id);
                                                     startActivity(intent);
@@ -383,6 +498,14 @@ public class Ecom_AppointlistDetail extends AppCompatActivity {
 
 
                                         }
+                                    } else if (response.body().getData().get(0).getStatus().equalsIgnoreCase("open")) {
+                                        statusText.setVisibility(View.VISIBLE);
+                                        bottomLayout.setVisibility(View.VISIBLE);
+                                        lay_accep_reject.setVisibility(View.VISIBLE);
+                                        lay_pay.setVisibility(View.VISIBLE);
+                                        layout_for_reschedule.setVisibility(View.GONE);
+
+
                                     } else {
 
                                         if (!availSeprate.equalsIgnoreCase("null")) {
@@ -450,7 +573,7 @@ public class Ecom_AppointlistDetail extends AppCompatActivity {
                                         public void onClick(View v) {
 
 
-                                            acceptReject("Cancel your appointment....", appo_id, "", "cancel", separated[0] + " " + requestime.format(dt));
+                                            acceptReject(response.body().getData().get(0).getSalonDetails().get(0).getName(), "Cancel your appointment....", appo_id, "", "cancel", separated[0] + " " + requestime.format(dt));
                                         }
                                     });
 
@@ -469,7 +592,7 @@ public class Ecom_AppointlistDetail extends AppCompatActivity {
                                     pay_at_salon.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            acceptReject("Confirm appointment....", getIntent().getIntExtra("appo_id", 0), "pay_at_salon", "accepted", separated[0] + " " + requestime.format(dt));
+                                            acceptReject(response.body().getData().get(0).getSalonDetails().get(0).getName(), "Confirm appointment....", getIntent().getIntExtra("appo_id", 0), "pay_at_salon", "accepted", separated[0] + " " + requestime.format(dt));
 
                                         }
                                     });
@@ -528,7 +651,7 @@ public class Ecom_AppointlistDetail extends AppCompatActivity {
         });
     }
 
-    public void acceptReject(String dialogtext, int appo_id, String paymentMode, String
+    public void acceptReject(String name, String dialogtext, int appo_id, String paymentMode, String
             status, String dateTime) {
 
         progressDoalog = new ProgressDialog(activity);
@@ -550,6 +673,11 @@ public class Ecom_AppointlistDetail extends AppCompatActivity {
 
                         if (response.body().getStatus()) {
 
+                            if (response.body().getData().getAppointments().getStatus().equalsIgnoreCase("Accepted"))
+                                confirmedBookingPopUp(name, response.body().getData().getAppointments().getAvailableDatetime()
+                                        , response.body().getData().getAppointments().getNailPolishColor(),
+                                        response.body().getData().getAppointments().getNailShape(),
+                                        response.body().getData().getAppointments().getSkinColor());
                             dismisFunc();
 
                         } else {

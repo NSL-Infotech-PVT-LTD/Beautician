@@ -105,7 +105,7 @@
                         android:id="@+id/near_salon_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Emma Lee"
+                        android:text="Loading...."
                         android:textColor="@color/white"
                         android:textSize="@dimen/_16sdp"
                         android:textStyle="bold" />
@@ -114,7 +114,7 @@
                         android:id="@+id/near_salon_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Emma Lee"
+                        android:text="Loading...."
                         android:textColor="@color/grey"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="normal" />
@@ -245,7 +245,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_20sdp"
-                        android:text="Thursday, 21 August 2019"
+                        android:text="Loading...."
                         android:textColor="@color/white"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold" />
@@ -255,7 +255,7 @@
                         android:id="@+id/salonBookingTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="10:30 AM"
+                        android:text="Loading...."
 
                         android:textColor="@color/white"
                         android:textSize="@dimen/_18sdp"
@@ -356,7 +356,7 @@
         android:layout_height="@dimen/_50sdp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:background="@color/pink"
+        android:background="@drawable/ripple_effect"
         android:gravity="center"
         android:text="@string/cofirmBooking"
         android:textColor="@color/white"

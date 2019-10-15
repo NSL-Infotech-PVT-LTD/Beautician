@@ -1,31 +1,23 @@
-package com.wellgel.london.Customer;
+package com.wellgel.london.UtilClasses;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public abstract class PaginationListener extends RecyclerView.OnScrollListener {
+public abstract class PaginationScrollListener extends RecyclerView.OnScrollListener {
 
-    public static final int PAGE_START = 1;
-
-    @NonNull
-    private GridLayoutManager layoutManager;
-
-    /**
-     * Set scrolling threshold here (for now i'm assuming 10 item in one page)
-     */
-    private static final int PAGE_SIZE = 10;
+    LinearLayoutManager layoutManager;
 
     /**
      * Supporting only LinearLayoutManager for now.
+     *
+     * @param layoutManager
      */
-    public PaginationListener(@NonNull GridLayoutManager layoutManager) {
+    public PaginationScrollListener(LinearLayoutManager layoutManager) {
         this.layoutManager = layoutManager;
     }
 
     @Override
-    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
 
         int visibleItemCount = layoutManager.getChildCount();
@@ -35,15 +27,19 @@ public abstract class PaginationListener extends RecyclerView.OnScrollListener {
         if (!isLoading() && !isLastPage()) {
             if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                     && firstVisibleItemPosition >= 0
-                    && totalItemCount >= PAGE_SIZE) {
+                    && totalItemCount >= getTotalPageCount()) {
                 loadMoreItems();
             }
         }
+
     }
 
     protected abstract void loadMoreItems();
 
+    public abstract int getTotalPageCount();
+
     public abstract boolean isLastPage();
 
     public abstract boolean isLoading();
+
 }

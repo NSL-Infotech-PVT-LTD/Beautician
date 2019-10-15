@@ -91,38 +91,39 @@ public class C_CreateNailAct extends AppCompatActivity implements View.OnClickLi
         bt_nailPolishColor.setTypeface(null, Typeface.BOLD);
 
 
-        listNailColor.add(0, "#FFFFFF");
-        listNailColor.add(1, "#CC66CC");
-        listNailColor.add(2, "#333366");
-        listNailColor.add(3, "#009999");
-        listNailColor.add(4, "#CC00CC");
-        listNailColor.add(5, "#0033FF");
-        listNailColor.add(6, "#99FFFF");
-        listNailColor.add(7, "#CCFF99");
-        listNailColor.add(8, "#006633");
-        listNailColor.add(9, "#CC9900");
-        listNailColor.add(10, "#33FF00");
-        listNailColor.add(11, "#669966");
-        listNailColor.add(12, "#666666");
-        listNailColor.add(13, "#00FFCC");
-        listNailColor.add(14, "#993333");
-        listNailColor.add(15, "#990099");
-        listNailColor.add(16, "#9999FF");
+//        listNailColor.add(0, "#FFFFFF");
+//        listNailColor.add(1, "#CC66CC");
+//        listNailColor.add(2, "#333366");
+//        listNailColor.add(3, "#009999");
+//        listNailColor.add(4, "#CC00CC");
+//        listNailColor.add(5, "#0033FF");
+//        listNailColor.add(6, "#99FFFF");
+//        listNailColor.add(7, "#CCFF99");
+//        listNailColor.add(8, "#006633");
+//        listNailColor.add(9, "#CC9900");
+//        listNailColor.add(10, "#33FF00");
+//        listNailColor.add(11, "#669966");
+//        listNailColor.add(12, "#666666");
+//        listNailColor.add(13, "#00FFCC");
+//        listNailColor.add(14, "#993333");
+//        listNailColor.add(15, "#990099");
+//        listNailColor.add(16, "#9999FF");
+//
+//
+//        listSkinColor.add(0, "#F2D9B7");
+//        listSkinColor.add(1, "#EFB38A");
+//        listSkinColor.add(2, "#A07561");
+//        listSkinColor.add(3, "#795D4C");
+//        listSkinColor.add(4, "#3D2923");
+//
+//
+//        listNailShape.add(0, "square");
+//        listNailShape.add(1, "round");
+//        listNailShape.add(2, "oval");
+//        listNailShape.add(3, "stillete");
+//        listNailShape.add(4, "pointed");
 
-
-        listSkinColor.add(0, "#F2D9B7");
-        listSkinColor.add(1, "#EFB38A");
-        listSkinColor.add(2, "#A07561");
-        listSkinColor.add(3, "#795D4C");
-        listSkinColor.add(4, "#3D2923");
-
-
-        listNailShape.add(0, "square");
-        listNailShape.add(1, "round");
-        listNailShape.add(2, "oval");
-        listNailShape.add(3, "stillete");
-        listNailShape.add(4, "pointed");
-
+        ConstantClass.ListFunc(listSkinColor, listNailColor, listNailShape);
 
         ConstantClass.NAIL_POlish_COLOR = listNailColor.get(0);
         ConstantClass.NAIL_SHAPE = listNailShape.get(0);

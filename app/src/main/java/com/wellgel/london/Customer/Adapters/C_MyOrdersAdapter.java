@@ -20,6 +20,7 @@ import com.wellgel.london.Customer.C_CartModel;
 
 import com.wellgel.london.Customer.SerializeModelClasses.C_MyOrdersSerial;
 import com.wellgel.london.R;
+import com.wellgel.london.UtilClasses.PreferencesShared;
 
 import java.io.Serializable;
 import java.util.List;
@@ -39,11 +40,13 @@ public class C_MyOrdersAdapter extends RecyclerView.Adapter<C_MyOrdersAdapter.C_
     private String spinnerValue;
     public EditAddress editAddress;
     public RemoveAddress removeAddress;
+    private PreferencesShared shared;
 
     public C_MyOrdersAdapter(FragmentActivity context, List<C_MyOrdersSerial.Datum> list) {
         this.context = context;
         this.list = list;
 
+        shared = new PreferencesShared(context);
 
     }
 

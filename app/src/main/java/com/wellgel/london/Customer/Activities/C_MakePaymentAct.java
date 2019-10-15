@@ -195,10 +195,10 @@ public class C_MakePaymentAct extends AppCompatActivity {
                                 if (extras.containsKey("appo_id")) {
                                     bookingConfirm(getIntent().getIntExtra("appo_id", 0), getIntent().getStringExtra("dateTime"), token.getId());
 
-                                } else
-                                    placeOrder(Integer.parseInt(shared.getString("order_id")), token.getId());
+                                }
                             }
-
+                            else
+                                placeOrder(Integer.parseInt(shared.getString("order_id")), token.getId());
 
                         }
                     });

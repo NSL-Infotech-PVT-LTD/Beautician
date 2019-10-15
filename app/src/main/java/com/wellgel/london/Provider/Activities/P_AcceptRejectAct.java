@@ -1,5 +1,6 @@
 package com.wellgel.london.Provider.Activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.graphics.drawable.DrawableCompat;
@@ -7,6 +8,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -27,6 +29,7 @@ import android.widget.Toast;
 import com.wellgel.london.APIs.Customer_APIs;
 import com.wellgel.london.APIs.Provider_APIs;
 import com.wellgel.london.Customer.Activities.C_DashboardAct;
+import com.wellgel.london.Customer.Activities.C_LoginAsActivity;
 import com.wellgel.london.Customer.Activities.C_SelectDateAct;
 import com.wellgel.london.Customer.Activities.Ecom_AppointlistDetail;
 import com.wellgel.london.Customer.C_CartModel;
@@ -116,38 +119,8 @@ public class P_AcceptRejectAct extends AppCompatActivity {
             }
         });
 
-        listNailColor.add(0, "#FFFFFF");
-        listNailColor.add(1, "#CC66CC");
-        listNailColor.add(2, "#333366");
-        listNailColor.add(3, "#009999");
-        listNailColor.add(4, "#CC00CC");
-        listNailColor.add(5, "#0033FF");
-        listNailColor.add(6, "#99FFFF");
-        listNailColor.add(7, "#CCFF99");
-        listNailColor.add(8, "#006633");
-        listNailColor.add(9, "#CC9900");
-        listNailColor.add(10, "#33FF00");
-        listNailColor.add(11, "#669966");
-        listNailColor.add(12, "#666666");
-        listNailColor.add(13, "#00FFCC");
-        listNailColor.add(14, "#993333");
-        listNailColor.add(15, "#990099");
-        listNailColor.add(16, "#9999FF");
 
-
-        listSkinColor.add(0, "#F2D9B7");
-        listSkinColor.add(1, "#EFB38A");
-        listSkinColor.add(2, "#A07561");
-        listSkinColor.add(3, "#795D4C");
-        listSkinColor.add(4, "#3D2923");
-
-
-        listNailShape.add(0, "square");
-        listNailShape.add(1, "round");
-        listNailShape.add(2, "oval");
-        listNailShape.add(3, "stillete");
-        listNailShape.add(4, "pointed");
-
+        ConstantClass.ListFunc(listSkinColor, listNailColor, listNailShape);
 
     }
 
@@ -249,12 +222,13 @@ public class P_AcceptRejectAct extends AppCompatActivity {
                                     reschedulingBTN.setVisibility(View.VISIBLE);
                                     bottomLayout.setVisibility(View.VISIBLE);
                                     statusText.setVisibility(View.GONE);
+                                    priceText.setText(response.body().getData().get(0).getPrice());
                                     reschedulingBTN.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
 
                                             priceText_st = priceText.getText().toString().trim();
-                                            if (priceText_st.isEmpty()) {
+                                            if (priceText_st.equalsIgnoreCase("0")) {
                                                 initiatePopupWindow();
                                             } else {
                                                 Intent intent = new Intent(activity, P_RescheduleDateAct.class);
@@ -271,23 +245,35 @@ public class P_AcceptRejectAct extends AppCompatActivity {
                                     bottomLayout.setVisibility(View.GONE);
                                     statusText.setVisibility(View.VISIBLE);
                                     priceText.setText(response.body().getData().get(0).getPrice());
-                                    if (response.body().getData().get(0).getStatus().equalsIgnoreCase("Accepted")) {
-                                        statusText.setText("Booking Accepted by Customer");
+                                    if (response.body().getData().get(0).getStatus().equalsIgnoreCase("Open")) {
+                                        statusText.setText("Booking confirmation is pending by customer side......");
                                         priceText.setVisibility(View.VISIBLE);
                                         priceText.setText(getString(R.string.currency) + response.body().getData().get(0).getPrice());
-                                        priceText.setClickable(false);
+                                        priceText.setEnabled(false);
 
+
+                                    } else if (response.body().getData().get(0).getStatus().equalsIgnoreCase("Accepted")) {
+                                        priceText.setVisibility(View.VISIBLE);
+                                        String value = "";
+                                        if (response.body().getData().get(0).getPaymentMode().equals("pay_now"))
+                                            value = "Appointment Already Paid by You";
+                                        else
+                                            value = "You Have Been Paid At Salon ";
+                                        statusText.setText("Your Appointment Has Been Accepted By Customer " + "\nPayment Mode :" + value);
+
+                                        priceText.setText(getString(R.string.currency) + response.body().getData().get(0).getPrice());
+                                        priceText.setEnabled(false);
 
                                     } else if (response.body().getData().get(0).getStatus().equalsIgnoreCase("Rejected")) {
                                         statusText.setText("You Have Reject This Appointment");
                                         priceText.setVisibility(View.VISIBLE);
                                         priceText.setText(getString(R.string.currency) + response.body().getData().get(0).getPrice());
-                                        priceText.setClickable(false);
+                                        priceText.setEnabled(false);
 
                                     } else if (response.body().getData().get(0).getStatus().equalsIgnoreCase("cancel")) {
                                         statusText.setText("Customer Has Cancelled This Booking");
                                         priceText.setVisibility(View.VISIBLE);
-                                        priceText.setClickable(false);
+                                        priceText.setEnabled(false);
                                         priceText.setText(getString(R.string.currency) + response.body().getData().get(0).getPrice());
 
                                     }
@@ -297,10 +283,24 @@ public class P_AcceptRejectAct extends AppCompatActivity {
                                 booking_reject.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
+                                        new AlertDialog.Builder(activity)
+                                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                                .setMessage("Are you sure you want to Reject this booking")
+                                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        acceptReject(response.body().getData().get(0).getCustomerDetails().get(0).getName(),
+                                                                response.body().getData().get(0).getId(), priceText_st, "rejected", separated[0] + " " + time);
 
-                                        acceptReject(response.body().getData().get(0).getId(), priceText_st, "rejected", separated[0] + " " + time);
+                                                    }
+
+                                                })
+                                                .setNegativeButton("No", null)
+                                                .show();
 
                                     }
+
+
                                 });
                                 booking_accept.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -309,7 +309,8 @@ public class P_AcceptRejectAct extends AppCompatActivity {
                                         if (priceText_st.isEmpty()) {
                                             initiatePopupWindow();
                                         } else {
-                                            acceptReject(response.body().getData().get(0).getId(), priceText_st, "open", separated[0] + " " + time);
+                                            acceptReject(response.body().getData().get(0).getCustomerDetails().get(0).getName(),
+                                                    response.body().getData().get(0).getId(), priceText_st, "open", separated[0] + " " + time);
                                         }
                                     }
                                 });
@@ -367,10 +368,10 @@ public class P_AcceptRejectAct extends AppCompatActivity {
             //We need to get the instance of the LayoutInflater, use the context of this activity
             LayoutInflater inflater = (LayoutInflater)
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            //Inflate the view from a predefined XML layout
+//Inflate the view from a predefined XML layout
             final View layout = inflater.inflate(R.layout.custom_pop_up_to_view_hand_image,
                     (ViewGroup) this.findViewById(R.id.mainPop));
-            // create a 300px width and 470px height PopupWindow
+// create a 300px width and 470px height PopupWindow
             final PopupWindow pw = new PopupWindow(layout, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
             // display the popup in the center
             pw.showAtLocation(layout, Gravity.TOP, 0, 0);
@@ -420,25 +421,6 @@ public class P_AcceptRejectAct extends AppCompatActivity {
 
         handImage.setImageResource(handSamples[handvalue][nailvalue]);
 
-//        if (handcolor.equalsIgnoreCase(listSkinColor.get(0))) {
-//            handImage.setImageResource(handSamples[0][0]);
-//            nailShape(handImage, nailColor);
-//
-//        } else if (handcolor.equalsIgnoreCase(listSkinColor.get(1))) {
-//
-//            nailShape(handImage, nailColor);
-//            handImage.setImageResource(handSamples[1][0]);
-//        } else if (handcolor.equalsIgnoreCase(listSkinColor.get(2))) {
-//            nailShape(handImage, nailColor);
-//            handImage.setImageResource(handSamples[2][0]);
-//
-//        } else if (handcolor.equalsIgnoreCase(listSkinColor.get(3))) {
-//            nailShape(handImage, nailColor);
-//            handImage.setImageResource(handSamples[3][0]);
-//        } else if (handcolor.equalsIgnoreCase(listSkinColor.get(4))) {
-//            nailShape(handImage, nailColor);
-//            handImage.setImageResource(handSamples[4][0]);
-//        }
     }
 
     private void nailShape(ImageView handImage, String nailshape) {
@@ -463,6 +445,7 @@ public class P_AcceptRejectAct extends AppCompatActivity {
             Toast.makeText(context, "" + intent.getAction(), Toast.LENGTH_SHORT);
 
         }
+
     }
 
     public void initiatePopupWindow() {
@@ -500,59 +483,6 @@ public class P_AcceptRejectAct extends AppCompatActivity {
 
     }
 
-    public void confirmedBookingPopUp() {
-        try {
-            //We need to get the instance of the LayoutInflater, use the context of this activity
-            LayoutInflater inflater = (LayoutInflater)
-                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            //Inflate the view from a predefined XML layout
-            final View layout = inflater.inflate(R.layout.custom_request_confirm,
-                    (ViewGroup) this.findViewById(R.id.mainPop));
-            // create a 300px width and 470px height PopupWindow
-            final PopupWindow pw = new PopupWindow(layout, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
-            // display the popup in the center
-            pw.showAtLocation(layout, Gravity.TOP, 0, 0);
-            TextView back_home = layout.findViewById(R.id.back_home);
-
-            near_salon_name = layout.findViewById(R.id.near_salon_name);
-            nail_shape = layout.findViewById(R.id.nail_shape);
-            salonBookingDate = layout.findViewById(R.id.salonBookingDate);
-            salonBookingTime = layout.findViewById(R.id.salonBookingTime);
-            lay_nail_color = layout.findViewById(R.id.lay_nail_color);
-            lay_skin_color = layout.findViewById(R.id.lay_skin_color);
-            c_dash_userhand_image = layout.findViewById(R.id.c_dash_userhand_image);
-            ln_nailColor = layout.findViewById(R.id.nail_back);
-
-            back_home.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    pw.dismiss();
-                    startActivity(new Intent(activity, C_DashboardAct.class));
-                    finish();
-                }
-            });
-
-            RelativeLayout main_pop_up = layout.findViewById(R.id.main_pop_up);
-            main_pop_up.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    pw.dismiss();
-                }
-            });
-
-            pw.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                @Override
-                public void onDismiss() {
-                    pw.dismiss();
-                }
-            });
-
-        } catch (
-                Exception e) {
-            e.printStackTrace();
-        }
-
-    }
 
     public void initiatePopupWindowPRice() {
         try {
@@ -604,7 +534,7 @@ public class P_AcceptRejectAct extends AppCompatActivity {
 
     }
 
-    public void acceptReject(int appo_id, String price, String status, String dateTime) {
+    public void acceptReject(String name, int appo_id, String price, String status, String dateTime) {
 
         progressDoalog = new ProgressDialog(activity);
         progressDoalog.setMessage("Checking appointment....");
@@ -626,7 +556,7 @@ public class P_AcceptRejectAct extends AppCompatActivity {
                         if (response.body().getStatus()) {
 
                             if (status.equals("open")) {
-                                confirmedBookingPopUp("", response.body().getData().getAppointments().getAvailableDatetime()
+                                confirmedBookingPopUp(name, response.body().getData().getAppointments().getAvailableDatetime()
                                         , response.body().getData().getAppointments().getNailPolishColor(),
                                         response.body().getData().getAppointments().getNailShape(),
                                         response.body().getData().getAppointments().getSkinColor());

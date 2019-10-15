@@ -244,7 +244,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
         android:layout_alignParentBottom="true"
-        android:background="@color/pink"
+        android:background="@drawable/ripple_effect"
         android:paddingLeft="@dimen/_30sdp"
         android:paddingRight="@dimen/_30sdp"
         android:visibility="visible">

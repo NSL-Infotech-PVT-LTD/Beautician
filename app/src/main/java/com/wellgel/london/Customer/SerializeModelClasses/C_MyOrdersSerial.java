@@ -10,6 +10,7 @@ import java.util.List;
 public class C_MyOrdersSerial implements Serializable{
 
 
+
     @SerializedName("status")
     @Expose
     private Boolean status;
@@ -18,7 +19,7 @@ public class C_MyOrdersSerial implements Serializable{
     private Integer code;
     @SerializedName("data")
     @Expose
-    private List<Datum> data = null;
+    private ArrayList<Datum> data = null;
 
     public Boolean getStatus() {
         return status;
@@ -36,13 +37,14 @@ public class C_MyOrdersSerial implements Serializable{
         this.code = code;
     }
 
-    public List<Datum> getData() {
+    public ArrayList<Datum> getData() {
         return data;
     }
 
-    public void setData(List<Datum> data) {
+    public void setData(ArrayList<Datum> data) {
         this.data = data;
     }
+
 
 
     public class Address implements Serializable{
@@ -127,6 +129,7 @@ public class C_MyOrdersSerial implements Serializable{
 
     }
 
+
     public class Datum implements Serializable{
 
         @SerializedName("id")
@@ -209,7 +212,9 @@ public class C_MyOrdersSerial implements Serializable{
 
     }
 
-    public class Orderdetail implements Serializable {
+
+
+    public class Orderdetail implements Serializable{
 
         @SerializedName("order_id")
         @Expose
@@ -262,6 +267,12 @@ public class C_MyOrdersSerial implements Serializable{
         @SerializedName("price")
         @Expose
         private Integer price;
+        @SerializedName("wholesale_price")
+        @Expose
+        private Integer wholesalePrice;
+        @SerializedName("is_added_to_cart_quantity")
+        @Expose
+        private Integer isAddedToCartQuantity;
 
         public Integer getId() {
             return id;
@@ -293,6 +304,22 @@ public class C_MyOrdersSerial implements Serializable{
 
         public void setPrice(Integer price) {
             this.price = price;
+        }
+
+        public Integer getWholesalePrice() {
+            return wholesalePrice;
+        }
+
+        public void setWholesalePrice(Integer wholesalePrice) {
+            this.wholesalePrice = wholesalePrice;
+        }
+
+        public Integer getIsAddedToCartQuantity() {
+            return isAddedToCartQuantity;
+        }
+
+        public void setIsAddedToCartQuantity(Integer isAddedToCartQuantity) {
+            this.isAddedToCartQuantity = isAddedToCartQuantity;
         }
 
     }

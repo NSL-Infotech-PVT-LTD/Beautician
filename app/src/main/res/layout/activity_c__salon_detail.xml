@@ -155,7 +155,7 @@
         android:layout_height="@dimen/_50sdp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center"
-        android:background="@color/pink"
+        android:background="@drawable/ripple_effect"
         android:gravity="center"
         android:text="Select Date and Time"
         android:textColor="@color/white"

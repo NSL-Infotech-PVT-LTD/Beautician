@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,11 +22,11 @@ import com.wellgel.london.UtilClasses.PreferencesShared;
 import java.util.ArrayList;
 import java.util.List;
 
-public class C_Product_Adapte extends RecyclerView.Adapter<C_Product_Adapte.C_product_holder> {
+public class C_ChromeKit_Adapte extends RecyclerView.Adapter<C_ChromeKit_Adapte.C_product_holder> {
 
     Context context;
     onItemClick onItemClick;
-    List<C_ProductsSerial.Datum> list;
+    List<C_Product_model> list;
 
     private static final int ITEM = 0;
     private static final int LOADING = 1;
@@ -35,7 +34,7 @@ public class C_Product_Adapte extends RecyclerView.Adapter<C_Product_Adapte.C_pr
     private PreferencesShared shared;
     private String baseUrlImage = C_ConstantClass.IMAGE_BASE_URL + "products/";
 
-    public C_Product_Adapte(Context context, List<C_ProductsSerial.Datum> list, onItemClick onItemClick) {
+    public C_ChromeKit_Adapte(Context context, List<C_Product_model> list, onItemClick onItemClick) {
         this.context = context;
         this.list = list;
         this.onItemClick = onItemClick;
@@ -45,7 +44,7 @@ public class C_Product_Adapte extends RecyclerView.Adapter<C_Product_Adapte.C_pr
 
     }
 
-    public C_Product_Adapte(FragmentActivity context, onItemClick onItemClick) {
+    public C_ChromeKit_Adapte(FragmentActivity context, onItemClick onItemClick) {
         this.context = context;
         list = new ArrayList<>();
         this.onItemClick = onItemClick;
@@ -95,26 +94,20 @@ public class C_Product_Adapte extends RecyclerView.Adapter<C_Product_Adapte.C_pr
     @Override
     public void onBindViewHolder(@NonNull final C_product_holder holder, int position) {
 
-        final C_ProductsSerial.Datum model = list.get(position);
+        final C_Product_model model = list.get(position);
 
         switch (getItemViewType(position)) {
             case ITEM:
                 if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_CUSTOMER)) {
-                    holder.productPrice.setText(" " + context.getString(R.string.currency) + model.getPrice() + "");
+                    holder.productPrice.setText(" " + context.getString(R.string.currency) + model.getProddductPrice() + "");
                 } else if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_PROVIDER)) {
-                    holder.productPrice.setText(" " + context.getString(R.string.currency) + model.getWholesale_price() + "");
+                    holder.productPrice.setText(" " + context.getString(R.string.currency) + model.getProddductPrice() + "");
                 }
 //                holder.productPrice.setText(model.getPrice() + "");
-                holder.productNAme.setText(model.getName());
+                holder.productNAme.setText(model.getProductName());
 
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        onItemClick.onItemClick(model.getId());
-                    }
-                });
 
-                Picasso.with(context).load(baseUrlImage+model.getImage()).placeholder(R.mipmap.logo).into(holder.productImage);
+                Picasso.with(context).load(model.getProductImage()).placeholder(R.mipmap.logo).into(holder.productImage);
                 break;
             case LOADING:
 //                Do nothing
@@ -151,63 +144,6 @@ public class C_Product_Adapte extends RecyclerView.Adapter<C_Product_Adapte.C_pr
    Helpers
    _________________________________________________________________________________________________
     */
-
-    public void add(C_ProductsSerial.Datum r) {
-        list.add(r);
-        notifyItemInserted(list.size() - 1);
-    }
-
-    public void addAll(List<C_ProductsSerial.Datum> moveResults) {
-        for (C_ProductsSerial.Datum result : moveResults) {
-            add(result);
-        }
-    }
-
-    public void setList(List<C_ProductsSerial.Datum> list) {
-        this.list = list;
-        notifyDataSetChanged();
-    }
-
-    public void remove(C_ProductsSerial.Datum r) {
-        int position = list.indexOf(r);
-        if (position > -1) {
-            list.remove(position);
-            notifyItemRemoved(position);
-        }
-    }
-
-    public void clear() {
-        isLoadingAdded = false;
-        while (getItemCount() > 0) {
-            remove(getItem(0));
-        }
-    }
-
-    public boolean isEmpty() {
-        return getItemCount() == 0;
-    }
-
-
-    public void addLoadingFooter() {
-        isLoadingAdded = true;
-//        add(new C_ProductsSerial.Datum());
-    }
-
-    public void removeLoadingFooter() {
-        isLoadingAdded = false;
-
-        int position = list.size() - 1;
-        C_ProductsSerial.Datum result = getItem(position);
-
-        if (result != null) {
-            list.remove(position);
-            notifyItemRemoved(position);
-        }
-    }
-
-    public C_ProductsSerial.Datum getItem(int position) {
-        return list.get(position);
-    }
 
 
     public class C_product_holder extends RecyclerView.ViewHolder {

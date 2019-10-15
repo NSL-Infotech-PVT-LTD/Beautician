@@ -117,7 +117,7 @@
                                     android:id="@+id/near_salon_name"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Emma Lee"
+                                    android:text="Loading...."
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/_16sdp"
                                     android:textStyle="bold" />
@@ -249,7 +249,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/_20sdp"
-                                    android:text="Thursday, 21 August 2019"
+                                    android:text="Loading...."
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/_12sdp"
                                     android:textStyle="bold" />
@@ -259,7 +259,7 @@
                                     android:id="@+id/salonBookingTime"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="10:30 AM"
+                                    android:text="Loading...."
 
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/_18sdp"

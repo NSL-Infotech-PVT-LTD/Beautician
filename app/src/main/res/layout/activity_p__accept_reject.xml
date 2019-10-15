@@ -74,7 +74,7 @@
                         android:id="@+id/near_salon_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Emma Lee"
+                        android:text="Loading...."
                         android:textColor="@color/white"
                         android:textSize="@dimen/_16sdp"
                         android:textStyle="bold" />

@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:hint="35.50"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:maxLength="10"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_20sdp"

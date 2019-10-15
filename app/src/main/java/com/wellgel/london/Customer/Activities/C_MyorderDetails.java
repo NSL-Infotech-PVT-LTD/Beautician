@@ -3,14 +3,19 @@ package com.wellgel.london.Customer.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.wellgel.london.Customer.Adapters.C_MyOrderDetailAdapter;
 import com.wellgel.london.Customer.C_CartModel;
 import com.wellgel.london.Customer.SerializeModelClasses.C_MyOrdersSerial;
 import com.wellgel.london.R;
+import com.wellgel.london.UtilClasses.ConstantClass;
+import com.wellgel.london.UtilClasses.PreferencesShared;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +29,7 @@ public class C_MyorderDetails extends AppCompatActivity {
     private TextView totalAmountOrder, textAddress, itemPrice;
     private ImageView c_cart_back;
 
+    private PreferencesShared shared;
     int pos = 0;
 
     @Override
@@ -31,12 +37,12 @@ public class C_MyorderDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_c__myorder_details);
 
+        shared = new PreferencesShared(this);
         list = (ArrayList<C_MyOrdersSerial.Orderdetail>) getIntent().getSerializableExtra("order_detail_list");
         listAddres = (ArrayList<C_MyOrdersSerial.Address>) getIntent().getSerializableExtra("order_address_list");
         recyclerView = findViewById(R.id.myOrderDetailRec);
         c_cart_back = findViewById(R.id.c_cart_back);
         itemPrice = findViewById(R.id.itemPrice);
-
 
 
         c_cart_back.setOnClickListener(new View.OnClickListener() {
@@ -49,8 +55,8 @@ public class C_MyorderDetails extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
-        totalAmountOrder.setText(" "+getString(R.string.currency) + grandTotal(list) + ".00");
-        itemPrice.setText(" "+getString(R.string.currency) + grandTotal(list) + ".00");
+        totalAmountOrder.setText(" " + getString(R.string.currency) + grandTotal(list) + ".00");
+        itemPrice.setText(" " + getString(R.string.currency) + grandTotal(list) + ".00");
         adapter = new C_MyOrderDetailAdapter(this, list);
         recyclerView.setAdapter(adapter);
     }
@@ -59,7 +65,14 @@ public class C_MyorderDetails extends AppCompatActivity {
 
         int totalPrice = 0;
         for (int i = 0; i < items.size(); i++) {
-            totalPrice += items.get(i).getProductId().getPrice() * items.get(i).getQuantity();
+            if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_PROVIDER)) {
+                totalPrice += items.get(i).getProductId().getWholesalePrice() * items.get(i).getQuantity();
+
+            } else if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_CUSTOMER)) {
+                totalPrice += items.get(i).getProductId().getPrice() * items.get(i).getQuantity();
+
+            }
+
         }
 
         return totalPrice;

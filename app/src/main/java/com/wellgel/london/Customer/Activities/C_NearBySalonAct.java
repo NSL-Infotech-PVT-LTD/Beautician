@@ -301,8 +301,13 @@ public class C_NearBySalonAct extends AppCompatActivity implements OnMapReadyCal
         fullAddress.setText(shared.getString(ConstantClass.USER_Address));
         location_address.setText(shared.getString(ConstantClass.USER_Address));
         nameOfaddHolder.setText(shared.getString(ConstantClass.USER_NAME));
+
+
         locationName.setText(shared.getString(ConstantClass.USER_Country));
+//        StringUtils.capitalize(shared.getString(ConstantClass.USER_Country));
+
     }
+
 
     private void checkClick() {
         sort_distance.setTypeface(null, Typeface.NORMAL);

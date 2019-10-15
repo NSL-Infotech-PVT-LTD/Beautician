@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.wellgel.london.APIs.Customer_APIs;
+import com.wellgel.london.Customer.Adapters.C_ChromeKit_Adapte;
 import com.wellgel.london.Customer.Adapters.C_Product_Adapte;
 import com.wellgel.london.Customer.C_ConstantClass;
 import com.wellgel.london.Customer.C_Product_model;
@@ -33,6 +34,7 @@ import com.wellgel.london.Customer.SerializeModelClasses.C_ProductsSerial;
 import com.wellgel.london.R;
 import com.wellgel.london.UtilClasses.ConstantClass;
 import com.wellgel.london.UtilClasses.PaginationListener;
+import com.wellgel.london.UtilClasses.PaginationScrollListener;
 import com.wellgel.london.UtilClasses.PreferencesShared;
 import com.wellgel.london.UtilClasses.Retrofit.RetrofitClientInstance;
 
@@ -54,6 +56,7 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
     private PreferencesShared shared;
     private C_Product_model product_model;
     private C_Product_Adapte product_adapte;
+    private C_ChromeKit_Adapte chromeKit_adapte;
     private ImageView c_view_back;
     private TextView textHeader, cart_count;
     private ImageView cart_detail, filterByICon, orderByICon;
@@ -68,11 +71,13 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
     private int sort_count = 3;
     private AutoCompleteTextView getSearchedItem;
     private String searchBy;
-    private int currentPage = PAGE_START;
-    private boolean isLastPage = false;
-    private int totalPage = 10;
+    private static final int PAGE_START = 1;
     private boolean isLoading = false;
-    int itemCount = 0;
+    private boolean isLastPage = false;
+    // limiting to 5 for this tutorial, since total pages in actual API is very large. Feel free to modify.
+    private int TOTAL_PAGES = 5;
+    private int currentPage = PAGE_START;
+    private String orderbyValue = "latest";
 
     @Override
     protected void onResume() {
@@ -175,6 +180,11 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
         });
     }
 
+    private List<C_ProductsSerial.Datum> fetchResults(Response<C_ProductsSerial> response) {
+        C_ProductsSerial topRatedMovies = response.body();
+        return topRatedMovies.getData().getData();
+    }
+
     private void productFun() {
 
         textHeader.setText(getString(R.string.wellgelExpres));
@@ -187,13 +197,24 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
         c_dash_product_recycler.setLayoutManager(layoutManager);
 
 
-        c_dash_product_recycler.addOnScrollListener(new PaginationListener(layoutManager) {
+        c_dash_product_recycler.addOnScrollListener(new PaginationScrollListener(layoutManager) {
             @Override
             protected void loadMoreItems() {
-
                 isLoading = true;
-                currentPage++;
-//                productsAPI("created_at", "asc");
+                currentPage += 1;
+
+                // mocking network delay for API call
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        nextProductsAPI(orderbyValue, "");
+                    }
+                }, 1000);
+            }
+
+            @Override
+            public int getTotalPageCount() {
+                return TOTAL_PAGES;
             }
 
             @Override
@@ -206,6 +227,7 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
                 return isLoading;
             }
         });
+
 
         if (getIntent() != null) {
 
@@ -245,13 +267,13 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
             productList.add(product_model);
         }
 
-        product_adapte = new C_Product_Adapte(activity, productList, new C_Product_Adapte.onItemClick() {
+        chromeKit_adapte = new C_ChromeKit_Adapte(activity, productList, new C_ChromeKit_Adapte.onItemClick() {
             @Override
             public void onItemClick(int id) {
 
             }
         });
-        c_dash_product_recycler.setAdapter(product_adapte);
+        c_dash_product_recycler.setAdapter(chromeKit_adapte);
 
     }
 
@@ -300,7 +322,7 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
 
         /*Create handle for the RetrofitInstance interface*/
         Customer_APIs service = RetrofitClientInstance.getRetrofitInstance().create(Customer_APIs.class);
-        Call<C_ProductsSerial> call = service.poducts("application/x-www-form-urlencoded", "Bearer " + shared.getString("token"), orderBy, search + "", "10", currentPage + "");
+        Call<C_ProductsSerial> call = service.poducts("application/x-www-form-urlencoded", "Bearer " + shared.getString("token"), orderBy, search + "", "6", currentPage + "");
         call.enqueue(new Callback<C_ProductsSerial>() {
             @Override
             public void onResponse(Call<C_ProductsSerial> call, Response<C_ProductsSerial> response) {
@@ -316,26 +338,38 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
                             productList.clear();
 
                             if (response.body().getData().getData().size() > 0) {
-                                no_search_data.setVisibility(View.GONE);
+//                                no_search_data.setVisibility(View.GONE);
 
+//
+//                                for (int i = 0; i < response.body().getData().getData().size(); i++) {
+//
+//                                    product_model = new C_Product_model();
+//                                    if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_CUSTOMER)) {
+//                                        product_model.setProddductPrice(" " + getString(R.string.currency) + response.body().getData().getData().get(i).getPrice() + "");
+//                                    } else if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_PROVIDER)) {
+//                                        product_model.setProddductPrice(" " + getString(R.string.currency) + response.body().getData().getData().get(i).getWholesale_price() + "");
+//                                    }
+//                                    product_model.setProductName(response.body().getData().getData().get(i).getName());
+//                                    product_model.setProductImage(C_ConstantClass.IMAGE_BASE_URL + "products/" + response.body().getData().getData().get(i).getImage());
+//                                    product_model.setProductID(response.body().getData().getData().get(i).getId());
+//
+//                                    productList.add(product_model);
+//                                }
 
-                                for (int i = 0; i < response.body().getData().getData().size(); i++) {
+//                                progressBar.setVisibility(View.GONE);
 
-                                    product_model = new C_Product_model();
-                                    product_model.setProddductPrice(getString(R.string.currency) + response.body().getData().getData().get(i).getPrice() + "");
-                                    product_model.setProductName(response.body().getData().getData().get(i).getName());
-                                    product_model.setProductImage(C_ConstantClass.IMAGE_BASE_URL + "products/" + response.body().getData().getData().get(i).getImage());
-                                    product_model.setProductID(response.body().getData().getData().get(i).getId());
-
-                                    productList.add(product_model);
-                                }
-
-
-                                product_adapte = new C_Product_Adapte(activity, productList, activity);
+                                product_adapte = new C_Product_Adapte(activity, activity);
                                 c_dash_product_recycler.setAdapter(product_adapte);
+//                                product_adapte.addAll(response.body().getData().getData());
+                                List<C_ProductsSerial.Datum> results = fetchResults(response);
+//                                progressBar.setVisibility(View.GONE);
+                                product_adapte.addAll(results);
+
+                                if (currentPage <= TOTAL_PAGES) product_adapte.addLoadingFooter();
+                                else isLastPage = true;
 
                             } else {
-                                no_search_data.setVisibility(View.VISIBLE);
+//                                no_search_data.setVisibility(View.VISIBLE);
 
                                 orderByICon.setVisibility(View.GONE);
                                 filterByICon.setVisibility(View.GONE);
@@ -343,7 +377,7 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
                         } else {
                             orderByICon.setVisibility(View.GONE);
                             filterByICon.setVisibility(View.GONE);
-                            no_search_data.setVisibility(View.VISIBLE);
+//                            no_search_data.setVisibility(View.VISIBLE);
                         }
 
                     }
@@ -358,6 +392,68 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
             @Override
             public void onFailure(Call<C_ProductsSerial> call, Throwable t) {
                 progressDoalog.dismiss();
+                Toast.makeText(activity, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void nextProductsAPI(String orderBy, String search) {
+
+
+        searchBy = search;
+
+        // initialize file here
+
+        /*Create handle for the RetrofitInstance interface*/
+        Customer_APIs service = RetrofitClientInstance.getRetrofitInstance().create(Customer_APIs.class);
+        Call<C_ProductsSerial> call = service.poducts("application/x-www-form-urlencoded", "Bearer " + shared.getString("token"), orderBy, search + "", "6", currentPage + "");
+        call.enqueue(new Callback<C_ProductsSerial>() {
+            @Override
+            public void onResponse(Call<C_ProductsSerial> call, Response<C_ProductsSerial> response) {
+                progressDoalog.dismiss();
+
+
+                if (response.body() != null) {
+                    if (response.isSuccessful()) {
+                        if (response.body().getStatus()) {
+
+                            productList.clear();
+
+                            if (response.body().getData().getData().size() > 0) {
+//                                no_search_data.setVisibility(View.GONE);
+                                product_adapte.removeLoadingFooter();
+                                isLoading = false;
+
+                                List<C_ProductsSerial.Datum> results = fetchResults(response);
+                                product_adapte.addAll(results);
+
+                                if (currentPage != TOTAL_PAGES)
+                                    product_adapte.addLoadingFooter();
+                                else isLastPage = true;
+
+                            } else {
+//                                no_search_data.setVisibility(View.VISIBLE);
+
+                                orderByICon.setVisibility(View.GONE);
+                                filterByICon.setVisibility(View.GONE);
+                            }
+                        } else {
+                            orderByICon.setVisibility(View.GONE);
+                            filterByICon.setVisibility(View.GONE);
+//                            no_search_data.setVisibility(View.VISIBLE);
+                        }
+
+                    }
+                } else {
+//                    no_search_data.setVisibility(View.VISIBLE);
+                    orderByICon.setVisibility(View.GONE);
+                    filterByICon.setVisibility(View.GONE);
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<C_ProductsSerial> call, Throwable t) {
                 Toast.makeText(activity, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -419,6 +515,7 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
                 sort_price_high.setTypeface(null, Typeface.BOLD);
                 bottomSheetUpDown();
                 sort_count = 1;
+                orderbyValue = "price_high";
                 productsAPI("price_high", searchBy);
 
             }
@@ -429,6 +526,7 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
                 sort_price_low.setTypeface(null, Typeface.BOLD);
                 bottomSheetUpDown();
                 sort_count = 2;
+                orderbyValue = "price_low";
                 productsAPI("price_low", searchBy);
 
             }
@@ -439,6 +537,7 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
                 sort_latest.setTypeface(null, Typeface.BOLD);
                 bottomSheetUpDown();
                 sort_count = 3;
+                orderbyValue = "latest";
                 productsAPI("latest", searchBy);
 
             }
@@ -449,6 +548,7 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
                 sort_name_asc.setTypeface(null, Typeface.BOLD);
                 bottomSheetUpDown();
                 sort_count = 4;
+                orderbyValue = "name_a2z";
                 productsAPI("name_a2z", searchBy);
 
             }
@@ -459,6 +559,7 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
                 sort_name_dsc.setTypeface(null, Typeface.BOLD);
                 bottomSheetUpDown();
                 sort_count = 5;
+                orderbyValue = "name_z2a";
                 productsAPI("name_z2a", searchBy);
 
             }

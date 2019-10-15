@@ -210,7 +210,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_gravity="bottom"
-                    android:background="@color/pink"
+                    android:background="@drawable/ripple_effect"
                     android:gravity="center"
                     android:padding="@dimen/_10sdp"
                     android:text="@string/continues"

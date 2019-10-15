@@ -193,45 +193,54 @@ public class C_SelectDateAct extends AppCompatActivity implements DatePickerList
         c_dash_userhand_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initiatePopupWindow(ConstantClass.HAND_COLOR, ConstantClass.NAIL_POlish_COLOR, ConstantClass.NAIL_SHAPE);
+                Bundle extra = getIntent().getExtras();
+                if (extra != null) {
+                    if (extra.containsKey("hand_color")) {
+                        initiatePopupWindow(extra.getString("hand_color"), extra.getString("nail_color"), extra.getString("nail_shape"));
+                    } else {
+                        initiatePopupWindow(ConstantClass.HAND_COLOR, ConstantClass.NAIL_POlish_COLOR, ConstantClass.NAIL_SHAPE);
+
+                    }
+                }
             }
         });
 
     }
 
     private void funcList() {
+        ConstantClass.ListFunc(listSkinColor, listNailColor, listNailShape);
 
-        listNailColor.add(0, "#FFFFFF");
-        listNailColor.add(1, "#CC66CC");
-        listNailColor.add(2, "#333366");
-        listNailColor.add(3, "#009999");
-        listNailColor.add(4, "#CC00CC");
-        listNailColor.add(5, "#0033FF");
-        listNailColor.add(6, "#99FFFF");
-        listNailColor.add(7, "#CCFF99");
-        listNailColor.add(8, "#006633");
-        listNailColor.add(9, "#CC9900");
-        listNailColor.add(10, "#33FF00");
-        listNailColor.add(11, "#669966");
-        listNailColor.add(12, "#666666");
-        listNailColor.add(13, "#00FFCC");
-        listNailColor.add(14, "#993333");
-        listNailColor.add(15, "#990099");
-        listNailColor.add(16, "#9999FF");
-
-
-        listSkinColor.add(0, "#F2D9B7");
-        listSkinColor.add(1, "#EFB38A");
-        listSkinColor.add(2, "#A07561");
-        listSkinColor.add(3, "#795D4C");
-        listSkinColor.add(4, "#3D2923");
-
-
-        listNailShape.add(0, "square");
-        listNailShape.add(1, "round");
-        listNailShape.add(2, "oval");
-        listNailShape.add(3, "stillete");
-        listNailShape.add(4, "pointed");
+//        listNailColor.add(0, "#FFFFFF");
+//        listNailColor.add(1, "#CC66CC");
+//        listNailColor.add(2, "#333366");
+//        listNailColor.add(3, "#009999");
+//        listNailColor.add(4, "#CC00CC");
+//        listNailColor.add(5, "#0033FF");
+//        listNailColor.add(6, "#99FFFF");
+//        listNailColor.add(7, "#CCFF99");
+//        listNailColor.add(8, "#006633");
+//        listNailColor.add(9, "#CC9900");
+//        listNailColor.add(10, "#33FF00");
+//        listNailColor.add(11, "#669966");
+//        listNailColor.add(12, "#666666");
+//        listNailColor.add(13, "#00FFCC");
+//        listNailColor.add(14, "#993333");
+//        listNailColor.add(15, "#990099");
+//        listNailColor.add(16, "#9999FF");
+//
+//
+//        listSkinColor.add(0, "#F2D9B7");
+//        listSkinColor.add(1, "#EFB38A");
+//        listSkinColor.add(2, "#A07561");
+//        listSkinColor.add(3, "#795D4C");
+//        listSkinColor.add(4, "#3D2923");
+//
+//
+//        listNailShape.add(0, "square");
+//        listNailShape.add(1, "round");
+//        listNailShape.add(2, "oval");
+//        listNailShape.add(3, "stillete");
+//        listNailShape.add(4, "pointed");
     }
 
     @Override
@@ -528,18 +537,35 @@ public class C_SelectDateAct extends AppCompatActivity implements DatePickerList
 
         near_salon_name.setText(getIntent().getStringExtra("salon_name"));
         near_salon_address.setText(getIntent().getStringExtra("salon_address"));
-        lay_skin_color.setBackgroundColor(Color.parseColor(ConstantClass.HAND_COLOR));
-        lay_nail_color.setBackgroundColor(Color.parseColor(ConstantClass.NAIL_POlish_COLOR));
+        Bundle extra = getIntent().getExtras();
+        if (extra != null) {
+            if (extra.containsKey("hand_color")) {
+                lay_skin_color.setBackgroundColor(Color.parseColor(extra.getString("hand_color")));
+                lay_nail_color.setBackgroundColor(Color.parseColor(extra.getString("nail_color")));
 
-        Drawable unwrappedDrawable = AppCompatResources.getDrawable(activity, R.drawable.circle_view);
-        Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
-        DrawableCompat.setTint(wrappedDrawable, Color.parseColor(ConstantClass.NAIL_POlish_COLOR));
+                Drawable unwrappedDrawable = AppCompatResources.getDrawable(activity, R.drawable.circle_view);
+                Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
+                DrawableCompat.setTint(wrappedDrawable, Color.parseColor(extra.getString("nail_color")));
 
-        ln_nailColor.setBackground(wrappedDrawable);
-        nail_shape.setText("Nail Shape  " + ConstantClass.NAIL_SHAPE);
-        nailShape(c_dash_userhand_image, ConstantClass.NAIL_SHAPE);
-        skinColor(c_dash_userhand_image, ConstantClass.NAIL_POlish_COLOR, ConstantClass.NAIL_SHAPE);
+                ln_nailColor.setBackground(wrappedDrawable);
+                nail_shape.setText("Nail Shape  " + extra.getString("nail_shape"));
+                nailShape(c_dash_userhand_image, extra.getString("nail_shape"));
+                skinColor(c_dash_userhand_image, extra.getString("nail_color"), extra.getString("nail_shape"));
+            } else {
 
+                lay_skin_color.setBackgroundColor(Color.parseColor(ConstantClass.HAND_COLOR));
+                lay_nail_color.setBackgroundColor(Color.parseColor(ConstantClass.NAIL_POlish_COLOR));
+
+                Drawable unwrappedDrawable = AppCompatResources.getDrawable(activity, R.drawable.circle_view);
+                Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
+                DrawableCompat.setTint(wrappedDrawable, Color.parseColor(ConstantClass.NAIL_POlish_COLOR));
+
+                ln_nailColor.setBackground(wrappedDrawable);
+                nail_shape.setText("Nail Shape  " + ConstantClass.NAIL_SHAPE);
+                nailShape(c_dash_userhand_image, ConstantClass.NAIL_SHAPE);
+                skinColor(c_dash_userhand_image, ConstantClass.NAIL_POlish_COLOR, ConstantClass.NAIL_SHAPE);
+            }
+        }
 
         salonBookingDate.setText(st_day + "," + st_date + " " + st_month + " " + st_year);
 //        if (getIntent().getIntExtra("salon_rating", 0) == 0) {

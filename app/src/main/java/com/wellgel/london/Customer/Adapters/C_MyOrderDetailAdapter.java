@@ -21,7 +21,9 @@ import com.wellgel.london.Customer.C_CartModel;
 import com.wellgel.london.Customer.C_ConstantClass;
 import com.wellgel.london.Customer.SerializeModelClasses.C_MyOrdersSerial;
 import com.wellgel.london.R;
+import com.wellgel.london.UtilClasses.ConstantClass;
 import com.wellgel.london.UtilClasses.DropDown;
+import com.wellgel.london.UtilClasses.PreferencesShared;
 
 import java.io.Serializable;
 import java.util.List;
@@ -37,13 +39,14 @@ public class C_MyOrderDetailAdapter extends RecyclerView.Adapter<C_MyOrderDetail
     private long mLastClickTime = System.currentTimeMillis();
     private long CLICK_TIME_INTERVAL = 600;
     private String spinnerValue;
+    private PreferencesShared shared;
 
     public C_MyOrderDetailAdapter(Activity context, List<C_MyOrdersSerial.Orderdetail> list) {
         this.context = context;
         this.list = list;
         this.onItemClick = onItemClick;
 
-
+        shared = new PreferencesShared(context);
     }
 
     @NonNull
@@ -62,7 +65,14 @@ public class C_MyOrderDetailAdapter extends RecyclerView.Adapter<C_MyOrderDetail
     public void onBindViewHolder(@NonNull final C_product_holder holder, int position) {
 
         final C_MyOrdersSerial.Orderdetail model = list.get(position);
-        holder.productPrice.setText(" "+context.getResources().getString(R.string.currency) + model.getProductId().getPrice() + ".00");
+        holder.productPrice.setText(" " + context.getResources().getString(R.string.currency) + model.getProductId().getPrice() + ".00");
+        if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_PROVIDER)) {
+            holder.productPrice.setText(" " + context.getResources().getString(R.string.currency) + model.getProductId().getWholesalePrice() + ".00");
+
+        } else if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_CUSTOMER)) {
+            holder.productPrice.setText(" " + context.getResources().getString(R.string.currency) + model.getProductId().getPrice() + ".00");
+
+        }
 
 //        holder.totalAmount.setText(" £" + model.getProductId().getPrice() + ".00");
         holder.productNAme.setText(model.getProductId().getName());
