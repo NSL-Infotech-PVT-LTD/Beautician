@@ -122,7 +122,6 @@ public class C_LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loginType = "google";
-
                 Intent signInIntent = googleSignInClient.getSignInIntent();
                 startActivityForResult(signInIntent, 101);
             }

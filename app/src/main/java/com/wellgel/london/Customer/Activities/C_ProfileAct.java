@@ -45,15 +45,12 @@ public class C_ProfileAct extends AppCompatActivity {
         user_county = findViewById(R.id.user_country);
         user_email = findViewById(R.id.user_email);
 
-
         update_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(activity, C_UpdateProfileFra.class));
             }
         });
-
-
     }
 
     @Override

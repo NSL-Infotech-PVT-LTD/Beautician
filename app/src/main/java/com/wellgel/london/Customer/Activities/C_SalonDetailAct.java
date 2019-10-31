@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 import com.wellgel.london.Customer.Adapters.MyCustomPagerAdapter;
 import com.wellgel.london.Customer.C_ConstantClass;
 import com.wellgel.london.R;
+import com.wellgel.london.UtilClasses.ConstantClass;
 import com.wellgel.london.UtilClasses.PreferencesShared;
 
 import java.text.ParseException;
@@ -36,6 +37,7 @@ public class C_SalonDetailAct extends AppCompatActivity {
     ViewPager viewPager;
     List<String> images = new ArrayList<>();
     MyCustomPagerAdapter myCustomPagerAdapter;
+    Date dt = null, dt2 = null;
 
     private C_SalonDetailAct activity;
     private TextView cart_count, c_select_date_time;
@@ -73,7 +75,6 @@ public class C_SalonDetailAct extends AppCompatActivity {
 
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
         SimpleDateFormat requestime = new SimpleDateFormat("hh:mm aa");
-        Date dt = null, dt2 = null;
 
         try {
             dt = sdf.parse(getIntent().getStringExtra("salon_startTime"));
@@ -82,7 +83,7 @@ public class C_SalonDetailAct extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        salonTiming.setText("Timings: " + requestime.format(dt) + "-" + requestime.format(dt2));
+        salonTiming.setText("Timings: " + requestime.format(dt) + " - " + requestime.format(dt2));
 
         c_product_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +99,8 @@ public class C_SalonDetailAct extends AppCompatActivity {
                 intent.putExtra("salon_name", getIntent().getStringExtra("salon_name"));
                 intent.putExtra("salon_address", getIntent().getStringExtra("salon_address"));
                 intent.putExtra("salon_rating", getIntent().getIntExtra("salon_rating", 0));
+                intent.putExtra("startTime", getIntent().getStringExtra("salon_startTime"));
+                intent.putExtra("endTime", getIntent().getStringExtra("salon_endTime"));
 
                 startActivity(intent);
             }
@@ -126,11 +129,11 @@ public class C_SalonDetailAct extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (shared.getString("cartsize").equalsIgnoreCase("")) {
+        if (shared.getString(ConstantClass.CART_SIZE).equalsIgnoreCase("")) {
             cart_count.setVisibility(View.GONE);
         } else {
             cart_count.setVisibility(View.VISIBLE);
-            cart_count.setText(shared.getString("cartsize"));
+            cart_count.setText(shared.getString(ConstantClass.CART_SIZE));
         }
     }
 }

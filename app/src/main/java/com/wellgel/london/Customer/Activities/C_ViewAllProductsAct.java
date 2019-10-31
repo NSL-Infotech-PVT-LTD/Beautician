@@ -3,6 +3,7 @@ package com.wellgel.london.Customer.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
@@ -71,22 +72,24 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
     private int sort_count = 3;
     private AutoCompleteTextView getSearchedItem;
     private String searchBy;
-    private static final int PAGE_START = 1;
+    private final int PAGE_START = 1;
     private boolean isLoading = false;
     private boolean isLastPage = false;
     // limiting to 5 for this tutorial, since total pages in actual API is very large. Feel free to modify.
-    private int TOTAL_PAGES = 5;
+    private int TOTAL_PAGES;
     private int currentPage = PAGE_START;
     private String orderbyValue = "latest";
+    private GridLayoutManager layoutManager;
+    private int getItemPerPage;
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (shared.getString("cartsize").equalsIgnoreCase("")) {
+        if (shared.getString(ConstantClass.CART_SIZE).equalsIgnoreCase("")) {
             cart_count.setVisibility(View.GONE);
         } else {
             cart_count.setVisibility(View.VISIBLE);
-            cart_count.setText(shared.getString("cartsize"));
+            cart_count.setText(shared.getString(ConstantClass.CART_SIZE));
         }
     }
 
@@ -96,10 +99,10 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
 
         setContentView(R.layout.activity_c__view_all_products);
         activity = this;
-        shared = new PreferencesShared(activity);
 
         c_dash_product_recycler = findViewById(R.id.viewAllRecycler);
         c_view_back = findViewById(R.id.c_view_back);
+        shared = new PreferencesShared(activity);
         cart_count = findViewById(R.id.cart_count);
         textHeader = findViewById(R.id.textHeader);
         filterByICon = findViewById(R.id.filterByICon);
@@ -159,7 +162,8 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
                     if (event.getRawX() >= (getSearchedItem.getRight() - getSearchedItem.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
 
                         // your action her
-                        productsAPI("latest", getSearchedItem.getText().toString());
+                        searchBy = getSearchedItem.getText().toString();
+                        productsAPI("latest", searchBy);
 
                         return true;
                     }
@@ -172,7 +176,8 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    productsAPI("latest", getSearchedItem.getText().toString());
+                    searchBy = getSearchedItem.getText().toString();
+                    productsAPI("latest", searchBy);
                     return true;
                 }
                 return false;
@@ -188,7 +193,7 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
     private void productFun() {
 
         textHeader.setText(getString(R.string.wellgelExpres));
-        GridLayoutManager layoutManager = new GridLayoutManager(activity, 2) {
+        layoutManager = new GridLayoutManager(activity, 2) {
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -197,6 +202,28 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
         c_dash_product_recycler.setLayoutManager(layoutManager);
 
 
+        recyclerFunc(layoutManager);
+
+
+        if (getIntent() != null) {
+
+            searchBy = getIntent().getStringExtra("search");
+            if (searchBy != null) {
+                if (searchBy.equalsIgnoreCase("")) {
+                    productsAPI("latest", "");
+
+                } else {
+                    productsAPI("latest", searchBy);
+
+                }
+            } else {
+                productsAPI("latest", searchBy);
+            }
+
+        }
+    }
+
+    private void recyclerFunc(LinearLayoutManager layoutManager) {
         c_dash_product_recycler.addOnScrollListener(new PaginationScrollListener(layoutManager) {
             @Override
             protected void loadMoreItems() {
@@ -207,7 +234,9 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        nextProductsAPI(orderbyValue, "");
+
+
+                        nextProductsAPI(orderbyValue, searchBy);
                     }
                 }, 1000);
             }
@@ -227,24 +256,6 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
                 return isLoading;
             }
         });
-
-
-        if (getIntent() != null) {
-
-            String search = getIntent().getStringExtra("search");
-            if (search != null) {
-                if (search.equalsIgnoreCase("")) {
-                    productsAPI("latest", "");
-
-                } else {
-                    productsAPI("latest", getIntent().getStringExtra("search"));
-
-                }
-            } else {
-                productsAPI("latest", getIntent().getStringExtra("search"));
-            }
-
-        }
     }
 
 
@@ -291,6 +302,7 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
                     case BottomSheetBehavior.STATE_EXPANDED: {
                     }
                     break;
+
                     case BottomSheetBehavior.STATE_COLLAPSED: {
                     }
                     break;
@@ -322,7 +334,12 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
 
         /*Create handle for the RetrofitInstance interface*/
         Customer_APIs service = RetrofitClientInstance.getRetrofitInstance().create(Customer_APIs.class);
-        Call<C_ProductsSerial> call = service.poducts("application/x-www-form-urlencoded", "Bearer " + shared.getString("token"), orderBy, search + "", "6", currentPage + "");
+        Call<C_ProductsSerial> call = null;
+        if (searchBy.isEmpty()) {
+            call = service.poducts("application/x-www-form-urlencoded", "Bearer " + shared.getString("token"), orderBy, searchBy + "", "12", currentPage + "");
+        } else
+            call = service.poducts("application/x-www-form-urlencoded", "Bearer " + shared.getString("token"), orderBy, searchBy + "", "12", "");
+
         call.enqueue(new Callback<C_ProductsSerial>() {
             @Override
             public void onResponse(Call<C_ProductsSerial> call, Response<C_ProductsSerial> response) {
@@ -338,34 +355,19 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
                             productList.clear();
 
                             if (response.body().getData().getData().size() > 0) {
-//                                no_search_data.setVisibility(View.GONE);
 
-//
-//                                for (int i = 0; i < response.body().getData().getData().size(); i++) {
-//
-//                                    product_model = new C_Product_model();
-//                                    if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_CUSTOMER)) {
-//                                        product_model.setProddductPrice(" " + getString(R.string.currency) + response.body().getData().getData().get(i).getPrice() + "");
-//                                    } else if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_PROVIDER)) {
-//                                        product_model.setProddductPrice(" " + getString(R.string.currency) + response.body().getData().getData().get(i).getWholesale_price() + "");
-//                                    }
-//                                    product_model.setProductName(response.body().getData().getData().get(i).getName());
-//                                    product_model.setProductImage(C_ConstantClass.IMAGE_BASE_URL + "products/" + response.body().getData().getData().get(i).getImage());
-//                                    product_model.setProductID(response.body().getData().getData().get(i).getId());
-//
-//                                    productList.add(product_model);
-//                                }
-
-//                                progressBar.setVisibility(View.GONE);
 
                                 product_adapte = new C_Product_Adapte(activity, activity);
                                 c_dash_product_recycler.setAdapter(product_adapte);
 //                                product_adapte.addAll(response.body().getData().getData());
                                 List<C_ProductsSerial.Datum> results = fetchResults(response);
 //                                progressBar.setVisibility(View.GONE);
+                                TOTAL_PAGES = response.body().getData().getLastPage();
+                                getItemPerPage = response.body().getData().getPerPage();
                                 product_adapte.addAll(results);
 
-                                if (currentPage <= TOTAL_PAGES) product_adapte.addLoadingFooter();
+                                if (currentPage <= TOTAL_PAGES)
+                                    product_adapte.addLoadingFooter();
                                 else isLastPage = true;
 
                             } else {
@@ -406,7 +408,7 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
 
         /*Create handle for the RetrofitInstance interface*/
         Customer_APIs service = RetrofitClientInstance.getRetrofitInstance().create(Customer_APIs.class);
-        Call<C_ProductsSerial> call = service.poducts("application/x-www-form-urlencoded", "Bearer " + shared.getString("token"), orderBy, search + "", "6", currentPage + "");
+        Call<C_ProductsSerial> call = service.poducts("application/x-www-form-urlencoded", "Bearer " + shared.getString("token"), orderBy, search + "", getItemPerPage + "", currentPage + "");
         call.enqueue(new Callback<C_ProductsSerial>() {
             @Override
             public void onResponse(Call<C_ProductsSerial> call, Response<C_ProductsSerial> response) {
@@ -514,6 +516,9 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
             public void onClick(View view) {
                 sort_price_high.setTypeface(null, Typeface.BOLD);
                 bottomSheetUpDown();
+                currentPage = PAGE_START;
+                isLastPage = false;
+                isLoading = false;
                 sort_count = 1;
                 orderbyValue = "price_high";
                 productsAPI("price_high", searchBy);
@@ -526,6 +531,10 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
                 sort_price_low.setTypeface(null, Typeface.BOLD);
                 bottomSheetUpDown();
                 sort_count = 2;
+                currentPage = PAGE_START;
+
+                isLastPage = false;
+                isLoading = false;
                 orderbyValue = "price_low";
                 productsAPI("price_low", searchBy);
 
@@ -536,7 +545,11 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
             public void onClick(View view) {
                 sort_latest.setTypeface(null, Typeface.BOLD);
                 bottomSheetUpDown();
+                currentPage = PAGE_START;
                 sort_count = 3;
+
+                isLastPage = false;
+                isLoading = false;
                 orderbyValue = "latest";
                 productsAPI("latest", searchBy);
 
@@ -546,8 +559,12 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
             @Override
             public void onClick(View view) {
                 sort_name_asc.setTypeface(null, Typeface.BOLD);
+                currentPage = PAGE_START;
                 bottomSheetUpDown();
                 sort_count = 4;
+
+                isLastPage = false;
+                isLoading = false;
                 orderbyValue = "name_a2z";
                 productsAPI("name_a2z", searchBy);
 
@@ -558,6 +575,10 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
             public void onClick(View view) {
                 sort_name_dsc.setTypeface(null, Typeface.BOLD);
                 bottomSheetUpDown();
+                currentPage = PAGE_START;
+
+                isLastPage = false;
+                isLoading = false;
                 sort_count = 5;
                 orderbyValue = "name_z2a";
                 productsAPI("name_z2a", searchBy);

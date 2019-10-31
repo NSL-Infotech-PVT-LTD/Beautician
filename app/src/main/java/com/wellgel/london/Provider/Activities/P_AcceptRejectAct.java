@@ -29,15 +29,10 @@ import android.widget.Toast;
 import com.wellgel.london.APIs.Customer_APIs;
 import com.wellgel.london.APIs.Provider_APIs;
 import com.wellgel.london.Customer.Activities.C_DashboardAct;
-import com.wellgel.london.Customer.Activities.C_LoginAsActivity;
-import com.wellgel.london.Customer.Activities.C_SelectDateAct;
-import com.wellgel.london.Customer.Activities.Ecom_AppointlistDetail;
-import com.wellgel.london.Customer.C_CartModel;
 import com.wellgel.london.Customer.SerializeModelClasses.EcomAppoDetailSerial;
 import com.wellgel.london.Provider.ModelSerialized.RescheduleAppointment;
 import com.wellgel.london.R;
 import com.wellgel.london.UtilClasses.ConstantClass;
-import com.wellgel.london.UtilClasses.DropDown;
 import com.wellgel.london.UtilClasses.PreferencesShared;
 import com.wellgel.london.UtilClasses.Retrofit.RetrofitClientInstance;
 
@@ -47,7 +42,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -168,7 +162,6 @@ public class P_AcceptRejectAct extends AppCompatActivity {
                                 lay_skin_color.setBackgroundColor(Color.parseColor(response.body().getData().get(0).getSkinColor() + ""));
                                 lay_nail_color.setBackgroundColor(Color.parseColor(response.body().getData().get(0).getNailPolishColor() + ""));
                                 salonBookingDate.setText(parseDateToddMMyyyy(separated[0]));
-                                resc_date.setText(parseDateToddMMyyyy(separatedAvailTime[0]));
                                 Drawable unwrappedDrawable = AppCompatResources.getDrawable(activity, R.drawable.circle_view);
                                 Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
                                 DrawableCompat.setTint(wrappedDrawable, Color.parseColor(response.body().getData().get(0).getNailPolishColor() + ""));
@@ -193,6 +186,21 @@ public class P_AcceptRejectAct extends AppCompatActivity {
                                             time = requireTime.format(dt);
                                         }
                                     }
+
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                                c_dash_userhand_image.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+
+                                        initiatePopupWindow(response.body().getData().get(0).getSkinColor(), response.body().getData().get(0).getNailPolishColor(), response.body().getData().get(0).getNailShape());
+                                    }
+                                });
+                                resc_date.setText(parseDateToddMMyyyy(separatedAvailTime[0]));
+                                try {
                                     if (!avilTime.equalsIgnoreCase("null")) {
 
                                         {
@@ -207,22 +215,13 @@ public class P_AcceptRejectAct extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
 
-
-                                c_dash_userhand_image.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-
-                                        initiatePopupWindow(response.body().getData().get(0).getSkinColor(), response.body().getData().get(0).getNailPolishColor(), response.body().getData().get(0).getNailShape());
-                                    }
-                                });
-
-
-                                if (response.body().getData().get(0).getStatus().equalsIgnoreCase("requested")) {
+                                if (response.body().getData().get(0).getStatus().equalsIgnoreCase(ConstantClass.STATUS_REQUESTED)) {
 
                                     reschedulingBTN.setVisibility(View.VISIBLE);
                                     bottomLayout.setVisibility(View.VISIBLE);
                                     statusText.setVisibility(View.GONE);
                                     priceText.setText(response.body().getData().get(0).getPrice());
+
                                     reschedulingBTN.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
@@ -234,6 +233,8 @@ public class P_AcceptRejectAct extends AppCompatActivity {
                                                 Intent intent = new Intent(activity, P_RescheduleDateAct.class);
                                                 intent.putExtra("appo_id", appo_id);
                                                 intent.putExtra("price", priceText_st);
+                                                intent.putExtra("startTime", response.body().getData().get(0).getSalonDetails().get(0).getBusinessHourStart());
+                                                intent.putExtra("endTime", response.body().getData().get(0).getSalonDetails().get(0).getBusinessHourEnd());
                                                 startActivity(intent);
                                             }
 
@@ -245,14 +246,14 @@ public class P_AcceptRejectAct extends AppCompatActivity {
                                     bottomLayout.setVisibility(View.GONE);
                                     statusText.setVisibility(View.VISIBLE);
                                     priceText.setText(response.body().getData().get(0).getPrice());
-                                    if (response.body().getData().get(0).getStatus().equalsIgnoreCase("Open")) {
+                                    if (response.body().getData().get(0).getStatus().equalsIgnoreCase(ConstantClass.STATUS_OPEN)) {
                                         statusText.setText("Booking confirmation is pending by customer side......");
                                         priceText.setVisibility(View.VISIBLE);
                                         priceText.setText(getString(R.string.currency) + response.body().getData().get(0).getPrice());
                                         priceText.setEnabled(false);
 
 
-                                    } else if (response.body().getData().get(0).getStatus().equalsIgnoreCase("Accepted")) {
+                                    } else if (response.body().getData().get(0).getStatus().equalsIgnoreCase(ConstantClass.STATUS_ACCEPTED)) {
                                         priceText.setVisibility(View.VISIBLE);
                                         String value = "";
                                         if (response.body().getData().get(0).getPaymentMode().equals("pay_now"))
@@ -264,13 +265,13 @@ public class P_AcceptRejectAct extends AppCompatActivity {
                                         priceText.setText(getString(R.string.currency) + response.body().getData().get(0).getPrice());
                                         priceText.setEnabled(false);
 
-                                    } else if (response.body().getData().get(0).getStatus().equalsIgnoreCase("Rejected")) {
+                                    } else if (response.body().getData().get(0).getStatus().equalsIgnoreCase(ConstantClass.STATUS_REJECTED)) {
                                         statusText.setText("You Have Reject This Appointment");
                                         priceText.setVisibility(View.VISIBLE);
                                         priceText.setText(getString(R.string.currency) + response.body().getData().get(0).getPrice());
                                         priceText.setEnabled(false);
 
-                                    } else if (response.body().getData().get(0).getStatus().equalsIgnoreCase("cancel")) {
+                                    } else if (response.body().getData().get(0).getStatus().equalsIgnoreCase(ConstantClass.STATUS_CANCEL)) {
                                         statusText.setText("Customer Has Cancelled This Booking");
                                         priceText.setVisibility(View.VISIBLE);
                                         priceText.setEnabled(false);

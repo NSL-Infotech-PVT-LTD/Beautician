@@ -41,7 +41,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/off_grey"
-                        android:scaleType="fitXY" />
+                        android:adjustViewBounds="true"
+                        android:layout_weight="1"
+                        android:scaleType="fitCenter" />
 
                     <ImageView
                         android:layout_width="wrap_content"

@@ -16,25 +16,32 @@
         android:icon="@mipmap/ic_launcher_app_icon"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_app_icon_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".Customer.EcomNotificationAct"></activity>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".Customer.EComAboutUsAct"></activity>
+        <activity android:name=".Customer.EcomNotificationAct" />
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".Provider.Activities.P_AcceptRejectAct" />
+        <activity
+            android:name=".Provider.Activities.P_AcceptRejectAct"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity
             android:name=".Customer.Activities.C_AllAppointListAct"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".Customer.Activities.Ecom_AppointlistDetail" />
+        <activity
+            android:name=".Customer.Activities.Ecom_AppointlistDetail"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity android:name=".Customer.Ecom_BookingActivity" />
         <activity android:name=".Customer.Activities.C_SelectDateAct" />
         <activity android:name=".Customer.Activities.C_SalonDetailAct" />
-        <activity android:name=".Customer.Activities.C_NearBySalonAct" />
+        <activity
+            android:name=".Customer.Activities.C_NearBySalonAct"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Customer.Activities.C_CreateNailAct"
             android:screenOrientation="portrait" />
@@ -55,6 +62,8 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Customer.Activities.C_DashboardAct"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:fitsSystemWindows="true"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".Customer.Activities.C_RegisterActivity" />
         <activity android:name=".Provider.Activities.P_RegisterActivity" />

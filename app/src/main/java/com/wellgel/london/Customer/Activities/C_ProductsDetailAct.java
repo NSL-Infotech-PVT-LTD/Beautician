@@ -59,11 +59,11 @@ public class C_ProductsDetailAct extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (shared.getString("cartsize").equalsIgnoreCase("")) {
+        if (shared.getString(ConstantClass.CART_SIZE).equalsIgnoreCase("")) {
             cart_count.setVisibility(View.GONE);
         } else {
             cart_count.setVisibility(View.VISIBLE);
-            cart_count.setText(shared.getString("cartsize"));
+            cart_count.setText(shared.getString(ConstantClass.CART_SIZE));
         }
     }
 
@@ -211,9 +211,9 @@ public class C_ProductsDetailAct extends AppCompatActivity {
                             }
                             Picasso.with(activity).load(C_ConstantClass.IMAGE_BASE_URL + "products/" + response.body().getData().getImage()).placeholder(R.mipmap.logo).into(c_peoduct_image);
                             if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_CUSTOMER)) {
-                                c_product_price.setText(" "+getString(R.string.currency) + response.body().getData().getPrice() + ".00");
+                                c_product_price.setText(" " + getString(R.string.currency) + response.body().getData().getPrice() + ".00");
                             } else if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_PROVIDER)) {
-                                c_product_price.setText(" "+getString(R.string.currency) + response.body().getData().getWholesale_price() + ".00");
+                                c_product_price.setText(" " + getString(R.string.currency) + response.body().getData().getWholesale_price() + ".00");
                             }
                             c_product_name.setText(response.body().getData().getName());
                             productID = response.body().getData().getId() + "";
@@ -281,8 +281,8 @@ public class C_ProductsDetailAct extends AppCompatActivity {
 
                         if (response.body().getStatus()) {
 
-                            Intent intent = new Intent(activity, C_CartDetailAct.class);
-                            startActivity(intent);
+
+                            startActivity(new Intent(activity, C_CartDetailAct.class));
                         }
                     }
                 }
@@ -321,9 +321,7 @@ public class C_ProductsDetailAct extends AppCompatActivity {
 
                         if (response.body().getStatus()) {
 
-                            Intent intent = new Intent(activity, C_CartDetailAct.class);
-                            startActivity(intent);
-
+                            startActivity(new Intent(activity, C_CartDetailAct.class));
 
                         } else {
                         }

@@ -99,9 +99,9 @@ public class C_ChromeKit_Adapte extends RecyclerView.Adapter<C_ChromeKit_Adapte.
         switch (getItemViewType(position)) {
             case ITEM:
                 if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_CUSTOMER)) {
-                    holder.productPrice.setText(" " + context.getString(R.string.currency) + model.getProddductPrice() + "");
+                    holder.productPrice.setText( model.getProddductPrice() + "");
                 } else if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_PROVIDER)) {
-                    holder.productPrice.setText(" " + context.getString(R.string.currency) + model.getProddductPrice() + "");
+                    holder.productPrice.setText( model.getProddductPrice() + "");
                 }
 //                holder.productPrice.setText(model.getPrice() + "");
                 holder.productNAme.setText(model.getProductName());

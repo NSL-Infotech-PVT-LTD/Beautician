@@ -88,5 +88,11 @@
     <string name="cofirmBooking">Confirm Booking</string>
     <string name="updateDateTime"><![CDATA[Update Booking Date & Time]]></string>
     <string name="continues">Continue</string>
+    <string name="about_us">WellgelLondon is an all in one cruelty free gel nail system. There is no need for separate base or top coats, everything you need is in one bottle. This makes application faster and easy to manage stock levels. Wellgel is made from an alcohol and solvent free system making it suitable for expectant mothers. Wellgel uses keratin to bond and nourish the natural nail, without causing damage or irritation to the skin. We have put a great deal of thought into this faster, safer, cruelty free system to make your working environment and the care of your nails at the forefront of our research. </string>
+    <string name="requestAccept">Booking Request is now accepted.</string>
+    <string name="salonServiceDetail">You will provide service to customer as below details.</string>
+    <string name="customerServiceDetail">You will get service by salon as below details.</string>
+    <string name="salonGetRespon">Customer will shortly respond to the Payment Method it will follow.</string>
+    <string name="salonImage">Add Your Salon Images (Optional)</string>
 
 </resources>

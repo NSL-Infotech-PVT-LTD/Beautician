@@ -41,6 +41,7 @@ import com.wellgel.london.Customer.Adapters.C_Product_Adapte;
 import com.wellgel.london.Customer.C_BookedOrderModel;
 import com.wellgel.london.Customer.C_ConstantClass;
 import com.wellgel.london.Customer.C_Product_model;
+import com.wellgel.london.Customer.EComAboutUsAct;
 import com.wellgel.london.Customer.EcomNotificationAct;
 import com.wellgel.london.Customer.Ecom_BookingActivity;
 import com.wellgel.london.Customer.SerializeModelClasses.C_AppointmentList;
@@ -102,11 +103,11 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
         NailPolishColorAdapter.selectedPosition = 0;
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.shake);
         lay_notification.setAnimation(animation);
-        if (shared.getString("cartsize").equalsIgnoreCase("")) {
+        if (shared.getString(ConstantClass.CART_SIZE).equalsIgnoreCase("")) {
             cart_count.setVisibility(View.GONE);
         } else {
             cart_count.setVisibility(View.VISIBLE);
-            cart_count.setText(shared.getString("cartsize"));
+            cart_count.setText(shared.getString(ConstantClass.CART_SIZE));
         }
     }
 
@@ -318,10 +319,10 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
                             product_adapte = new C_Product_Adapte(activity, response.body().getData().getData(), activity);
                             c_dash_product_recycler.setAdapter(product_adapte);
 
-                            String[] array = new String[productList.size()];
+                            String[] array = new String[response.body().getData().getData().size()];
 
-                            for (int i = 0; i < productList.size(); i++) {
-                                array[i] = productList.get(i).getProductName();
+                            for (int i = 0; i < response.body().getData().getData().size(); i++) {
+                                array[i] = response.body().getData().getData().get(i).getName();
                             }
                             ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_dropdown_item_1line, array);
                             getSearchedItem.setThreshold(2);
@@ -394,6 +395,7 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
         // display the popup in the center
         popupWindow.showAtLocation(view, Gravity.TOP, 0, 0);
         RelativeLayout main = view.findViewById(R.id.main);
+        RelativeLayout profileLay = view.findViewById(R.id.profileLay);
         TextView myOrder = view.findViewById(R.id.myOrders);
         TextView logout = view.findViewById(R.id.logout);
 
@@ -425,11 +427,35 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
                 startActivity(new Intent(activity, C_MyOrdersActivity.class));
             }
         });
+        profileLay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow.dismiss();
+                if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_CUSTOMER))
+                    startActivity(new Intent(activity, C_ProfileAct.class));
+                else if (shared.getString(ConstantClass.ROLL_PLAY).equalsIgnoreCase(ConstantClass.ROLL_PROVIDER))
+                    startActivity(new Intent(activity, P_ProfileAct.class));
+            }
+        });
         navi_booking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 popupWindow.dismiss();
                 startActivity(new Intent(activity, Ecom_BookingActivity.class));
+            }
+        });
+        navi_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow.dismiss();
+                startActivity(new Intent(activity, C_CartDetailAct.class));
+            }
+        });
+        navi_about_us.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow.dismiss();
+                startActivity(new Intent(activity, EComAboutUsAct.class));
             }
         });
 
@@ -446,8 +472,9 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
 
                                 shared.clearShared();
                                 popupWindow.dismiss();
-
-                                startActivity(new Intent(C_DashboardAct.this, C_LoginAsActivity.class));
+                                Intent intent = new Intent(activity, C_LoginAsActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
                                 finish();
 
                             }
@@ -457,8 +484,7 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                popupWindow.dismiss();
-
+                                dialog.dismiss();
                             }
 
                         })

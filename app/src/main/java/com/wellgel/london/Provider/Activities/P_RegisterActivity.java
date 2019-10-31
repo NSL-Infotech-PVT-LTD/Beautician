@@ -135,7 +135,7 @@ public class P_RegisterActivity extends AppCompatActivity implements GoogleApiCl
     private P_Adapter_Services adapter_services;
     private C_Product_model serviceModel;
     private String address = "";
-    private double latitude = 0.0, longitude=0.0;
+    private double latitude = 0.0, longitude = 0.0;
     private String valueOfLayout = "";
     private PreferencesShared shared;
     private Chip addServiceMAin;
@@ -155,16 +155,8 @@ public class P_RegisterActivity extends AppCompatActivity implements GoogleApiCl
     private int month, year;
     private String datePattern = "\\d{2}/\\d{4}", currentString;
 
-
-    private ArrayList<String> imgList = new ArrayList<>();
-    String backString = "";
-    String imageEncoded = "";
-    MultipartBody.Part userImg = null;
     MultipartBody.Part portFolioImage1 = null, portFolioImage2 = null, portFolioImage3 = null, portFolioImage4 = null;
-    private ImageView imageView;
     private int position;
-    private List<File> imagesSelected = new ArrayList<>();
-    private List<MultipartBody.Part> imgPortfolio;
     private boolean apiHit = false;
 
     @Override
@@ -391,7 +383,6 @@ public class P_RegisterActivity extends AppCompatActivity implements GoogleApiCl
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (checktimings(show_selctStartTime.getText().toString(), show_selctEndTime.getText().toString())) {
                 position = 1;
                 selectImage();
             }
@@ -399,7 +390,6 @@ public class P_RegisterActivity extends AppCompatActivity implements GoogleApiCl
         profileImage2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (checktimings(show_selctStartTime.getText().toString(), show_selctEndTime.getText().toString())) {
                 position = 2;
                 selectImage();
             }
@@ -407,7 +397,6 @@ public class P_RegisterActivity extends AppCompatActivity implements GoogleApiCl
         profileImage3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (checktimings(show_selctStartTime.getText().toString(), show_selctEndTime.getText().toString())) {
                 position = 3;
                 selectImage();
             }
@@ -415,7 +404,6 @@ public class P_RegisterActivity extends AppCompatActivity implements GoogleApiCl
         profileImage4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (checktimings(show_selctStartTime.getText().toString(), show_selctEndTime.getText().toString())) {
                 position = 4;
                 selectImage();
             }
@@ -462,6 +450,18 @@ public class P_RegisterActivity extends AppCompatActivity implements GoogleApiCl
                 mTimePicker = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+
+                        Calendar c = Calendar.getInstance();
+                        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                        String getCurrentTime = sdf.format(c.getTime());
+                        String getTestTime = "09:45";
+
+                        if (getCurrentTime.compareTo(getTestTime) < 0) {
+                            // Do your staff
+                            Log.d("Return", "getTestTime less than getCurrentTime ");
+                        } else {
+                            Log.d("Return", "getTestTime older than getCurrentTime ");
+                        }
                         if (selectedHour > 12) {
                             show_selctEndTime.setText(String.valueOf(selectedHour - 12) + ":" + (String.valueOf(selectedMinute) + " PM"));
                         } else if (selectedHour == 12) {
@@ -631,13 +631,6 @@ public class P_RegisterActivity extends AppCompatActivity implements GoogleApiCl
     //Intent to open the gallery
     private void galleryIntent() {
 
-//        Intent intent = new Intent();
-//        intent.setType("image/*");
-//        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-//        intent.setAction(Intent.ACTION_GET_CONTENT);
-//        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_FILE);
-
-
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);//
@@ -739,17 +732,6 @@ public class P_RegisterActivity extends AppCompatActivity implements GoogleApiCl
             if (data != null) {
                 try {
 
-
-//            Uri mImageUri = data.getData();
-//
-//            // Get the cursor
-//            Cursor cursor = getContentResolver().query(mImageUri, filePathColumn, null, null, null);
-//            // Move to first row
-//            cursor.moveToFirst();
-//
-//            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//            imageEncoded = cursor.getString(columnIndex);
-//            cursor.close();
                     if (position == 1) {
                         bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
                         file = saveImage1(bm);
@@ -791,98 +773,6 @@ public class P_RegisterActivity extends AppCompatActivity implements GoogleApiCl
                 }
             }
         }
-
-//        else {                              //on multiple image selected
-//            if (data.getClipData() != null) {
-//                ClipData mClipData = data.getClipData();
-//                ArrayList<Uri> mArrayUri = new ArrayList<Uri>();
-//                if (mClipData.getItemCount() == 0) {
-//                    Toast.makeText(activity, "You haven't select any photo", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    if (mClipData.getItemCount() > 4) {
-//                        Toast.makeText(activity, "Please select 4 or less photos", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        for (int i = 0; i < mClipData.getItemCount(); i++) {
-//
-//                            ClipData.Item item = mClipData.getItemAt(i);
-//                            Uri uri = item.getUri();
-//                            mArrayUri.add(uri);
-//                            // Get the cursor
-//                            Cursor cursor = getContentResolver().query(uri, filePathColumn, null, null, null);
-//                            // Move to first row
-//                            cursor.moveToFirst();
-//
-//                            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//                            imageEncoded = cursor.getString(columnIndex);
-//
-//
-//                            imgList.add(imageEncoded);
-//
-//                            cursor.close();
-//                            if (imgList.size() > 4) {
-//                                imgList.clear();
-//
-//                                imgList.add(imageEncoded);
-//                                cursor.close();
-//
-//                            }
-//                        }
-//
-//                        for (int i = 0; i < imgList.size(); i++) {
-//                            Log.v("MainActivity", "Selected Images" + imgList.get(i));
-//                        }
-//
-//                        if (imgList.size() > 0 && (imgList.get(0) != null))
-//                            profileImage.setImageURI(Uri.parse(imgList.get(0)));
-//                        if (imgList.size() > 1 && (imgList.get(1) != null))
-//                            profileImage2.setImageURI(Uri.parse(imgList.get(1)));
-//                        if (imgList.size() > 2 && (imgList.get(2) != null))
-//                            profileImage3.setImageURI(Uri.parse(imgList.get(2)));
-//                        if (imgList.size() > 3 && (imgList.get(3) != null))
-//                            profileImage4.setImageURI(Uri.parse(imgList.get(3)));
-//
-//                    }
-//                }
-//            }
-//        }
-
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-//            if (data.getClipData() != null) {
-//                int count = data.getClipData().getItemCount();
-//                int currentItem = 0;
-//                while (currentItem < count) {
-//                    //do something with the image (save it to some directory or whatever you need to do with it here)
-//                    try {
-//                        bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getClipData().getItemAt(currentItem).getUri());
-//                        file = saveImage1(bm);
-//                        picturePath = saveImage(bm);
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                    currentItem = currentItem + 1;
-//
-//
-//                }
-//            } else if (data.getData() != null) {
-//
-//                if (data != null) {
-//                    try {
-//                        bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
-//                        file = saveImage1(bm);
-//                        picturePath = saveImage(bm);
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//
-//
-//            }
-//        }
-//
-//        imgList.add(file);
-
-
     }
 
 
@@ -947,7 +837,7 @@ public class P_RegisterActivity extends AppCompatActivity implements GoogleApiCl
 
         /*Create handle for the RetrofitInstance interface*/
         Provider_APIs service = RetrofitClientInstance.getRetrofitInstance().create(Provider_APIs.class);
-        Call<P_Registration_serial> call = service.registration(portFolioImage1, portFolioImage2, portFolioImage3, portFolioImage4, st_name, st_email, st_pass, st_number, latitude + "", longitude + "", "android",shared.getString(ConstantClass.DEVICE_TOKEN), st_address, String.valueOf(myIntegers), token, subscriptionID + "", show_selctStartTime.getText().toString(), show_selctEndTime.getText().toString(), st_country);
+        Call<P_Registration_serial> call = service.registration(portFolioImage1, portFolioImage2, portFolioImage3, portFolioImage4, st_name, st_email, st_pass, st_number, latitude + "", longitude + "", "android", shared.getString(ConstantClass.DEVICE_TOKEN), st_address, String.valueOf(myIntegers), token, subscriptionID + "", show_selctStartTime.getText().toString(), show_selctEndTime.getText().toString(), st_country);
         call.enqueue(new Callback<P_Registration_serial>() {
             @Override
             public void onResponse(Call<P_Registration_serial> call, Response<P_Registration_serial> response) {
@@ -963,7 +853,7 @@ public class P_RegisterActivity extends AppCompatActivity implements GoogleApiCl
                             shared.setBoolean(ConstantClass.isProviderLoggeIn, true);
                             shared.setBoolean(ConstantClass.isCustomerLoggeIn, false);
 
-                            shared.setString("profile",imageURL + response.body().getData().getUser().getProfileImage());
+                            shared.setString("profile", imageURL + response.body().getData().getUser().getProfileImage());
                             shared.setString("token", response.body().getData().getToken());
                             shared.setString(ConstantClass.USER_NAME, response.body().getData().getUser().getName());
                             shared.setString(ConstantClass.USER_Address, response.body().getData().getUser().getAddress());

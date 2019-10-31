@@ -83,7 +83,6 @@
                     android:layout_alignParentLeft="true"
                     android:hint="@string/enterPass"
                     android:inputType="textPassword"
-                    android:maxLength="20"
                     android:paddingBottom="@dimen/_20sdp"
                     android:singleLine="true"
                     android:textSize="@dimen/_14sdp" />

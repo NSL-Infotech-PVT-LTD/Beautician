@@ -2,6 +2,7 @@ package com.wellgel.london.Customer.Adapters;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.wellgel.london.Customer.Activities.C_CartDetailAct;
+import com.wellgel.london.Customer.Activities.C_ProductsDetailAct;
 import com.wellgel.london.Customer.C_CartModel;
 import com.wellgel.london.R;
 import com.wellgel.london.UtilClasses.DropDown;
@@ -64,7 +66,7 @@ public class C_CartAdapter extends RecyclerView.Adapter<C_CartAdapter.C_product_
     public void onBindViewHolder(@NonNull final C_product_holder holder, int position) {
 
         final C_CartModel model = list.get(position);
-        holder.productPrice.setText(" "+context.getResources().getString(R.string.currency) + model.getCartProductPrice() + ".00");
+        holder.productPrice.setText(" " + context.getResources().getString(R.string.currency) + model.getCartProductPrice() + ".00");
         holder.productNAme.setText(model.getCartProductName());
         holder.productNAme.setText(model.getCartProductName());
         ArrayList<String> data = new ArrayList<>();
@@ -73,7 +75,7 @@ public class C_CartAdapter extends RecyclerView.Adapter<C_CartAdapter.C_product_
         data.add("3");
         data.add("More");
 
-        ((DropDown) holder.dropDown).setOptions(data,position);
+        ((DropDown) holder.dropDown).setOptions(data, position);
         ((DropDown) holder.dropDown).setItemListener(context);
         holder.dropDown.setText(model.getCartQuantity() + "");
 
@@ -84,6 +86,16 @@ public class C_CartAdapter extends RecyclerView.Adapter<C_CartAdapter.C_product_
             public void onClick(View view) {
 
                 onItemClick.onItemClick(model.getCartID(), holder.removeProduct.getText().toString(), holder.dropDown.getText().toString());
+            }
+        });
+
+        holder.cartProductImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context, C_ProductsDetailAct.class);
+                intent.putExtra("product_id", model.getCartID());
+//                context.startActivity(intent);
             }
         });
 
@@ -114,13 +126,12 @@ public class C_CartAdapter extends RecyclerView.Adapter<C_CartAdapter.C_product_
             dropDown = itemView.findViewById(R.id.dropdown);
 
 
-
-
         }
     }
 
     public interface onItemClick {
         public void onItemClick(String id, String value, String quantity);
+
     }
 
 

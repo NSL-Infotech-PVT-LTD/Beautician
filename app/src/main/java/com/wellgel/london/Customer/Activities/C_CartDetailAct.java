@@ -173,18 +173,21 @@ public class C_CartDetailAct extends AppCompatActivity implements DropDown.IQuan
                                     }
 
                                     setDataFromSharedPreferences(list);
-                                    totalAmount.setText(" "+getString(R.string.currency) + grandTotal(list) + ".00");
+                                    totalAmount.setText(" " + getString(R.string.currency) + grandTotal(list) + ".00");
                                     cart_count.setText(list.size() + "");
 
 
-                                    shared.setString("cartsize", String.valueOf(list.size()));
-                                    itemPrice.setText(" "+getString(R.string.currency) + grandTotal(list) + ".00");
+                                    shared.setString(ConstantClass.CART_SIZE, String.valueOf(list.size()));
+                                    itemPrice.setText(" " + getString(R.string.currency) + grandTotal(list) + ".00");
                                     adapter = new C_CartAdapter(activity, list, new C_CartAdapter.onItemClick() {
                                         @Override
-                                        public void onItemClick(String id, String option, String quantity) {
+                                        public void onItemClick(String id, String value, String quantity) {
                                             removeOrUpdateCartApi(id, "delete", quantity);
 
                                         }
+
+
+
                                     });
 
                                     cartRecycler.setAdapter(adapter);
@@ -202,13 +205,13 @@ public class C_CartDetailAct extends AppCompatActivity implements DropDown.IQuan
 
                                 } else {
                                     cartDeatil.setVisibility(View.VISIBLE);
-                                    shared.setString("cartsize", "");
+                                    shared.setString(ConstantClass.CART_SIZE, "");
                                     placeOrder.setVisibility(View.GONE);
                                     cardViewOfamount.setVisibility(View.GONE);
                                 }
                             } else {
                                 cartDeatil.setVisibility(View.VISIBLE);
-                                shared.setString("cartsize", "");
+                                shared.setString(ConstantClass.CART_SIZE, "");
                                 placeOrder.setVisibility(View.GONE);
                                 cardViewOfamount.setVisibility(View.GONE);
 
@@ -314,18 +317,19 @@ public class C_CartDetailAct extends AppCompatActivity implements DropDown.IQuan
                                     }
 
                                     setDataFromSharedPreferences(list);
-                                    totalAmount.setText(" " +getString(R.string.currency)+ grandTotal(list) + ".00");
+                                    totalAmount.setText(" " + getString(R.string.currency) + grandTotal(list) + ".00");
                                     cart_count.setText(list.size() + "");
 
 
-                                    shared.setString("cartsize", String.valueOf(list.size()));
-                                    itemPrice.setText(" "+getString(R.string.currency) + grandTotal(list) + ".00");
+                                    shared.setString(ConstantClass.CART_SIZE, String.valueOf(list.size()));
+                                    itemPrice.setText(" " + getString(R.string.currency) + grandTotal(list) + ".00");
                                     adapter = new C_CartAdapter(activity, list, new C_CartAdapter.onItemClick() {
                                         @Override
-                                        public void onItemClick(String id, String option, String quantity) {
+                                        public void onItemClick(String id, String value, String quantity) {
                                             removeOrUpdateCartApi(id, "delete", quantity);
 
                                         }
+
                                     });
 
                                     cartRecycler.setAdapter(adapter);
@@ -343,20 +347,20 @@ public class C_CartDetailAct extends AppCompatActivity implements DropDown.IQuan
 
                                 } else {
                                     cartDeatil.setVisibility(View.VISIBLE);
-                                    shared.setString("cartsize", "");
+                                    shared.setString(ConstantClass.CART_SIZE, "");
                                     cardViewOfamount.setVisibility(View.GONE);
                                     mycartText.setText("My Cart(" + list.size() + ")");
                                     placeOrder.setVisibility(View.GONE);
                                 }
                             } else {
                                 cartDeatil.setVisibility(View.VISIBLE);
-                                shared.setString("cartsize", "");
+                                shared.setString(ConstantClass.CART_SIZE, "");
                                 cardViewOfamount.setVisibility(View.GONE);
                                 placeOrder.setVisibility(View.GONE);
                             }
                         } else {
                             cartDeatil.setVisibility(View.VISIBLE);
-                            shared.setString("cartsize", "");
+                            shared.setString(ConstantClass.CART_SIZE, "");
                             cardViewOfamount.setVisibility(View.GONE);
                             placeOrder.setVisibility(View.GONE);
 
@@ -417,12 +421,13 @@ public class C_CartDetailAct extends AppCompatActivity implements DropDown.IQuan
 
                         if (response.body().getStatus()) {
 
-                            shared.setString("cartsize", "");
+                            shared.setString(ConstantClass.CART_SIZE, "");
                             shared.setString("order_id", response.body().getData().getOrderId() + "");
                             startActivity(new Intent(activity, C_MakePaymentAct.class));
                             finish();
 
                         } else {
+
                         }
 
                     }

@@ -71,7 +71,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:text="Booking Request is now accepted."
+                            android:text="@string/requestAccept"
                             android:textSize="@dimen/_8sdp"
                             android:textStyle="bold" />
 
@@ -80,7 +80,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="@dimen/_5sdp"
-                            android:text="You will provide service to customer as below details."
+                            android:id="@+id/request"
+                            android:text="@string/salonServiceDetail"
                             android:textSize="@dimen/_8sdp"
                             android:textStyle="bold" />
 
@@ -89,8 +90,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="@dimen/_15sdp"
-
-                            android:text="Customer will shortly respond to the Payment Method it will follow."
+                            android:id="@+id/respond"
+                            android:text="@string/salonGetRespon"
                             android:textSize="@dimen/_8sdp"
                             android:textStyle="bold" />
 

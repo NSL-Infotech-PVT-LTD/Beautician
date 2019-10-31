@@ -8,6 +8,7 @@ public class C_CartModel {
     String cartID;
     int cartQuantity;
 
+
     public int getCartQuantity() {
         return cartQuantity;
     }

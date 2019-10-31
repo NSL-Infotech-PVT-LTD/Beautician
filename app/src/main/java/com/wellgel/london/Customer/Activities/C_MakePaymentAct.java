@@ -28,6 +28,7 @@ import com.wellgel.london.APIs.Customer_APIs;
 import com.wellgel.london.Customer.SerializeModelClasses.C_PlaceOrderSerial;
 import com.wellgel.london.Provider.ModelSerialized.RescheduleAppointment;
 import com.wellgel.london.R;
+import com.wellgel.london.UtilClasses.ConstantClass;
 import com.wellgel.london.UtilClasses.PreferencesShared;
 import com.wellgel.london.UtilClasses.Retrofit.RetrofitClientInstance;
 
@@ -472,7 +473,7 @@ public class C_MakePaymentAct extends AppCompatActivity {
                                     dialogMultiOrder.dismiss();
                                     startActivity(new Intent(activity, C_DashboardAct.class));
                                     finish();
-                                    shared.setString("cartsize", "");
+                                    shared.setString(ConstantClass.CART_SIZE, "");
                                 }
                             }).start();
                         } else {

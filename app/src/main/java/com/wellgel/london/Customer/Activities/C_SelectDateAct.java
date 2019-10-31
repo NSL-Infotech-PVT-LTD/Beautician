@@ -8,9 +8,11 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -43,6 +45,8 @@ import com.wellgel.london.UtilClasses.Retrofit.RetrofitClientInstance;
 import org.joda.time.DateTime;
 import org.json.JSONObject;
 
+import java.sql.Struct;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,14 +57,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.wellgel.london.UtilClasses.AlertClas.alertDialog;
+
 public class C_SelectDateAct extends AppCompatActivity implements DatePickerListener {
 
-    private TextView near_salon_name, salonBookingDate, salonBookingTime, near_salon_address, salon_new, confirm_booking, shoTimeSelected;
+    private TextView near_salon_name, salonBookingDate, salonBookingTime, near_salon_address, confirm_booking, shoTimeSelected;
 
     private ImageView c_dash_navi;
 
-    private FragmentManager fragmentManager;
-    private FragmentTransaction transaction;
     private String formattedDate;
     private String dateMatch = "";
     private CardView bookinCard;
@@ -76,16 +80,17 @@ public class C_SelectDateAct extends AppCompatActivity implements DatePickerList
             new int[]{R.drawable.square_medium, R.drawable.square_round_medium, R.drawable.round_medium, R.drawable.pointed_medium, R.drawable.pointed_round_medium},
             new int[]{R.drawable.square_black_one, R.drawable.square_round_black_one, R.drawable.round_black_one, R.drawable.pointed_black_one, R.drawable.pointed_round_black_one},
             new int[]{R.drawable.square_black_two, R.drawable.square_round_black_two, R.drawable.round_black_two, R.drawable.pointed_black_two, R.drawable.pointed_round_black_two}};
-    private TextView nail_shape, resc_date, resc_time;
+    private TextView nail_shape, salonTime;
     private LinearLayout lay_nail_color, lay_skin_color;
     private CircleImageView c_dash_userhand_image;
     private RelativeLayout ln_nailColor;
+    private String[] startTime, endTime;
+    private String currentString, currentString2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_c__select_date);
-        // find the picker
 
         activity = this;
         shared = new PreferencesShared(activity);
@@ -94,19 +99,16 @@ public class C_SelectDateAct extends AppCompatActivity implements DatePickerList
         c_dash_navi = findViewById(R.id.c_dash_navi);
         confirm_booking = findViewById(R.id.confirm_booking);
         near_salon_name = findViewById(R.id.near_salon_name);
-        salon_new = findViewById(R.id.salon_new);
         near_salon_address = findViewById(R.id.near_salon_address);
         bookinCard = findViewById(R.id.bookinCard);
         salonBookingDate = findViewById(R.id.salonBookingDate);
         salonBookingTime = findViewById(R.id.salonBookingTime);
-        fragmentManager = getSupportFragmentManager();
-        resc_date = findViewById(R.id.resc_date);
-        resc_time = findViewById(R.id.resc_time);
         lay_nail_color = findViewById(R.id.lay_nail_color);
         lay_skin_color = findViewById(R.id.lay_skin_color);
         nail_shape = findViewById(R.id.nail_shape);
         ln_nailColor = findViewById(R.id.nail_back);
         c_dash_userhand_image = findViewById(R.id.c_dash_userhand_image);
+        salonTime = findViewById(R.id.salonTime);
 
         c_dash_navi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,33 +128,34 @@ public class C_SelectDateAct extends AppCompatActivity implements DatePickerList
             public void onClick(View view) {
 
                 if (dateMatch.equalsIgnoreCase("")) {
-                    Toast.makeText(C_SelectDateAct.this, "Please Select Date first", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "Please Select Date first", Toast.LENGTH_SHORT).show();
                 } else {
                     Calendar mcurrentTime = Calendar.getInstance();
                     int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                     int minute = mcurrentTime.get(Calendar.MINUTE);
                     TimePickerDialog mTimePicker;
-                    mTimePicker = new TimePickerDialog(C_SelectDateAct.this, new TimePickerDialog.OnTimeSetListener() {
+                    mTimePicker = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
 
+
                             if (formattedDate.equalsIgnoreCase(dateMatch)) {
                                 if (selectedHour < hour) {
-                                    setTime(hour, minute);
+                                    Toast.makeText(activity, "This Session has been Expired ,Choose Correct Time", Toast.LENGTH_SHORT).show();
                                 } else if (selectedHour == hour) {
                                     if (selectedMinute < minute) {
-                                        Toast.makeText(C_SelectDateAct.this, "Please coorect time", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(activity, "Choose Correct Time", Toast.LENGTH_SHORT).show();
                                     } else {
-                                        setTime(selectedHour, selectedMinute);
+                                        compareTime(selectedHour, selectedMinute);
                                     }
                                 } else {
-                                    setTime(selectedHour, selectedMinute);
+                                    compareTime(selectedHour, selectedMinute);
                                 }
                             } else {
 
-                                setTime(selectedHour, selectedMinute);
+                                compareTime(selectedHour, selectedMinute);
                             }
-//                        selctStartTime.setText(selectedHour + ":" + selectedMinute);
+//                            selectStartTime.setText(selectedHour + ":" + selectedMinute);
                         }
                     }, hour, minute, false);//Yes 24 hour time
 
@@ -168,7 +171,7 @@ public class C_SelectDateAct extends AppCompatActivity implements DatePickerList
 
 // initialize it and attach a listener
         picker.setListener(this)
-                .setDays(120)
+                .setDays(30)
                 .setOffset(0)
                 .setDateSelectedColor(getResources()
                         .getColor(R.color.pink))
@@ -205,42 +208,67 @@ public class C_SelectDateAct extends AppCompatActivity implements DatePickerList
             }
         });
 
+        currentString = getIntent().getStringExtra("startTime");
+        currentString2 = getIntent().getStringExtra("endTime");
+        startTime = new String[0];
+        endTime = new String[0];
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+        SimpleDateFormat requestime = new SimpleDateFormat("hh:mm aa");
+        Date dt = null, dt2 = null;
+
+        try {
+            dt = sdf.parse(currentString);
+            dt2 = sdf.parse(currentString2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        salonTime.setText("Timing : " + requestime.format(dt) + " - " + requestime.format(dt2));
+
+    }
+
+
+    private void compareTime(int selectedHour, int selectedMinute) {
+
+        if ((currentString != null) && (currentString2 != null)) {
+            startTime = currentString.split(":");
+            endTime = currentString2.split(":");
+
+
+            int compareHour = Integer.parseInt(startTime[0]);
+            int compareMint = Integer.parseInt(startTime[1]);
+
+            int compareEndHour = Integer.parseInt(endTime[0]);
+            int compareEndMint = Integer.parseInt(endTime[1]);
+
+            if (compareHour == selectedHour) {
+                if ((compareMint < selectedMinute) || (compareMint == selectedMinute)) {
+
+                    setTime(selectedHour, selectedMinute);
+                } else {
+                    alertDialog("Please Enter Time According to Salon Timing", activity);
+                }
+            } else if ((compareEndHour == selectedHour)) {
+                if ((compareEndMint > selectedMinute) || (compareEndMint == selectedMinute)) {
+
+                    setTime(selectedHour, selectedMinute);
+                } else {
+                    alertDialog("Please Enter Time According to Salon Timing", activity);
+                }
+            } else if ((compareHour < selectedHour) && (compareEndHour > selectedHour)) {
+                if ((compareEndMint < selectedMinute) || (compareEndMint == selectedMinute)) {
+                    setTime(selectedHour, selectedMinute);
+
+                } else {
+                    alertDialog("Please Enter Time According to Salon Timing", activity);
+                }
+            } else {
+                alertDialog("Please Enter Time According to Salon Timing", activity);
+            }
+        }
     }
 
     private void funcList() {
         ConstantClass.ListFunc(listSkinColor, listNailColor, listNailShape);
-
-//        listNailColor.add(0, "#FFFFFF");
-//        listNailColor.add(1, "#CC66CC");
-//        listNailColor.add(2, "#333366");
-//        listNailColor.add(3, "#009999");
-//        listNailColor.add(4, "#CC00CC");
-//        listNailColor.add(5, "#0033FF");
-//        listNailColor.add(6, "#99FFFF");
-//        listNailColor.add(7, "#CCFF99");
-//        listNailColor.add(8, "#006633");
-//        listNailColor.add(9, "#CC9900");
-//        listNailColor.add(10, "#33FF00");
-//        listNailColor.add(11, "#669966");
-//        listNailColor.add(12, "#666666");
-//        listNailColor.add(13, "#00FFCC");
-//        listNailColor.add(14, "#993333");
-//        listNailColor.add(15, "#990099");
-//        listNailColor.add(16, "#9999FF");
-//
-//
-//        listSkinColor.add(0, "#F2D9B7");
-//        listSkinColor.add(1, "#EFB38A");
-//        listSkinColor.add(2, "#A07561");
-//        listSkinColor.add(3, "#795D4C");
-//        listSkinColor.add(4, "#3D2923");
-//
-//
-//        listNailShape.add(0, "square");
-//        listNailShape.add(1, "round");
-//        listNailShape.add(2, "oval");
-//        listNailShape.add(3, "stillete");
-//        listNailShape.add(4, "pointed");
     }
 
     @Override
@@ -265,7 +293,6 @@ public class C_SelectDateAct extends AppCompatActivity implements DatePickerList
                 confirm_booking.setText(getString(R.string.updateDateTime));
             } else {
                 confirm_booking.setText(getString(R.string.cofirmBooking));
-
             }
         }
 
@@ -277,11 +304,12 @@ public class C_SelectDateAct extends AppCompatActivity implements DatePickerList
 
                 if (confirm_booking.getText().toString().equalsIgnoreCase(getString(R.string.updateDateTime))) {
 
-                    acceptReject(getIntent().getIntExtra("appo_id", 0), "", "requested", dateTime);
+                    acceptReject(getIntent().getIntExtra("appo_id", 0), "", ConstantClass.STATUS_REQUESTED, dateTime);
                 } else
                     createAppointMent(dateTime);
             }
         });
+        salonBookingDate.setText(st_day + "," + st_date + " " + st_month + " " + st_year);
 
 
     }
@@ -527,11 +555,30 @@ public class C_SelectDateAct extends AppCompatActivity implements DatePickerList
 
     private void setTime(int selectedHour, int selectedMinute) {
 
-        st_time = selectedHour + ":" + selectedMinute;
+        if ((selectedHour == 0) || (selectedHour == 1) || (selectedHour == 2) || (selectedHour == 3) ||
+                (selectedHour == 4) || (selectedHour == 5) || (selectedHour == 6) ||
+                (selectedHour == 7) || (selectedHour == 8)
+                || (selectedHour == 9)) {
+            if ((selectedMinute == 0) || (selectedMinute == 1) || (selectedMinute == 2) || (selectedMinute == 3) ||
+                    (selectedMinute == 4) || (selectedMinute == 5) || (selectedMinute == 6) ||
+                    (selectedMinute == 7) || (selectedMinute == 8)
+                    || (selectedMinute == 9)) {
+                st_time = "0" + selectedHour + ":" + "0" + selectedMinute;
+            } else {
+                st_time = "0" + selectedHour + ":" + selectedMinute;
+            }
+        } else if ((selectedMinute == 0) || (selectedMinute == 1) || (selectedMinute == 2) || (selectedMinute == 3) ||
+                (selectedMinute == 4) || (selectedMinute == 5) || (selectedMinute == 6) ||
+                (selectedMinute == 7) || (selectedMinute == 8)
+                || (selectedMinute == 9)) {
+            st_time = selectedHour + ":" + "0" + selectedMinute;
+        } else {
+            st_time = selectedHour + ":" + selectedMinute;
+        }
         bookinCard.setVisibility(View.VISIBLE);
         confirm_booking.setVisibility(View.VISIBLE);
-        Animation animation = AnimationUtils.loadAnimation(C_SelectDateAct.this, R.anim.slide_in_right);
-        Animation animation2 = AnimationUtils.loadAnimation(C_SelectDateAct.this, R.anim.slide_in_left);
+        Animation animation = AnimationUtils.loadAnimation(activity, R.anim.slide_in_right);
+        Animation animation2 = AnimationUtils.loadAnimation(activity, R.anim.slide_in_left);
         bookinCard.setAnimation(animation);
         confirm_booking.setAnimation(animation2);
 
@@ -550,7 +597,7 @@ public class C_SelectDateAct extends AppCompatActivity implements DatePickerList
                 ln_nailColor.setBackground(wrappedDrawable);
                 nail_shape.setText("Nail Shape  " + extra.getString("nail_shape"));
                 nailShape(c_dash_userhand_image, extra.getString("nail_shape"));
-                skinColor(c_dash_userhand_image, extra.getString("nail_color"), extra.getString("nail_shape"));
+                skinColor(c_dash_userhand_image, extra.getString("hand_color"), extra.getString("nail_shape"));
             } else {
 
                 lay_skin_color.setBackgroundColor(Color.parseColor(ConstantClass.HAND_COLOR));
@@ -563,7 +610,7 @@ public class C_SelectDateAct extends AppCompatActivity implements DatePickerList
                 ln_nailColor.setBackground(wrappedDrawable);
                 nail_shape.setText("Nail Shape  " + ConstantClass.NAIL_SHAPE);
                 nailShape(c_dash_userhand_image, ConstantClass.NAIL_SHAPE);
-                skinColor(c_dash_userhand_image, ConstantClass.NAIL_POlish_COLOR, ConstantClass.NAIL_SHAPE);
+                skinColor(c_dash_userhand_image, ConstantClass.HAND_COLOR, ConstantClass.NAIL_SHAPE);
             }
         }
 
@@ -578,15 +625,69 @@ public class C_SelectDateAct extends AppCompatActivity implements DatePickerList
 //        }
         if (selectedHour > 12) {
 
-            salonBookingTime.setText(String.valueOf(selectedHour - 12) + ":" + (String.valueOf(selectedMinute) + " PM"));
-            shoTimeSelected.setText(String.valueOf(selectedHour - 12) + ":" + (String.valueOf(selectedMinute) + " PM"));
+
+            if ((selectedHour == 13) || (selectedHour == 14) || (selectedHour == 15) || (selectedHour == 16) ||
+                    (selectedHour == 17) || (selectedHour == 18) || (selectedHour == 19) ||
+                    (selectedHour == 20) || (selectedHour == 21)) {
+                if ((selectedMinute == 0) || (selectedMinute == 1) || (selectedMinute == 2) || (selectedMinute == 3) ||
+                        (selectedMinute == 4) || (selectedMinute == 5) || (selectedMinute == 6) ||
+                        (selectedMinute == 7) || (selectedMinute == 8)
+                        || (selectedMinute == 9)) {
+                    salonBookingTime.setText(String.valueOf("0" + (selectedHour - 12)) + ":" + (String.valueOf("0" + selectedMinute) + " PM"));
+                    shoTimeSelected.setText(String.valueOf("0" + (selectedHour - 12)) + ":" + (String.valueOf("0" + selectedMinute) + " PM"));
+                } else {
+                    salonBookingTime.setText(String.valueOf("0" + (selectedHour - 12)) + ":" + (String.valueOf(selectedMinute) + " PM"));
+                    shoTimeSelected.setText(String.valueOf("0" + (selectedHour - 12)) + ":" + (String.valueOf(selectedMinute) + " PM"));
+                }
+
+
+            } else {
+                if ((selectedMinute == 0) || (selectedMinute == 1) || (selectedMinute == 2) || (selectedMinute == 3) ||
+                        (selectedMinute == 4) || (selectedMinute == 5) || (selectedMinute == 6) ||
+                        (selectedMinute == 7) || (selectedMinute == 8)
+                        || (selectedMinute == 9)) {
+                    salonBookingTime.setText(String.valueOf(selectedHour - 12) + ":" + (String.valueOf("0" + selectedMinute) + " PM"));
+                    shoTimeSelected.setText(String.valueOf(selectedHour - 12) + ":" + (String.valueOf("0" + selectedMinute) + " PM"));
+                } else {
+                    salonBookingTime.setText(String.valueOf(selectedHour - 12) + ":" + (String.valueOf(selectedMinute) + " PM"));
+                    shoTimeSelected.setText(String.valueOf(selectedHour - 12) + ":" + (String.valueOf(selectedMinute) + " PM"));
+                }
+            }
+
+
         } else if (selectedHour == 12) {
             salonBookingTime.setText("12" + ":" + (String.valueOf(selectedMinute) + " PM"));
             shoTimeSelected.setText("12" + ":" + (String.valueOf(selectedMinute) + " PM"));
         } else if (selectedHour < 12) {
             if (selectedHour != 0) {
-                salonBookingTime.setText(String.valueOf(selectedHour) + ":" + (String.valueOf(selectedMinute) + " AM"));
-                shoTimeSelected.setText(String.valueOf(selectedHour) + ":" + (String.valueOf(selectedMinute) + " AM"));
+                if ((selectedHour == 0) || (selectedHour == 1) || (selectedHour == 2) || (selectedHour == 3) ||
+                        (selectedHour == 4) || (selectedHour == 5) || (selectedHour == 6) ||
+                        (selectedHour == 7) || (selectedHour == 8)
+                        || (selectedHour == 9)) {
+                    if ((selectedMinute == 0) || (selectedMinute == 1) || (selectedMinute == 2) || (selectedMinute == 3) ||
+                            (selectedMinute == 4) || (selectedMinute == 5) || (selectedMinute == 6) ||
+                            (selectedMinute == 7) || (selectedMinute == 8)
+                            || (selectedMinute == 9)) {
+                        salonBookingTime.setText(String.valueOf("0" + selectedHour) + ":" + (String.valueOf("0" + selectedMinute) + " AM"));
+                        shoTimeSelected.setText(String.valueOf("0" + selectedHour) + ":" + (String.valueOf("0" + selectedMinute) + " AM"));
+                    } else {
+                        salonBookingTime.setText(String.valueOf("0" + selectedHour) + ":" + (String.valueOf(selectedMinute) + " AM"));
+                        shoTimeSelected.setText(String.valueOf("0" + selectedHour) + ":" + (String.valueOf(selectedMinute) + " AM"));
+                    }
+
+
+                } else {
+                    if ((selectedMinute == 0) || (selectedMinute == 1) || (selectedMinute == 2) || (selectedMinute == 3) ||
+                            (selectedMinute == 4) || (selectedMinute == 5) || (selectedMinute == 6) ||
+                            (selectedMinute == 7) || (selectedMinute == 8)
+                            || (selectedMinute == 9)) {
+                        salonBookingTime.setText(String.valueOf(selectedHour) + ":" + (String.valueOf("0" + selectedMinute) + " AM"));
+                        shoTimeSelected.setText(String.valueOf(selectedHour) + ":" + (String.valueOf("0" + selectedMinute) + " AM"));
+                    } else {
+                        salonBookingTime.setText(String.valueOf(selectedHour) + ":" + (String.valueOf(selectedMinute) + " AM"));
+                        shoTimeSelected.setText(String.valueOf(selectedHour) + ":" + (String.valueOf(selectedMinute) + " AM"));
+                    }
+                }
             } else {
                 salonBookingTime.setText("12" + ":" + (String.valueOf(selectedMinute) + " AM"));
                 shoTimeSelected.setText("12" + ":" + (String.valueOf(selectedMinute) + " AM"));
@@ -665,5 +766,22 @@ public class C_SelectDateAct extends AppCompatActivity implements DatePickerList
             }
         });
     }
+
+
+//    public static androidx.appcompat.app.AlertDialog alertDialog(String text,Context activity) {
+//        return new androidx.appcompat.app.AlertDialog.Builder(activity)
+//                .setIcon(android.R.drawable.ic_dialog_alert)
+//                .setTitle("!Oops")
+//                .setMessage(text)
+//                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                        dialog.dismiss();
+//                    }
+//
+//                })
+//                .show();
+//}
 
 }

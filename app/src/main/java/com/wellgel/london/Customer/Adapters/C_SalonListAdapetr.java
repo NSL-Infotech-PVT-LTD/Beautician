@@ -19,6 +19,9 @@ import com.wellgel.london.Customer.SerializeModelClasses.C_MyOrdersSerial;
 import com.wellgel.london.Customer.SerializeModelClasses.C_SalonListSerial;
 import com.wellgel.london.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class C_SalonListAdapetr extends RecyclerView.Adapter<C_SalonListAdapetr.C_product_holder> {
@@ -68,14 +71,25 @@ public class C_SalonListAdapetr extends RecyclerView.Adapter<C_SalonListAdapetr.
             holder.salon_new.setVisibility(View.GONE);
             holder.salonRating.setRating(model.getRating());
         }
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+        SimpleDateFormat requestime = new SimpleDateFormat("hh:mm aa");
+        Date dt = null, dt2 = null;
+
+        try {
+            dt = sdf.parse(model.getBusinessHourStart());
+            dt2 = sdf.parse(model.getBusinessHourEnd());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
 
-        holder.salonTime.setText("Timings: " + model.getBusinessHourStart() + "-" + model.getBusinessHourEnd());
+        holder.salonTime.setText("Timings: " + requestime.format(dt) + " - " + requestime.format(dt2));
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onItemClick.getSalon(model.getId(),model.getName(), model.getAddress(), model.getBusinessHourStart(), model.getBusinessHourEnd(), model.getRating(), C_ConstantClass.IMAGE_BASE_URL + "salon/profile_image/" + model.getProfileImage(), C_ConstantClass.IMAGE_BASE_URL + "salon/profile_image/" + model.getImage1(), C_ConstantClass.IMAGE_BASE_URL + "salon/profile_image/" + model.getImage2(), C_ConstantClass.IMAGE_BASE_URL + "salon/profile_image/" + model.getImage3());
+                onItemClick.getSalon(model.getId(), model.getName(), model.getAddress(), model.getBusinessHourStart(), model.getBusinessHourEnd(), model.getRating(), C_ConstantClass.IMAGE_BASE_URL + "salon/profile_image/" + model.getProfileImage(), C_ConstantClass.IMAGE_BASE_URL + "salon/profile_image/" + model.getImage1(), C_ConstantClass.IMAGE_BASE_URL + "salon/profile_image/" + model.getImage2(), C_ConstantClass.IMAGE_BASE_URL + "salon/profile_image/" + model.getImage3());
             }
         });
 
@@ -83,7 +97,7 @@ public class C_SalonListAdapetr extends RecyclerView.Adapter<C_SalonListAdapetr.
 
 
     public interface ONSALONCLICK {
-        public void getSalon(int ID,String name, String address, String startTime, String endTime, int rating, String image,String img1,String img2,String img3);
+        public void getSalon(int ID, String name, String address, String startTime, String endTime, int rating, String image, String img1, String img2, String img3);
     }
 
     @Override

@@ -39,10 +39,8 @@ public class C_CreateNailAct extends AppCompatActivity implements View.OnClickLi
     RelativeLayout ln_nailColor;
     private NailPolishColorAdapter nailPolishColorAdapter;
     private NailShapeAdapter nailShapeAdapter;
-    private String[] nail_colors = new String[]{"#FFFFFF", "#CC66CC", "#333366", "#009999", "#CC00CC", "#0033FF", "#99FFFF", "#CCFF99", "#006633", "#CC9900", "#33FF00", "#669966", "#666666", "#00FFCC", "#993333", "#990099", "#9999FF"};
     RecyclerView recyclerView;
     private SkinColorAdapter skinColorAdapter;
-    //    private String[] skin_colors = new String[]{"#F2D9B7", "#EFB38A", "#A07561", "#795D4C", "#3D2923"};
     private ArrayList<String> listSkinColor = new ArrayList<>();
     private ArrayList<String> listNailColor = new ArrayList<>();
     private ArrayList<String> listNailShape = new ArrayList<>();

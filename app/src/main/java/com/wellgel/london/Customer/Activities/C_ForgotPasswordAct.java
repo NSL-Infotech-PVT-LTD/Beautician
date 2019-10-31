@@ -50,7 +50,11 @@ public class C_ForgotPasswordAct extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 st_forgotEmail = forgotPass_email_ed.getText().toString();
-                if (!isValidEmail(st_forgotEmail)) {
+
+              if(st_forgotEmail.isEmpty()){
+                  forgotPass_email_ed.setError(getString(R.string.enterEmail));
+
+              }  else  if (!isValidEmail(st_forgotEmail)) {
                     forgotPass_email_ed.setError(getString(R.string.inalidEmail));
                 } else {
                     forgotAPI();

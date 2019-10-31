@@ -40,6 +40,12 @@ public class ConstantClass {
     public static String HAND_COLOR = "";
     public static String SALON_ID = "";
     public static String FIREBASE_TOKEN = "";
+    public static String STATUS_REQUESTED = "requested";
+    public static String STATUS_OPEN="Open";
+    public static String STATUS_ACCEPTED="Accepted";
+    public static String STATUS_REJECTED="Rejected";
+    public static String STATUS_CANCEL="Cancel";
+    public static String CART_SIZE="cart_size";
 
 
     public static void ListFunc(ArrayList<String> listSkinColor, ArrayList<String> listNailColor, ArrayList<String> listNailShape) {
