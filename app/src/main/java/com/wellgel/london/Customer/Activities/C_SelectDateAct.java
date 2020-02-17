@@ -304,7 +304,7 @@ public class C_SelectDateAct extends AppCompatActivity implements DatePickerList
 
                 if (confirm_booking.getText().toString().equalsIgnoreCase(getString(R.string.updateDateTime))) {
 
-                    acceptReject(getIntent().getIntExtra("appo_id", 0), "", ConstantClass.STATUS_REQUESTED, dateTime);
+                    acceptReject(getIntent().getIntExtra("appo_id", 0), "", ConstantClass.STATUS_REQUESTED_BY_CUSTOMER, dateTime);
                 } else
                     createAppointMent(dateTime);
             }

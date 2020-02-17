@@ -20,7 +20,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Customer.EComAboutUsAct"></activity>
+        <activity android:name=".PostFeed.PostsComments"
+         android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".PostFeed.FeedPostActivtiy" />
+        <activity android:name=".Customer.EComAboutUsAct" />
         <activity android:name=".Customer.EcomNotificationAct" />
 
         <uses-library

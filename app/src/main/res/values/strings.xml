@@ -94,5 +94,7 @@
     <string name="customerServiceDetail">You will get service by salon as below details.</string>
     <string name="salonGetRespon">Customer will shortly respond to the Payment Method it will follow.</string>
     <string name="salonImage">Add Your Salon Images (Optional)</string>
+    <string name="postSomthing">Post Something Intersting....</string>
+    <string name="write_a_comment">Write a comment</string>
 
 </resources>

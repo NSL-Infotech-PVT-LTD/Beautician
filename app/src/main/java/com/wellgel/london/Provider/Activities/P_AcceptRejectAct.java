@@ -218,6 +218,31 @@ public class P_AcceptRejectAct extends AppCompatActivity {
                                 if (response.body().getData().get(0).getStatus().equalsIgnoreCase(ConstantClass.STATUS_REQUESTED)) {
 
                                     reschedulingBTN.setVisibility(View.VISIBLE);
+                                    bottomLayout.setVisibility(View.GONE);
+                                    statusText.setVisibility(View.VISIBLE);
+                                    priceText.setText(response.body().getData().get(0).getPrice());
+
+                                    reschedulingBTN.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+
+                                            priceText_st = priceText.getText().toString().trim();
+                                            if (priceText_st.equalsIgnoreCase("0")) {
+                                                initiatePopupWindow();
+                                            } else {
+                                                Intent intent = new Intent(activity, P_RescheduleDateAct.class);
+                                                intent.putExtra("appo_id", appo_id);
+                                                intent.putExtra("price", priceText_st);
+                                                intent.putExtra("startTime", response.body().getData().get(0).getSalonDetails().get(0).getBusinessHourStart());
+                                                intent.putExtra("endTime", response.body().getData().get(0).getSalonDetails().get(0).getBusinessHourEnd());
+                                                startActivity(intent);
+                                            }
+
+                                        }
+                                    });
+                                } else if (response.body().getData().get(0).getStatus().equalsIgnoreCase(ConstantClass.STATUS_REQUESTED_BY_CUSTOMER)) {
+
+                                    reschedulingBTN.setVisibility(View.VISIBLE);
                                     bottomLayout.setVisibility(View.VISIBLE);
                                     statusText.setVisibility(View.GONE);
                                     priceText.setText(response.body().getData().get(0).getPrice());

@@ -446,6 +446,57 @@ public class Ecom_AppointlistDetail extends AppCompatActivity {
                                     SimpleDateFormat sdfs = new SimpleDateFormat("hh:mm aa");
 
                                     if (response.body().getData().get(0).getStatus().equalsIgnoreCase(ConstantClass.STATUS_REQUESTED)) {
+
+                                        statusText.setVisibility(View.GONE);
+                                        bottomLayout.setVisibility(View.GONE);
+                                        lay_accep_reject.setVisibility(View.VISIBLE);
+                                        lay_pay.setVisibility(View.VISIBLE);
+                                        layout_for_reschedule.setVisibility(View.GONE);
+                                        if ((response.body().getData().get(0).getAvailableDatetime() != null) && (response.body().getData().get(0).getAvailableDatetime() != response.body().getData().get(0).getRequestedDatetime())) {
+
+                                            layout_for_reschedule.setVisibility(View.VISIBLE);
+
+                                            if (!availSeprate.equalsIgnoreCase("null")) {
+                                                availableTime = availSeprate.split(" ");
+
+                                                resc_date.setText(parseDateToddMMyyyy(availableTime[0]));
+
+                                                try {
+                                                    avilDate = sdf.parse(availableTime[1]);
+
+                                                    if (avilDate != null) {
+                                                        resc_time.setText(sdfs.format(avilDate));
+                                                    }
+                                                } catch (ParseException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                            image_accept_reject_loader.setImageDrawable(getResources().getDrawable(R.drawable.ic_loader_half));
+
+                                            reschedulingBTN.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    Intent intent = new Intent(activity, C_SelectDateAct.class);
+                                                    intent.putExtra("salon_name", response.body().getData().get(0).getSalonDetails().get(0).getName());
+                                                    intent.putExtra("salon_address", response.body().getData().get(0).getSalonDetails().get(0).getAddress());
+                                                    intent.putExtra("hand_color", response.body().getData().get(0).getSkinColor());
+                                                    intent.putExtra("nail_color", response.body().getData().get(0).getNailPolishColor());
+                                                    intent.putExtra("nail_shape", response.body().getData().get(0).getNailShape());
+                                                    intent.putExtra("startTime", response.body().getData().get(0).getSalonDetails().get(0).getBusinessHourStart());
+                                                    intent.putExtra("endTime", response.body().getData().get(0).getSalonDetails().get(0).getBusinessHourEnd());
+                                                    intent.putExtra("from", "resc");
+                                                    intent.putExtra("appo_id", appo_id);
+                                                    startActivity(intent);
+                                                }
+                                            });
+
+
+                                        } else {
+                                            bottomLayout.setVisibility(View.GONE);
+                                            statusText.setText("Your Appointment is Awaiting......");
+
+                                        }
+                                    } else if (response.body().getData().get(0).getStatus().equalsIgnoreCase(ConstantClass.STATUS_REQUESTED_BY_CUSTOMER)) {
                                         statusText.setVisibility(View.VISIBLE);
                                         bottomLayout.setVisibility(View.VISIBLE);
                                         lay_accep_reject.setVisibility(View.GONE);
@@ -454,8 +505,7 @@ public class Ecom_AppointlistDetail extends AppCompatActivity {
                                         if ((response.body().getData().get(0).getAvailableDatetime() != null) && (response.body().getData().get(0).getAvailableDatetime() != response.body().getData().get(0).getRequestedDatetime())) {
 
                                             layout_for_reschedule.setVisibility(View.VISIBLE);
-                                            lay_accep_reject.setVisibility(View.VISIBLE);
-                                            lay_pay.setVisibility(View.VISIBLE);
+
                                             if (!availSeprate.equalsIgnoreCase("null")) {
                                                 availableTime = availSeprate.split(" ");
 

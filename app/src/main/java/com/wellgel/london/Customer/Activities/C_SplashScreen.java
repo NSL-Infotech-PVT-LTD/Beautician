@@ -38,6 +38,7 @@ public class C_SplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_c__splash_screen);
 
 
+
         shared = new PreferencesShared(this);
         new Thread(new Runnable() {
             @Override

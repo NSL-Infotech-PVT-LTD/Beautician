@@ -41,10 +41,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.wellgel.london.UtilClasses.ConstantClass.PUBLISHABLE_KEY;
+
 public class C_MakePaymentAct extends AppCompatActivity {
 
     EditText cardNumberEditText, cardDate, cardCVV, cardHolder;
-    public static final String PUBLISHABLE_KEY = "pk_test_EofuWsjaHTjaOaJ3ZdmuyDZ1009cv4oXN7";
     protected Card cardToSave;
     TextView validateCard;
     Stripe stripe;

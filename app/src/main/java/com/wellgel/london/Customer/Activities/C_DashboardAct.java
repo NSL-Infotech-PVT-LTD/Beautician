@@ -46,6 +46,7 @@ import com.wellgel.london.Customer.EcomNotificationAct;
 import com.wellgel.london.Customer.Ecom_BookingActivity;
 import com.wellgel.london.Customer.SerializeModelClasses.C_AppointmentList;
 import com.wellgel.london.Customer.SerializeModelClasses.C_ProductsSerial;
+import com.wellgel.london.PostFeed.FeedPostActivtiy;
 import com.wellgel.london.Provider.Activities.P_AcceptRejectAct;
 import com.wellgel.london.Provider.Activities.P_ProfileAct;
 import com.wellgel.london.Provider.ModelSerialized.P_AppointmentListSerial;
@@ -201,8 +202,8 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
         c_dash_navi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopupWindow popupwindow_obj = popupDisplay();
-                popupwindow_obj.showAsDropDown(view, 200, 18);
+                popupDisplay();
+//                popupwindow_obj.showAsDropDown(view, 200, 18);
             }
         });
 
@@ -380,7 +381,7 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
         startActivity(intent);
     }
 
-    public PopupWindow popupDisplay() {
+    public void popupDisplay() {
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         //Inflate the view from a predefined XML layout
@@ -390,14 +391,15 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
 
         // inflate your layout or dynamically add view
 
-        View view = inflater.inflate(R.layout.c_drawer_layout, (ViewGroup) findViewById(R.id.main));
+        View view = inflater.inflate(R.layout.c_drawer_layout, null);
         final PopupWindow popupWindow = new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
         // display the popup in the center
         popupWindow.showAtLocation(view, Gravity.TOP, 0, 0);
-        RelativeLayout main = view.findViewById(R.id.main);
+        RelativeLayout main = view.findViewById(R.id.mainView);
         RelativeLayout profileLay = view.findViewById(R.id.profileLay);
         TextView myOrder = view.findViewById(R.id.myOrders);
         TextView logout = view.findViewById(R.id.logout);
+        TextView navi_postFeed = view.findViewById(R.id.navi_postFeed);
 
         //drawer ids
         navi_about_us = view.findViewById(R.id.navi_about_us);
@@ -425,6 +427,13 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
             public void onClick(View view) {
                 popupWindow.dismiss();
                 startActivity(new Intent(activity, C_MyOrdersActivity.class));
+            }
+        });
+        navi_postFeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow.dismiss();
+                startActivity(new Intent(activity, FeedPostActivtiy.class));
             }
         });
         profileLay.setOnClickListener(new View.OnClickListener() {
@@ -504,7 +513,6 @@ public class C_DashboardAct extends AppCompatActivity implements C_Product_Adapt
 //
 
 
-        return popupWindow;
     }
 
     @Override

@@ -85,10 +85,10 @@ public class C_ProductsDetailAct extends AppCompatActivity {
         buyNow = findViewById(R.id.buyNow);
         c_direction = findViewById(R.id.c_direction);
         c_description = findViewById(R.id.c_description);
+        c_shippingAddress = findViewById(R.id.c_shippingAddress);
         addtocart = findViewById(R.id.addtocart);
         cart_detail = findViewById(R.id.cartValue);
         cart_count = findViewById(R.id.cart_count);
-        c_shippingAddress = findViewById(R.id.c_shippingAddress);
         c_product_name = findViewById(R.id.c_product_name);
         c_product_price = findViewById(R.id.c_product_price);
         c_peoduct_image = findViewById(R.id.c_peoduct_image);

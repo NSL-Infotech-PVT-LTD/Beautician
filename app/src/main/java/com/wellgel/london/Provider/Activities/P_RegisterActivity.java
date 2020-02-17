@@ -108,6 +108,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.wellgel.london.Provider.Activities.P_LoginActivity.loginType;
+import static com.wellgel.london.UtilClasses.ConstantClass.PUBLISHABLE_KEY;
 
 public class P_RegisterActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -121,6 +122,7 @@ public class P_RegisterActivity extends AppCompatActivity implements GoogleApiCl
     private Button next, p_registr_back_btn;
     private P_RegisterActivity activity;
     private int REQUEST_CAMERA = 777, SELECT_FILE = 7777;
+
     private String picturePath = "";
     private String IMAGE_DIRECTORY = "/WellgelLondon/";
     private TextView show_selctStartTime, show_selctEndTime, p_service_add_tv;
@@ -149,7 +151,6 @@ public class P_RegisterActivity extends AppCompatActivity implements GoogleApiCl
     private String subscribedName = "";
     private int subscriptionID = 0;
     EditText cardNumberEditText, cardDate, cardCVV, cardHolder;
-    public static final String PUBLISHABLE_KEY = "pk_test_EofuWsjaHTjaOaJ3ZdmuyDZ1009cv4oXN7";
     protected Card cardToSave;
     Stripe stripe;
     private int month, year;
@@ -157,6 +158,7 @@ public class P_RegisterActivity extends AppCompatActivity implements GoogleApiCl
 
     MultipartBody.Part portFolioImage1 = null, portFolioImage2 = null, portFolioImage3 = null, portFolioImage4 = null;
     private int position;
+    private String st_startHour="00",st_startMin="00",st_endHour="23",st_endMin="59";
     private boolean apiHit = false;
 
     @Override
@@ -420,6 +422,9 @@ public class P_RegisterActivity extends AppCompatActivity implements GoogleApiCl
                 mTimePicker = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+
+                        st_startHour = selectedHour+"";
+                        st_startMin = selectedMinute+"";
                         if (selectedHour > 12) {
                             show_selctStartTime.setText(String.valueOf(selectedHour - 12) + ":" + (String.valueOf(selectedMinute) + " PM"));
                         } else if (selectedHour == 12) {
@@ -451,6 +456,8 @@ public class P_RegisterActivity extends AppCompatActivity implements GoogleApiCl
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
 
+                        st_endHour = selectedHour+"";
+                        st_endMin = selectedMinute+"";
                         Calendar c = Calendar.getInstance();
                         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
                         String getCurrentTime = sdf.format(c.getTime());
@@ -704,11 +711,11 @@ public class P_RegisterActivity extends AppCompatActivity implements GoogleApiCl
 
             }
             if (position == 4) {
+
                 file.createNewFile();
                 fo = new FileOutputStream(file);
                 fo.write(bytes.toByteArray());
                 fo.close();
-
                 profileImage4.setImageBitmap(thumbnail);
                 portFolioImage4 = MultipartBody.Part.createFormData("image_3", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
 
@@ -837,7 +844,7 @@ public class P_RegisterActivity extends AppCompatActivity implements GoogleApiCl
 
         /*Create handle for the RetrofitInstance interface*/
         Provider_APIs service = RetrofitClientInstance.getRetrofitInstance().create(Provider_APIs.class);
-        Call<P_Registration_serial> call = service.registration(portFolioImage1, portFolioImage2, portFolioImage3, portFolioImage4, st_name, st_email, st_pass, st_number, latitude + "", longitude + "", "android", shared.getString(ConstantClass.DEVICE_TOKEN), st_address, String.valueOf(myIntegers), token, subscriptionID + "", show_selctStartTime.getText().toString(), show_selctEndTime.getText().toString(), st_country);
+        Call<P_Registration_serial> call = service.registration(portFolioImage1, portFolioImage2, portFolioImage3, portFolioImage4, st_name, st_email, st_pass, st_number, latitude + "", longitude + "", "android", shared.getString(ConstantClass.DEVICE_TOKEN), st_address, String.valueOf(myIntegers), token, subscriptionID + "", st_startHour+":"+st_startMin+":00", st_endHour+":"+st_endMin+":00", st_country);
         call.enqueue(new Callback<P_Registration_serial>() {
             @Override
             public void onResponse(Call<P_Registration_serial> call, Response<P_Registration_serial> response) {

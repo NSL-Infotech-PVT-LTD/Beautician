@@ -102,7 +102,7 @@ public class UpcomingOrder extends Fragment {
                             for (int i = 0; i < response.body().getData().size(); i++) {
                                 String status = response.body().getData().get(i).getStatus();
 
-                                if (status.equalsIgnoreCase(ConstantClass.STATUS_REQUESTED) || status.equalsIgnoreCase("open")) {
+                                if (status.equalsIgnoreCase(ConstantClass.STATUS_REQUESTED) || status.equalsIgnoreCase(ConstantClass.STATUS_OPEN)) {
 
                                     bookedListProvider.add(response.body().getData().get(i));
 
@@ -168,7 +168,7 @@ public class UpcomingOrder extends Fragment {
                             for (int i = 0; i < response.body().getData().size(); i++) {
                                 String status = response.body().getData().get(i).getStatus();
 
-                                if (status.equalsIgnoreCase(ConstantClass.STATUS_REQUESTED)) {
+                                if (status.equalsIgnoreCase(ConstantClass.STATUS_REQUESTED_BY_CUSTOMER)) {
 
                                     bookedList.add(response.body().getData().get(i));
 

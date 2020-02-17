@@ -115,10 +115,13 @@ public class C_MyOrdersActivity extends AppCompatActivity {
                 } else {
 
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        String errorMessage = jObjError.getJSONObject("error").getJSONObject("error_message").getJSONArray("message").getString(0);
+                        JSONObject jObjError = null;
+                        if (response.errorBody() != null) {
+                            jObjError = new JSONObject(response.errorBody().string());
+                            String errorMessage = jObjError.getJSONObject("error").getJSONObject("error_message").getJSONArray("message").getString(0);
 
-                        Toast.makeText(activity, "" + errorMessage, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity, "" + errorMessage, Toast.LENGTH_SHORT).show();    }
+
                     } catch (Exception e) {
 
                     }

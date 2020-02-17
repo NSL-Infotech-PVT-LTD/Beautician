@@ -494,7 +494,7 @@ public class C_RegisterActivity extends AppCompatActivity implements GoogleApiCl
 
         /*Create handle for the RetrofitInstance interface*/
         Customer_APIs service = RetrofitClientInstance.getRetrofitInstance().create(Customer_APIs.class);
-        Call<RegistrationSerial> call = service.registration(f, st_name, st_email, st_pass, st_number, latitude + "", longitude + "", "android",shared.getString(ConstantClass.DEVICE_TOKEN), st_address, st_country);
+        Call<RegistrationSerial> call = service.registration(f, st_name, st_email, st_pass, st_number, latitude + "", longitude + "", "android", shared.getString(ConstantClass.DEVICE_TOKEN), st_address, st_country);
         call.enqueue(new Callback<RegistrationSerial>() {
             @Override
             public void onResponse(Call<RegistrationSerial> call, Response<RegistrationSerial> response) {
@@ -731,8 +731,9 @@ public class C_RegisterActivity extends AppCompatActivity implements GoogleApiCl
                 e.printStackTrace();
             }
             try {
-                if (bm != null)
+                if (url != null) {
                     bm = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -777,7 +778,8 @@ public class C_RegisterActivity extends AppCompatActivity implements GoogleApiCl
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            if (bm != null) profileImage.setImageBitmap(bm);
+            if (bm != null)
+                profileImage.setImageBitmap(bm);
         }
     }
 

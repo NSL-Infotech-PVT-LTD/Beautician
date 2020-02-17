@@ -18,6 +18,11 @@ import com.wellgel.london.Customer.SerializeModelClasses.EcomAppoDetailSerial;
 import com.wellgel.london.Customer.SerializeModelClasses.LoginSerialized;
 import com.wellgel.london.Customer.SerializeModelClasses.ProductDetailSerial;
 import com.wellgel.london.Customer.SerializeModelClasses.RegistrationSerial;
+import com.wellgel.london.PostFeed.POstListModel;
+import com.wellgel.london.PostFeed.PostLikeModel;
+import com.wellgel.london.PostFeed.PostStoreModel;
+import com.wellgel.london.PostFeed.PostsCommentsModel;
+import com.wellgel.london.PostFeed.SendCommentModel;
 import com.wellgel.london.Provider.ModelSerialized.ForgotPasswordSerial;
 import com.wellgel.london.Provider.ModelSerialized.RescheduleAppointment;
 
@@ -172,5 +177,32 @@ public interface Customer_APIs {
                                                           @Query("comments") String comments,
                                                           @Query("token") String token,
                                                           @Query("payment_mode") String price);
+
+    //feedPost
+    @Multipart
+    @POST("posts/store")
+    Call<PostStoreModel> postStore(@Header("Authorization") String Auth,
+                                   @Part MultipartBody.Part file,
+                                   @PartMap() Map<String, RequestBody> partMap);
+
+
+    @POST("posts")
+    Call<POstListModel> postList(@Header("Authorization") String Auth);
+
+
+    @POST("posts/like/store")
+    Call<PostLikeModel> likeOrDislike(@Header("Content-Type") String content,
+                                      @Header("Authorization") String Auth,
+                                      @Query("post_id") int post_id,
+                                      @Query("status") String status);
+    @POST("posts/comments")
+    Call<PostsCommentsModel> getPostsComments(@Header("Content-Type") String content,
+                                              @Query("id") int id);
+    @POST("posts/comment/store")
+    Call<SendCommentModel> sendUserComments(@Header("Content-Type") String contentType,
+                                            @Header("Authorization") String Authorization,
+                                            @Query("post_id") int post_id,
+                                            @Query("comment") String comment);
+
 
 }

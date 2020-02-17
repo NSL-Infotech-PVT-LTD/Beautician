@@ -93,8 +93,8 @@ public class C_CartAdapter extends RecyclerView.Adapter<C_CartAdapter.C_product_
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(context, C_ProductsDetailAct.class);
-                intent.putExtra("product_id", model.getCartID());
+//                Intent intent = new Intent(context, C_ProductsDetailAct.class);
+//                intent.putExtra("product_id", model.getCartID());
 //                context.startActivity(intent);
             }
         });

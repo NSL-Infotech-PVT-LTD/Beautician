@@ -114,13 +114,7 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
 
         bottomSheetBehavior();
-        filterByICon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                bottomSheetUpDown();
-            }
-        });
         layoutBottomSheet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,6 +132,13 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
 
         if (ConstantClass.isProduct) {
             productFun();
+            filterByICon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    bottomSheetUpDown();
+                }
+            });
         } else {
             chromeFun();
         }
@@ -469,15 +470,15 @@ public class C_ViewAllProductsAct extends AppCompatActivity implements C_Product
         startActivity(intent);
     }
 
-    private void bottomSheetUpDown() {
-        if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
-            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        } else {
-            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        }
+        private void bottomSheetUpDown() {
+            if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+                sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            } else {
+                sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
 
-        bottomOnClickSort();
-    }
+            bottomOnClickSort();
+        }
 
     private void bottomOnClickSort() {
 

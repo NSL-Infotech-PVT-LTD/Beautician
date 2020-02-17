@@ -141,7 +141,9 @@ public class C_NearBySalonAct extends AppCompatActivity implements OnMapReadyCal
 
         map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(
                 R.id.map));
-        map.getMapAsync(this);
+        if (map != null) {
+            map.getMapAsync(this);
+        }
 
 
         salonRecycler = findViewById(R.id.salonRecycelr);

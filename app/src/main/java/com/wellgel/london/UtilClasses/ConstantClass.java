@@ -40,13 +40,16 @@ public class ConstantClass {
     public static String HAND_COLOR = "";
     public static String SALON_ID = "";
     public static String FIREBASE_TOKEN = "";
-    public static String STATUS_REQUESTED = "requested";
-    public static String STATUS_OPEN="Open";
-    public static String STATUS_ACCEPTED="Accepted";
-    public static String STATUS_REJECTED="Rejected";
-    public static String STATUS_CANCEL="Cancel";
-    public static String CART_SIZE="cart_size";
+    public static String STATUS_REQUESTED = "requested_salon";
+    public static String STATUS_REQUESTED_BY_CUSTOMER = "requested_customer";
+    public static String STATUS_OPEN = "Open";
+    public static String STATUS_ACCEPTED = "Accepted";
+    public static String STATUS_REJECTED = "Rejected";
+    public static String STATUS_CANCEL = "Cancel";
+    public static String CART_SIZE = "cart_size";
 
+    //publish key
+    public static final String PUBLISHABLE_KEY = "pk_test_EofuWsjaHTjaOaJ3ZdmuyDZ1009cv4oXN7";
 
     public static void ListFunc(ArrayList<String> listSkinColor, ArrayList<String> listNailColor, ArrayList<String> listNailShape) {
         listNailColor.add(0, "#FFFFFF");

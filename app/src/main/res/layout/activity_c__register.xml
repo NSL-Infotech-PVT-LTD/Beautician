@@ -116,6 +116,7 @@
                     android:hint="@string/enterNumber"
                     android:inputType="number"
                     android:paddingBottom="@dimen/_20sdp"
+                    android:maxLength="10"
                     android:singleLine="true"
                     android:textSize="@dimen/_14sdp" />
 
